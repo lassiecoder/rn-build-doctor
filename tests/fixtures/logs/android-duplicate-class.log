@@ -1,0 +1,16 @@
+> Task :app:checkDebugDuplicateClasses FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:checkDebugDuplicateClasses'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckDuplicatesRunnable
+   > Duplicate class android.support.v4.app.INotificationSideChannel found in modules core-1.9.0-runtime (androidx.core:core:1.9.0) and support-compat-28.0.0-runtime (com.android.support:support-compat:28.0.0)
+     Duplicate class android.support.v4.app.INotificationSideChannel$Stub found in modules core-1.9.0-runtime (androidx.core:core:1.9.0) and support-compat-28.0.0-runtime (com.android.support:support-compat:28.0.0)
+
+     Go to the documentation to learn how to <a href="d.android.com/r/tools/classpath-sync-errors">Fix dependency resolution errors</a>.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 22s

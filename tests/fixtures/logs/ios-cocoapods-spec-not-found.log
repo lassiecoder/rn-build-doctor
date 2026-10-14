@@ -1,0 +1,8 @@
+Installing CocoaPods dependencies (this may take a few minutes)
+Analyzing dependencies
+[!] Unable to find a specification for `RNCAsyncStorage` depended upon by `RNCPushNotificationIOS`
+
+You have either:
+ * out-of-date source repos which you can update with `pod repo update` or with `pod install --repo-update`.
+ * mistyped the name or version.
+ * not added the source repo that hosts the Podspec to your Podfile.

@@ -1,0 +1,12 @@
+PhaseScriptExecution Bundle\ React\ Native\ code\ and\ images /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Release-iphoneos/MyApp.build/Script-00DD1BFF1BD5951E006B06BC.sh (in target 'MyApp' from project 'MyApp')
+    cd /Users/dev/MyApp/ios
+    /bin/sh -c /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Release-iphoneos/MyApp.build/Script-00DD1BFF1BD5951E006B06BC.sh
++ [[ -f /Users/dev/MyApp/ios/.xcode.env.local ]]
+error: Can't find the 'node' binary to build the React Native bundle. If you have a non-standard Node.js installation, select your project in Xcode, find 'Build Phases' - 'Bundle React Native code and images' and change NODE_BINARY to an absolute path to your node executable. You can find it by invoking 'which node' in the terminal.
+Command PhaseScriptExecution failed with a nonzero exit code
+
+** ARCHIVE FAILED **
+
+The following build commands failed:
+	PhaseScriptExecution Bundle\ React\ Native\ code\ and\ images /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Release-iphoneos/MyApp.build/Script-00DD1BFF1BD5951E006B06BC.sh (in target 'MyApp' from project 'MyApp')
+(1 failure)

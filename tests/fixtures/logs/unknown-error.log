@@ -1,0 +1,15 @@
+> Task :app:compileDebugKotlin FAILED
+e: file:///Users/dev/MyApp/android/app/src/main/java/com/myapp/MainApplication.kt:28:24 Unresolved reference 'PackageList'.
+e: file:///Users/dev/MyApp/android/app/src/main/java/com/myapp/MainApplication.kt:31:13 Unresolved reference 'add'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 37s

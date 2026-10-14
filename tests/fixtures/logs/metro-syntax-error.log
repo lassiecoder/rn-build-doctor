@@ -1,0 +1,12 @@
+                Welcome to Metro v0.83.1
+              Fast - Scalable - Integrated
+
+info Writing bundle output to:, ios/main.jsbundle
+error SyntaxError: /Users/dev/MyApp/src/screens/Profile.tsx: Unexpected token, expected "," (42:8)
+
+  40 |       <Text style={styles.name}>{user.name}</Text>
+  41 |       <Text style={styles.bio}>{user.bio}</Text>
+> 42 |     </View
+     |         ^
+  43 |   );
+  44 | }

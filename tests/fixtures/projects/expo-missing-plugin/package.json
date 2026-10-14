@@ -1,0 +1,1 @@
+{ "name": "x", "dependencies": { "expo": "~54.0.0", "react-native": "0.81.4", "expo-camera": "~17.0.0" } }

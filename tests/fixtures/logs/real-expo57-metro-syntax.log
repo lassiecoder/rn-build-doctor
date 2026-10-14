@@ -1,0 +1,13 @@
+Using src/app as the root directory for Expo Router.
+React Compiler enabled
+Starting Metro Bundler
+
+Android Bundling failed 338ms node_modules/expo-router/entry.js (1491 modules)
+
+SyntaxError: SyntaxError: /Users/dev/realexpo/src/app/index.tsx: Unexpected token (1:11)
+
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mconst[39m x [33m=[39m ([33m;[39m
+ [90m   |[39m            [31m[1m^[22m[39m
+ [90m 2 |[39m [36mimport[39m [33m*[39m [36mas[39m [33mDevice[39m [36mfrom[39m [32m'expo-device'[39m[33m;[39m
+ [90m 3 |[39m [36mimport[39m { [33mPlatform[39m[33m,[39m [33mStyleSheet[39m } [36mfrom[39m [32m'react-native'[39m[33m;[39m
+ [90m 4 |[39m [36mimport[39m { [33mSafeAreaView[39m } [36mfrom[39m [32m'react-native-safe-area-context'[39m[33m;[39m[0m

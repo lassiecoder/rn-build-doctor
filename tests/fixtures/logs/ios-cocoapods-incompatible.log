@@ -1,0 +1,15 @@
+Analyzing dependencies
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+[!] CocoaPods could not find compatible versions for pod "FirebaseCore":
+  In snapshot (Podfile.lock):
+    FirebaseCore (= 10.29.0)
+
+  In Podfile:
+    RNFBApp (from `../node_modules/@react-native-firebase/app`) was resolved to 21.6.1, which depends on
+      Firebase/CoreOnly (= 11.5.0) was resolved to 11.5.0, which depends on
+        FirebaseCore (~> 11.5.0)
+
+Specs satisfying the `FirebaseCore (= 10.29.0), FirebaseCore (~> 11.5.0)` dependency were found, but they required a higher minimum deployment target.
+You have either:
+ * changed the constraints of dependency `FirebaseCore` inside your development pod `RNFBApp`.
+   You should run `pod update FirebaseCore` to apply changes you've made.

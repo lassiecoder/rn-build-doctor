@@ -1,0 +1,12 @@
+▸ Compiling AppDelegate.mm
+
+❌  /Users/dev/MyApp/ios/MyApp/AppDelegate.mm:3:9: 'RNBootSplash.h' file not found
+
+#import "RNBootSplash.h"
+        ^~~~~~~~~~~~~~~~
+
+** BUILD FAILED **
+
+The following build commands failed:
+	CompileC /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/AppDelegate.o /Users/dev/MyApp/ios/MyApp/AppDelegate.mm normal arm64 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler (in target 'MyApp' from project 'MyApp')
+(1 failure)

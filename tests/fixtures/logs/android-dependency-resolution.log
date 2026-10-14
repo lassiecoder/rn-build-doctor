@@ -1,0 +1,26 @@
+> Configure project :app
+Reading env from: .env
+
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:checkDebugAarMetadata FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:checkDebugAarMetadata'.
+> Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
+   > Could not find com.github.example:image-cropper:4.6.2.
+     Searched in the following locations:
+       - https://dl.google.com/dl/android/maven2/com/github/example/image-cropper/4.6.2/image-cropper-4.6.2.pom
+       - https://repo.maven.apache.org/maven2/com/github/example/image-cropper/4.6.2/image-cropper-4.6.2.pom
+     Required by:
+         project :app > project :react-native-image-crop-picker
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 14s

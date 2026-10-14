@@ -1,0 +1,12 @@
+Welcome to Gradle 8.3!
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Could not open settings generic class cache for settings file '/Users/dev/MyApp/android/settings.gradle' (/Users/dev/.gradle/caches/8.3/scripts/abc123).
+> BUG! exception in phase 'semantic analysis' in source unit '_BuildScript_' Unsupported class file major version 65
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 1s

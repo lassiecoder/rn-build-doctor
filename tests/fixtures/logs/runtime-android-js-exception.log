@@ -1,0 +1,14 @@
+10-12 14:22:07.311  8123  8150 I ReactNativeJS: Running "main" with {"rootTag":11,"initialProps":{}}
+10-12 14:22:07.902  8123  8150 E ReactNativeJS: TypeError: Cannot read property 'map' of undefined
+10-12 14:22:07.902  8123  8150 E ReactNativeJS:
+10-12 14:22:07.902  8123  8150 E ReactNativeJS: This error is located at:
+10-12 14:22:07.902  8123  8150 E ReactNativeJS:     in OrdersList
+10-12 14:22:07.902  8123  8150 E ReactNativeJS:     in RCTView
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: FATAL EXCEPTION: mqt_native_modules
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: Process: com.example.shop, PID: 8123
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: com.facebook.react.common.JavascriptException: TypeError: Cannot read property 'map' of undefined, stack:
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: anonymous@1:84512
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: renderWithHooks@1:301122
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: 	at com.facebook.react.modules.core.ExceptionsManagerModule.reportException(ExceptionsManagerModule.java:65)
+10-12 14:22:08.010  8123  8151 E AndroidRuntime: 	at com.facebook.jni.NativeRunnable.run(Native Method)
+10-12 14:22:08.020  8123  8151 I Process : Sending signal. PID: 8123 SIG: 9

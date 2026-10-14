@@ -1,0 +1,28 @@
+> Task :app:checkReleaseAarMetadata FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:checkReleaseAarMetadata'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+   > 2 issues were found when checking AAR metadata:
+
+       1.  Dependency 'androidx.core:core:1.17.0' requires libraries and applications that
+           depend on it to compile against version 36 or later of the
+           Android APIs.
+
+           :app is currently compiled against android-35.
+
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 36, for example 36.
+
+       2.  Dependency 'androidx.core:core-ktx:1.17.0' requires libraries and applications that
+           depend on it to compile against version 36 or later of the
+           Android APIs.
+
+           :app is currently compiled against android-35.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 41s

@@ -1,0 +1,8 @@
+Starting Metro Bundler
+› Metro waiting on exp://192.168.1.12:8081
+iOS Bundling failed 2134ms node_modules/expo-router/entry.js (1203 modules)
+Unable to resolve "@/components/ThemedText" from "app/(tabs)/index.tsx"
+  1 | import { StyleSheet } from 'react-native';
+> 2 | import { ThemedText } from '@/components/ThemedText';
+    |                             ^
+  3 |

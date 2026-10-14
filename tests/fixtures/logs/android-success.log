@@ -1,0 +1,6 @@
+> Task :app:preBuild UP-TO-DATE
+> Task :app:compileDebugKotlin
+> Task :app:assembleDebug
+
+BUILD SUCCESSFUL in 1m 12s
+412 actionable tasks: 98 executed, 314 up-to-date

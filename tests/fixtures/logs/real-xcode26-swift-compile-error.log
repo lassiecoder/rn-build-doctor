@@ -1,0 +1,1200 @@
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: note: insert '_Nullable' if the pointer may be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: note: insert '_Nonnull' if the pointer should never be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: note: insert '_Nullable' if the pointer may be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: note: insert '_Nonnull' if the pointer should never be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: note: insert '_Nullable' if the pointer may be null
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: note: insert '_Nonnull' if the pointer should never be null
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: note: insert '_Nullable' if the block pointer may be null
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: note: insert '_Nonnull' if the block pointer should never be null
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: note: insert '_Nullable' if the pointer may be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: note: insert '_Nonnull' if the pointer should never be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: note: insert '_Nullable' if the pointer may be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: note: insert '_Nonnull' if the pointer should never be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: note: insert '_Nullable' if the pointer may be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: note: insert '_Nonnull' if the pointer should never be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: note: insert '_Nullable' if the pointer may be null
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: note: insert '_Nonnull' if the pointer should never be null
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: note: insert '_Nullable' if the pointer may be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: note: insert '_Nonnull' if the pointer should never be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: note: insert '_Nullable' if the block pointer may be null
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: note: insert '_Nonnull' if the block pointer should never be null
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: note: insert '_Nullable' if the pointer may be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: note: insert '_Nonnull' if the pointer should never be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: note: insert '_Nullable' if the pointer may be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: note: insert '_Nonnull' if the pointer should never be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/realexpo/ios/realexpo/AppDelegate.swift:71:24: error: cannot convert value of type 'String' to specified type 'Int'
+let brokenValue: Int = "not an int"
+                       ^~~~~~~~~~~~
+
+SwiftCompile normal x86_64 Compiling\ AppDelegate.swift /Users/dev/realexpo/ios/realexpo/AppDelegate.swift (in target 'realexpo' from project 'realexpo')
+
+SwiftCompile normal x86_64 /Users/dev/realexpo/ios/realexpo/AppDelegate.swift (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    
+
+SwiftDriverJobDiscovery normal arm64 Compiling bridging header (in target 'realexpo' from project 'realexpo')
+
+SwiftEmitModule normal arm64 Emitting\ module\ for\ realexpo (in target 'realexpo' from project 'realexpo')
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -emit-module -experimental-skip-non-inlinable-function-bodies-without-types /Users/dev/realexpo/ios/realexpo/AppDelegate.swift /Users/dev/realexpo/ios/Pods/Target\ Support\ Files/Pods-realexpo/ExpoModulesProvider.swift /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/GeneratedAssetSymbols.swift -target arm64-apple-ios16.4-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -I /Users/dev/dd/Build/Products/Debug-iphonesimulator -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFileSystem -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFont -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoImage -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesJSI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesWorklets -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens -F /Users/dev/dd/Build/Products/Debug-iphonesimulator -F /Users/dev/realexpo/node_modules/expo-modules-jsi/apple/Products -F /Users/dev/realexpo/ios/Pods/ExpoFileSystem -F /Users/dev/realexpo/ios/Pods/ExpoFont -F /Users/dev/realexpo/ios/Pods/ExpoImage -F /Users/dev/realexpo/ios/Pods/ExpoModulesCore -F /Users/dev/realexpo/ios/Pods/ExpoModulesWorklets -F /Users/dev/realexpo/ios/Pods/React-Core-prebuilt -F /Users/dev/realexpo/ios/Pods/ReactNativeDependencies/framework/packages/react-native -F /Users/dev/realexpo/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFont -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoImage -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesJSI -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesWorklets -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ReactNativeDependencies -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/hermes-engine/Pre-built -no-color-diagnostics -Xcc -fno-color-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -module-cache-path /Users/dev/dd/ModuleCache.noindex -swift-version 5 -Onone -D DEBUG -D COCOAPODS -D EXPO_CONFIGURATION_DEBUG -serialize-debugging-options -const-gather-protocols-file /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo_const_extract_protocols.json -enable-experimental-feature DebugDescriptionMacro -enable-bare-slash-regex -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/dev/dd/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/dev/realexpo/ios -enable-anonymous-context-mangled-names -file-compilation-dir /Users/dev/realexpo/ios -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants/EXConstants.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Expo.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset/ExpoAsset.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice/ExpoDevice.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView/ExpoDomWebView.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect/ExpoGlassEffect.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake/ExpoKeepAwake.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking/ExpoLinking.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox/ExpoLogBox.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter/ExpoRouter.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen/ExpoSplashScreen.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols/ExpoSymbols.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI/ExpoSystemUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI/ExpoUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser/ExpoWebBrowser.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens/RNScreens.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter/ExpoModulesWorkletsAdapter.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider/ReactAppDependencyProvider.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen/ReactCodegen.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/reanimated/RNReanimated.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/worklets/RNWorklets.modulemap -Xcc -ivfsoverlay -Xcc /Users/dev/realexpo/ios/Pods/React-Core-prebuilt/React-VFS.yaml -Xcc -Wno-incomplete-umbrella -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/dev/dd/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/swift-overrides.hmap -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-generated-files.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-own-target-headers.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo-10d0b397e7ee40110498de64abc7f9e8-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-project-headers.hmap -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/EXConstants -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Expo -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoUI -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/FBLazyVector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTDeprecation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTRequired -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTSwiftUIWrapper -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTTypeSafety -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNCMaskedView -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNGestureHandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNReanimated -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNScreens -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core-prebuilt -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-CoreModules -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Fabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricComponents -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-ImageManager -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Mapbuffer -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-NativeModulesApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAnimation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAppDelegate -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTBlob -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFBReactNativeSpec -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTRuntime -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTSettings -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTText -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTVibration -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeCore -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeHermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-callinvoker -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-cxxreact -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-debug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-defaultsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-domnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflags -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflagsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-graphics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-idlecallbacksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-intersectionobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jserrorhandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsi -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsiexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectorcdp -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectornetwork -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectortracing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-logger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-microtasksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-mutationobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-networking -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-oscompat -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-perflogger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancecdpmetrics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancetimeline -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererconsistency -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-renderercss -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererdebug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimeexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimescheduler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-timing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-utils -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-viewtransitionnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-webperformancenativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCommon -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactNativeDependencies -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/react-native-safe-area-context -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources-normal/arm64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/arm64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -Xcc -DFB_SONARKIT_ENABLED\=1 -import-objc-header /Users/dev/realexpo/ios/realexpo/realexpo-Bridging-Header.h -pch-output-dir /Users/dev/dd/Build/Intermediates.noindex/PrecompiledHeaders -pch-disable-validation -no-auto-bridging-header-chaining -module-name realexpo -frontend-parseable-output -disable-clang-spi -target-sdk-version 26.5 -target-sdk-name iphonesimulator26.5 -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\#/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -emit-module-doc-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.swiftdoc -emit-module-source-info-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.swiftsourceinfo -emit-objc-header-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo-Swift.h -serialize-diagnostics-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo-primary-emit-module.dia -emit-dependencies-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo-primary-emit-module.d -o /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.swiftmodule -emit-abi-descriptor-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.abi.json
+
+EmitSwiftModule normal arm64 (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:116:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:116:
+#import <React/RCTHTTPRequestHandler.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:11:35: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef NSURLSessionConfiguration * (^NSURLSessionConfigurationProvider)(void);
+                                  ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:11:35: note: insert '_Nullable' if the pointer may be null
+typedef NSURLSessionConfiguration * (^NSURLSessionConfigurationProvider)(void);
+                                  ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:11:35: note: insert '_Nonnull' if the pointer should never be null
+typedef NSURLSessionConfiguration * (^NSURLSessionConfigurationProvider)(void);
+                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:116:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:116:
+#import <React/RCTHTTPRequestHandler.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:24:52: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+RCT_EXTERN void RCTSetCustomHTTPRequestInterceptor(RCTHTTPRequestInterceptor /*interceptor*/);
+                                                   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:24:52: note: insert '_Nullable' if the block pointer may be null
+RCT_EXTERN void RCTSetCustomHTTPRequestInterceptor(RCTHTTPRequestInterceptor /*interceptor*/);
+                                                   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTHTTPRequestHandler.h:24:52: note: insert '_Nonnull' if the block pointer should never be null
+RCT_EXTERN void RCTSetCustomHTTPRequestInterceptor(RCTHTTPRequestInterceptor /*interceptor*/);
+                                                   ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:168:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:168:
+#import <React/RCTModalHostView.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTModalHostView.h:55:31: warning: 'RCTModalHostView' is deprecated: This API will be removed along with the legacy architecture.
+- (void)presentModalHostView:(RCTModalHostView *)modalHostView
+                              ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTModalHostView.h:21:16: note: 'RCTModalHostView' has been explicitly marked deprecated here
+__attribute__((deprecated("This API will be removed along with the legacy architecture.")))
+               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:168:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:168:
+#import <React/RCTModalHostView.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTModalHostView.h:58:31: warning: 'RCTModalHostView' is deprecated: This API will be removed along with the legacy architecture.
+- (void)dismissModalHostView:(RCTModalHostView *)modalHostView
+                              ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTModalHostView.h:21:16: note: 'RCTModalHostView' has been explicitly marked deprecated here
+__attribute__((deprecated("This API will be removed along with the legacy architecture.")))
+               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:15:18: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+    NSDictionary *headers,
+                 ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:15:18: note: insert '_Nullable' if the pointer may be null
+    NSDictionary *headers,
+                 ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:15:18: note: insert '_Nonnull' if the pointer should never be null
+    NSDictionary *headers,
+                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:26:65: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+RCT_EXTERN void RCTSetCustomMultipartDataTaskRequestInterceptor(RCTMultipartDataTaskRequestInterceptor /*interceptor*/);
+                                                                ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:26:65: note: insert '_Nullable' if the block pointer may be null
+RCT_EXTERN void RCTSetCustomMultipartDataTaskRequestInterceptor(RCTMultipartDataTaskRequestInterceptor /*interceptor*/);
+                                                                ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:26:65: note: insert '_Nonnull' if the block pointer should never be null
+RCT_EXTERN void RCTSetCustomMultipartDataTaskRequestInterceptor(RCTMultipartDataTaskRequestInterceptor /*interceptor*/);
+                                                                ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:4: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (instancetype)initWithURL:(NSURL *)url
+   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:4: note: insert '_Nullable' if the pointer may be null
+- (instancetype)initWithURL:(NSURL *)url
+   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:4: note: insert '_Nonnull' if the pointer should never be null
+- (instancetype)initWithURL:(NSURL *)url
+   ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:36: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (instancetype)initWithURL:(NSURL *)url
+                                   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:36: note: insert '_Nullable' if the pointer may be null
+- (instancetype)initWithURL:(NSURL *)url
+                                   ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:30:36: note: insert '_Nonnull' if the pointer should never be null
+- (instancetype)initWithURL:(NSURL *)url
+                                   ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:31:30: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                partHandler:(RCTMultipartDataTaskCallback)partHandler
+                             ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:31:30: note: insert '_Nullable' if the block pointer may be null
+                partHandler:(RCTMultipartDataTaskCallback)partHandler
+                             ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:31:30: note: insert '_Nonnull' if the block pointer should never be null
+                partHandler:(RCTMultipartDataTaskCallback)partHandler
+                             ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:177:
+#import <React/RCTMultipartDataTask.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:32:30: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+            progressHandler:(RCTMultipartProgressCallback)progressHandler;
+                             ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:32:30: note: insert '_Nullable' if the block pointer may be null
+            progressHandler:(RCTMultipartProgressCallback)progressHandler;
+                             ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTMultipartDataTask.h:32:30: note: insert '_Nonnull' if the block pointer should never be null
+            progressHandler:(RCTMultipartProgressCallback)progressHandler;
+                             ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:228:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:228:
+#import <React/RCTShadowView+Internal.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTShadowView+Internal.h:16:40: warning: 'RCTRootShadowView' is deprecated: This API will be removed along with the legacy architecture.
+@property (nonatomic, weak, readwrite) RCTRootShadowView *rootView;
+                                       ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTRootShadowView.h:11:16: note: 'RCTRootShadowView' has been explicitly marked deprecated here
+__attribute__((deprecated("This API will be removed along with the legacy architecture.")))
+               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/React_Core/React_Core-umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:286:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt/React.framework/Headers/React_Core/React_Core-umbrella.h:286:
+#import <React/RCTWebSocketModule.h>
+        ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTWebSocketModule.h:23:21: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef SRWebSocket * (^SRWebSocketProvider)(NSURLRequest *request);
+                    ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTWebSocketModule.h:23:21: note: insert '_Nullable' if the pointer may be null
+typedef SRWebSocket * (^SRWebSocketProvider)(NSURLRequest *request);
+                    ^
+/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core/React/RCTWebSocketModule.h:23:21: note: insert '_Nonnull' if the pointer should never be null
+typedef SRWebSocket * (^SRWebSocketProvider)(NSURLRequest *request);
+                    ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:8:41: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+@property (nonatomic, strong, readonly) EXPromiseResolveBlock resolve;
+                                        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:8:41: note: insert '_Nullable' if the block pointer may be null
+@property (nonatomic, strong, readonly) EXPromiseResolveBlock resolve;
+                                        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:8:41: note: insert '_Nonnull' if the block pointer should never be null
+@property (nonatomic, strong, readonly) EXPromiseResolveBlock resolve;
+                                        ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:11:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:11:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:11:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:12:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject;
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:12:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject;
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:12:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject;
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:83: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:83: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:83: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:131: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:131: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:14:131: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location;
+                                                                                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:67: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:67: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:67: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:104: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                                                       ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:104: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                                                       ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:16:104: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error;
+                                                                                                       ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:83: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:83: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:18:83: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
+                                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:75: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                          ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:75: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                          ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:75: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                          ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:109: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                                                            ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:109: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                                                            ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:23:109: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data;
+                                                                                                            ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:34: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                 ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: note: insert '_Nullable' if the pointer may be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:25:67: note: insert '_Nonnull' if the pointer should never be null
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+                                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: note: insert '_Nullable' if the pointer may be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:17: note: insert '_Nonnull' if the pointer should never be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionUploadTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionUploadTaskDelegate.h:3:
+#import <ExpoFileSystem/EXSessionTaskDelegate.h>
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: note: insert '_Nullable' if the pointer may be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionTaskDelegate.h:30:54: note: insert '_Nonnull' if the pointer should never be null
+- (NSDictionary *)parseServerResponse:(NSURLResponse *)response;
+                                                     ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: note: insert '_Nullable' if the pointer may be null
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:6:71: note: insert '_Nonnull' if the pointer should never be null
+typedef void (^EXUploadDelegateOnSendCallback)(NSURLSessionUploadTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend);
+                                                                      ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:10:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:11:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: note: insert '_Nullable' if the block pointer may be null
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:12:42: note: insert '_Nonnull' if the block pointer should never be null
+                         onSendCallback:(EXUploadDelegateOnSendCallback)onSendCallback
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: note: insert '_Nullable' if the pointer may be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:13:64: note: insert '_Nonnull' if the pointer should never be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:4:
+#import "EXSessionCancelableUploadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: note: insert '_Nullable' if the pointer may be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionCancelableUploadTaskDelegate.h:14:51: note: insert '_Nonnull' if the pointer should never be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:7:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:8:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:5:
+#import "EXSessionDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: note: insert '_Nullable' if the pointer may be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionDownloadTaskDelegate.h:9:48: note: insert '_Nonnull' if the pointer should never be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: note: insert '_Nullable' if the pointer may be null
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:6:76: note: insert '_Nonnull' if the pointer should never be null
+typedef void (^EXDownloadDelegateOnWriteCallback)(NSURLSessionDownloadTask *task, int64_t bytesWritten, int64_t totalBytesWritten, int64_t totalBytesExpectedToWrite);
+                                                                           ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: note: insert '_Nullable' if the block pointer may be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:10:42: note: insert '_Nonnull' if the block pointer should never be null
+- (nonnull instancetype)initWithResolve:(EXPromiseResolveBlock)resolve
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: note: insert '_Nullable' if the block pointer may be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:11:42: note: insert '_Nonnull' if the block pointer should never be null
+                                 reject:(EXPromiseRejectBlock)reject
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: note: insert '_Nullable' if the pointer may be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:12:48: note: insert '_Nonnull' if the pointer should never be null
+                               localUrl:(NSURL *)localUrl
+                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: warning: block pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: note: insert '_Nullable' if the block pointer may be null
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:14:42: note: insert '_Nonnull' if the block pointer should never be null
+                        onWriteCallback:(EXDownloadDelegateOnWriteCallback)onWriteCallback
+                                         ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: note: insert '_Nullable' if the pointer may be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:15:64: note: insert '_Nonnull' if the pointer should never be null
+                       resumableManager:(EXTaskHandlersManager *)manager
+                                                               ^
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+#import "Headers/ExpoFileSystem_umbrella.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:9: note: in file included from /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/ExpoFileSystem_umbrella.h:7:
+#import "EXSessionResumableDownloadTaskDelegate.h"
+        ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: note: insert '_Nullable' if the pointer may be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem/ExpoFileSystem.framework/Headers/EXSessionResumableDownloadTaskDelegate.h:16:51: note: insert '_Nonnull' if the pointer should never be null
+                                   uuid:(NSString *)uuid;
+                                                  ^
+/Users/dev/realexpo/ios/realexpo/AppDelegate.swift:71:24: error: cannot convert value of type 'String' to specified type 'Int'
+let brokenValue: Int = "not an int"
+                       ^~~~~~~~~~~~
+
+SwiftCompile normal arm64 Compiling\ AppDelegate.swift /Users/dev/realexpo/ios/realexpo/AppDelegate.swift (in target 'realexpo' from project 'realexpo')
+
+SwiftCompile normal arm64 /Users/dev/realexpo/ios/realexpo/AppDelegate.swift (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    
+
+SwiftCompile normal arm64 Compiling\ ExpoModulesProvider.swift /Users/dev/realexpo/ios/Pods/Target\ Support\ Files/Pods-realexpo/ExpoModulesProvider.swift (in target 'realexpo' from project 'realexpo')
+
+SwiftCompile normal arm64 /Users/dev/realexpo/ios/Pods/Target\ Support\ Files/Pods-realexpo/ExpoModulesProvider.swift (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    
+
+SwiftCompile normal arm64 Compiling\ GeneratedAssetSymbols.swift /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'realexpo' from project 'realexpo')
+
+SwiftCompile normal arm64 /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/GeneratedAssetSymbols.swift (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    
+
+LinkStoryboards (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --module realexpo --target-device iphone --minimum-deployment-target 16.4 --output-format human-readable-text --link /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/SplashScreen.storyboardc
+
+LinkAssetCatalog /Users/dev/realexpo/ios/realexpo/Images.xcassets /Users/dev/realexpo/ios/realexpo/expo.icon (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    builtin-linkAssetCatalog --thinned /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_output/thinned --thinned-dependencies /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_dependencies_thinned --thinned-info-plist-content /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_generated_info.plist_thinned --unthinned /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_output/unthinned --unthinned-dependencies /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_dependencies_unthinned --unthinned-info-plist-content /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_generated_info.plist_unthinned --output /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app --plist-output /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_generated_info.plist
+note: Emplaced /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/expo76x76@2x~ipad.png (in target 'realexpo' from project 'realexpo')
+note: Emplaced /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/expo60x60@2x.png (in target 'realexpo' from project 'realexpo')
+note: Emplaced /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/Assets.car (in target 'realexpo' from project 'realexpo')
+
+ProcessInfoPlistFile /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/Info.plist /Users/dev/realexpo/ios/realexpo/Info.plist (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    builtin-infoPlistUtility /Users/dev/realexpo/ios/realexpo/Info.plist -producttype com.apple.product-type.application -genpkginfo /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -additionalcontentfile /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/SplashScreen-SBPartialInfo.plist -additionalcontentfile /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/assetcatalog_generated_info.plist -o /Users/dev/dd/Build/Products/Debug-iphonesimulator/realexpo.app/Info.plist
+
+SwiftDriver\ Compilation\ Requirements realexpo normal arm64 com.apple.xcode.tools.swift.compiler (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name realexpo -Onone @/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.SwiftFileList -DDEBUG -D COCOAPODS -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants/EXConstants.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Expo.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset/ExpoAsset.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice/ExpoDevice.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView/ExpoDomWebView.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect/ExpoGlassEffect.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake/ExpoKeepAwake.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking/ExpoLinking.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox/ExpoLogBox.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter/ExpoRouter.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen/ExpoSplashScreen.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols/ExpoSymbols.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI/ExpoSystemUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI/ExpoUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser/ExpoWebBrowser.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens/RNScreens.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter/ExpoModulesWorkletsAdapter.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider/ReactAppDependencyProvider.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen/ReactCodegen.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/reanimated/RNReanimated.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/worklets/RNWorklets.modulemap -Xcc -ivfsoverlay -Xcc /Users/dev/realexpo/ios/Pods/React-Core-prebuilt/React-VFS.yaml -Xcc -Wno-incomplete-umbrella -D EXPO_CONFIGURATION_DEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target arm64-apple-ios16.4-simulator -g -module-cache-path /Users/dev/dd/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/dev/dd/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/dev/dd/Build/Products/Debug-iphonesimulator -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFileSystem -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFont -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoImage -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesJSI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesWorklets -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens -F /Users/dev/dd/Build/Products/Debug-iphonesimulator -F /Users/dev/realexpo/node_modules/expo-modules-jsi/apple/Products -F /Users/dev/realexpo/ios/Pods/ExpoFileSystem -F /Users/dev/realexpo/ios/Pods/ExpoFont -F /Users/dev/realexpo/ios/Pods/ExpoImage -F /Users/dev/realexpo/ios/Pods/ExpoModulesCore -F /Users/dev/realexpo/ios/Pods/ExpoModulesWorklets -F /Users/dev/realexpo/ios/Pods/React-Core-prebuilt -F /Users/dev/realexpo/ios/Pods/ReactNativeDependencies/framework/packages/react-native -F /Users/dev/realexpo/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFont -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoImage -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesJSI -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesWorklets -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ReactNativeDependencies -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/hermes-engine/Pre-built -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/dev/dd/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/dev/dd/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo_const_extract_protocols.json -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-generated-files.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-own-target-headers.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo-10d0b397e7ee40110498de64abc7f9e8-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-project-headers.hmap -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/EXConstants -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Expo -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoUI -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/FBLazyVector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTDeprecation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTRequired -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTSwiftUIWrapper -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTTypeSafety -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNCMaskedView -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNGestureHandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNReanimated -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNScreens -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core-prebuilt -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-CoreModules -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Fabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricComponents -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-ImageManager -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Mapbuffer -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-NativeModulesApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAnimation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAppDelegate -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTBlob -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFBReactNativeSpec -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTRuntime -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTSettings -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTText -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTVibration -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeCore -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeHermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-callinvoker -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-cxxreact -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-debug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-defaultsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-domnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflags -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflagsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-graphics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-idlecallbacksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-intersectionobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jserrorhandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsi -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsiexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectorcdp -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectornetwork -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectortracing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-logger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-microtasksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-mutationobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-networking -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-oscompat -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-perflogger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancecdpmetrics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancetimeline -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererconsistency -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-renderercss -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererdebug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimeexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimescheduler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-timing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-utils -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-viewtransitionnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-webperformancenativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCommon -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactNativeDependencies -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/react-native-safe-area-context -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources-normal/arm64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/arm64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -Xcc -DFB_SONARKIT_ENABLED\=1 -emit-objc-header -emit-objc-header-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/arm64/realexpo-Swift.h -import-objc-header /Users/dev/realexpo/ios/realexpo/realexpo-Bridging-Header.h -pch-output-dir /Users/dev/dd/Build/Intermediates.noindex/PrecompiledHeaders -working-directory /Users/dev/realexpo/ios -experimental-emit-module-separately -disable-cmo
+
+SwiftDriver\ Compilation\ Requirements realexpo normal x86_64 com.apple.xcode.tools.swift.compiler (in target 'realexpo' from project 'realexpo')
+    cd /Users/dev/realexpo/ios
+    builtin-Swift-Compilation-Requirements -- /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -module-name realexpo -Onone @/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/x86_64/realexpo.SwiftFileList -DDEBUG -D COCOAPODS -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants/EXConstants.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Expo.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset/ExpoAsset.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice/ExpoDevice.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView/ExpoDomWebView.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect/ExpoGlassEffect.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake/ExpoKeepAwake.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking/ExpoLinking.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox/ExpoLogBox.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter/ExpoRouter.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen/ExpoSplashScreen.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols/ExpoSymbols.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI/ExpoSystemUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI/ExpoUI.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser/ExpoWebBrowser.modulemap -Xcc -fmodule-map-file\=/Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens/RNScreens.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter/ExpoModulesWorkletsAdapter.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider/ReactAppDependencyProvider.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen/ReactCodegen.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/reanimated/RNReanimated.modulemap -Xcc -fmodule-map-file\=/Users/dev/realexpo/ios/Pods/Headers/Public/worklets/RNWorklets.modulemap -Xcc -ivfsoverlay -Xcc /Users/dev/realexpo/ios/Pods/React-Core-prebuilt/React-VFS.yaml -Xcc -Wno-incomplete-umbrella -D EXPO_CONFIGURATION_DEBUG -enable-bare-slash-regex -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -target x86_64-apple-ios16.4-simulator -g -module-cache-path /Users/dev/dd/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/dev/dd/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 5 -I /Users/dev/dd/Build/Products/Debug-iphonesimulator -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/EXConstants -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoAsset -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDevice -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoDomWebView -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFileSystem -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoFont -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoGlassEffect -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoImage -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoKeepAwake -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLinking -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoLogBox -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesJSI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesWorklets -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoRouter -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSplashScreen -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSymbols -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoSystemUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoUI -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoWebBrowser -I /Users/dev/dd/Build/Products/Debug-iphonesimulator/RNScreens -F /Users/dev/dd/Build/Products/Debug-iphonesimulator -F /Users/dev/realexpo/node_modules/expo-modules-jsi/apple/Products -F /Users/dev/realexpo/ios/Pods/ExpoFileSystem -F /Users/dev/realexpo/ios/Pods/ExpoFont -F /Users/dev/realexpo/ios/Pods/ExpoImage -F /Users/dev/realexpo/ios/Pods/ExpoModulesCore -F /Users/dev/realexpo/ios/Pods/ExpoModulesWorklets -F /Users/dev/realexpo/ios/Pods/React-Core-prebuilt -F /Users/dev/realexpo/ios/Pods/ReactNativeDependencies/framework/packages/react-native -F /Users/dev/realexpo/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFileSystem -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoFont -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoImage -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesCore -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesJSI -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ExpoModulesWorklets -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ReactNativeDependencies -F /Users/dev/dd/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/hermes-engine/Pre-built -c -j10 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/dev/dd/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache -output-file-map /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/x86_64/realexpo-OutputFileMap.json -use-frontend-parseable-output -save-temps -no-color-diagnostics -serialize-diagnostics -emit-dependencies -emit-module -emit-module-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/x86_64/realexpo.swiftmodule -validate-clang-modules-once -clang-build-session-file /Users/dev/dd/ModuleCache.noindex/Session.modulevalidation -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/swift-overrides.hmap -emit-const-values -Xfrontend -const-gather-protocols-file -Xfrontend /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/x86_64/realexpo_const_extract_protocols.json -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-generated-files.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-own-target-headers.hmap -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo-10d0b397e7ee40110498de64abc7f9e8-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/realexpo-project-headers.hmap -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/EXConstants -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Expo -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoModulesWorkletsAdapter -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ExpoUI -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/FBLazyVector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTDeprecation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTRequired -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTSwiftUIWrapper -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RCTTypeSafety -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNCMaskedView -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNGestureHandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNReanimated -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNScreens -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Core-prebuilt -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-CoreModules -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Fabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricComponents -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-FabricImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-ImageManager -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-Mapbuffer -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-NativeModulesApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAnimation -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTAppDelegate -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTBlob -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFBReactNativeSpec -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTFabric -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTImage -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTRuntime -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTSettings -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTText -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RCTVibration -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeApple -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeCore -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-RuntimeHermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-callinvoker -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-cxxreact -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-debug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-defaultsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-domnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflags -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-featureflagsnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-graphics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-idlecallbacksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-intersectionobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jserrorhandler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsi -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsiexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspector -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectorcdp -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectornetwork -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsinspectortracing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-logger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-microtasksnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-mutationobservernativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-networking -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-oscompat -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-perflogger -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancecdpmetrics -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-performancetimeline -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererconsistency -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-renderercss -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-rendererdebug -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimeexecutor -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-runtimescheduler -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-timing -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-utils -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-viewtransitionnativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-webperformancenativemodule -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactAppDependencyProvider -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCodegen -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactCommon -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/ReactNativeDependencies -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/react-native-safe-area-context -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/Expo/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/dd/Build/Products/Debug-iphonesimulator/ExpoModulesCore/Swift\ Compatibility\ Header -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/RNWorklets -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/boost -Xcc -I/Users/dev/realexpo/ios/Pods/boost-for-react-native -Xcc -I/Users/dev/realexpo/ios/Pods/glog -Xcc -I/Users/dev/realexpo/ios/Pods/RCT-Folly -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/React-hermes -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Public/hermes-engine -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon -Xcc -I/Users/dev/realexpo/node_modules/react-native/ReactCommon/jsitooling -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/React-Core -Xcc -I/Users/dev/realexpo/ios/Pods/Headers/Private/Yoga -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/realexpo/ios/Pods/ExpoModulesCore/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/Headers -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources-normal/x86_64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources/x86_64 -Xcc -I/Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/DerivedSources -Xcc -DDEBUG\=1 -Xcc -DCOCOAPODS\=1 -Xcc -DFB_SONARKIT_ENABLED\=1 -emit-objc-header -emit-objc-header-path /Users/dev/dd/Build/Intermediates.noindex/realexpo.build/Debug-iphonesimulator/realexpo.build/Objects-normal/x86_64/realexpo-Swift.h -import-objc-header /Users/dev/realexpo/ios/realexpo/realexpo-Bridging-Header.h -pch-output-dir /Users/dev/dd/Build/Intermediates.noindex/PrecompiledHeaders -working-directory /Users/dev/realexpo/ios -experimental-emit-module-separately -disable-cmo
+
+warning: Run script build phase '[CP-User] [Hermes] Replace Hermes for the right configuration, if needed' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'hermes-engine' from project 'Pods')
+note: Run script build phase '[CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ReactNativeDependencies' from project 'Pods')
+note: Run script build phase '[CP-User] [RN]Check FBReactNativeSpec' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-RCTFBReactNativeSpec' from project 'Pods')
+note: Run script build phase '[CP-User] [RNCore] Replace React Native Core for the right configuration, if needed' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'React-Core-prebuilt' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesWorklets XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesWorklets' from project 'Pods')
+note: Run script build phase '[CP-User] Build ExpoModulesJSI xcframework' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesJSI' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoModulesCore XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoModulesCore' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoImage XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoImage' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFont XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFont' from project 'Pods')
+note: Run script build phase '[CP-User] [Expo] Switch ExpoFileSystem XCFramework for build configuration' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'ExpoFileSystem' from project 'Pods')
+note: Run script build phase 'Bundle React Native code and images' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'realexpo' from project 'realexpo')
+note: Run script build phase '[Expo] Configure project' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'realexpo' from project 'realexpo')
+note: Run script build phase '[CP-User] Generate app.config for prebuilt Constants.manifest' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'EXConstants' from project 'Pods')
+** BUILD FAILED **
+
+
+The following build commands failed:
+	SwiftEmitModule normal x86_64 Emitting\ module\ for\ realexpo (in target 'realexpo' from project 'realexpo')
+	EmitSwiftModule normal x86_64 (in target 'realexpo' from project 'realexpo')
+	SwiftEmitModule normal arm64 Emitting\ module\ for\ realexpo (in target 'realexpo' from project 'realexpo')
+	EmitSwiftModule normal arm64 (in target 'realexpo' from project 'realexpo')
+	Building workspace realexpo with scheme realexpo and configuration Debug
+(5 failures)

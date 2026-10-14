@@ -1,0 +1,21 @@
+Starting a Gradle Daemon (subsequent builds will be faster)
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/home/dev/MyApp/android/app/build.gradle' line: 1
+
+* What went wrong:
+A problem occurred evaluating project ':app'.
+> Failed to apply plugin 'com.android.internal.application'.
+   > Android Gradle plugin requires Java 17 to run. You are currently using Java 11.
+      Your current JDK is located in /usr/lib/jvm/java-11-openjdk-amd64
+      You can try some of the following options:
+       - changing the IDE settings.
+       - changing the JAVA_HOME environment variable.
+       - changing `org.gradle.java.home` in `gradle.properties`.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 3s

@@ -1,0 +1,989 @@
+> Task :gradle-plugin:shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:settings-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:shared:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:shared:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:compileJava NO-SOURCE
+> Task :gradle-plugin:shared:processResources NO-SOURCE
+> Task :gradle-plugin:shared:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:processResources NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin-shared:jar UP-TO-DATE
+> Task :gradle-plugin:shared:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileKotlin UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileJava NO-SOURCE
+> Task :gradle-plugin:settings-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-settings-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :gradle-plugin:react-native-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :expo-module-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-module-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileKotlin UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:pluginDescriptors UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:pluginDescriptors UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:processResources UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:classes UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:processResources UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:classes UP-TO-DATE
+> Task :gradle-plugin:react-native-gradle-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-autolinking-plugin:jar UP-TO-DATE
+> Task :expo-gradle-plugin:expo-max-sdk-override-plugin:jar UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileKotlin UP-TO-DATE
+> Task :expo-module-gradle-plugin:compileJava NO-SOURCE
+> Task :expo-module-gradle-plugin:classes UP-TO-DATE
+> Task :expo-module-gradle-plugin:jar UP-TO-DATE
+
+> Configure project :app
+ ℹ️  [33mApplying gradle plugin[0m '[32mexpo-max-sdk-override-plugin[0m'
+  [expo-max-sdk-override-plugin] This plugin will find all permissions declared with `android:maxSdkVersion`. If there exists a declaration with the `android:maxSdkVersion` annotation and another one without, the plugin will remove the annotation from the final merged manifest. In order to see a log with the changes run a clean build of the app.
+
+> Configure project :
+[32m[ExpoRootProject][0m Using the following versions:
+  - buildTools:  [32m36.0.0[0m
+  - minSdk:      [32m24[0m
+  - compileSdk:  [32m33[0m
+  - targetSdk:   [32m36[0m
+  - ndk:         [32m27.1.12297006[0m
+  - kotlin:      [32m2.1.20[0m
+  - ksp:         [32m2.1.20-2.0.1[0m
+
+> Configure project :expo-modules-core
+Linking react-native-worklets native libs into expo-modules-core build tasks
+task ':react-native-worklets:mergeDebugNativeLibs'
+task ':react-native-worklets:mergeReleaseNativeLibs'
+
+> Configure project :expo
+
+Using expo modules
+  - [32mexpo-log-box[0m (57.0.4)
+  - [32mexpo-constants[0m (57.0.21)
+  - [32mexpo-modules-core[0m (57.0.22)
+  - [33m[📦][0m [32mexpo-dom-webview[0m (57.0.1)
+  - [33m[📦][0m [32mexpo-ui[0m (57.0.23)
+  - [33m[📦][0m [32mexpo-asset[0m (57.0.19)
+  - [33m[📦][0m [32mexpo-device[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-file-system[0m (57.0.7)
+  - [33m[📦][0m [32mexpo-font[0m (57.0.4)
+  - [33m[📦][0m [32mexpo-image[0m (57.0.5)
+  - [33m[📦][0m [32mexpo-keep-awake[0m (57.0.2)
+  - [33m[📦][0m [32mexpo-linking[0m (57.0.12)
+  - [33m[📦][0m [32mexpo-router[0m (57.0.26)
+  - [33m[📦][0m [32mexpo-splash-screen[0m (57.0.10)
+  - [33m[📦][0m [32mexpo-status-bar[0m (57.0.1)
+  - [33m[📦][0m [32mexpo-system-ui[0m (57.0.4)
+  - [33m[📦][0m [32mexpo-web-browser[0m (57.0.3)
+
+
+> Task :expo-log-box:preBuild UP-TO-DATE
+> Task :react-native-masked-view_masked-view:preBuild UP-TO-DATE
+> Task :expo-modules-core:preBuild UP-TO-DATE
+> Task :expo-log-box:preDebugBuild UP-TO-DATE
+> Task :expo-modules-core:preDebugBuild UP-TO-DATE
+> Task :expo:generatePackagesList
+> Task :expo:preBuild
+> Task :expo:preDebugBuild
+> Task :app:generateAutolinkingNewArchitectureFiles
+> Task :app:generateAutolinkingPackageList
+> Task :app:generateCodegenSchemaFromJavaScript SKIPPED
+> Task :app:generateCodegenArtifactsFromSchema SKIPPED
+> Task :expo:writeDebugAarMetadata
+> Task :react-native-masked-view_masked-view:preDebugBuild UP-TO-DATE
+> Task :expo-modules-core:writeDebugAarMetadata
+> Task :expo-log-box:writeDebugAarMetadata
+> Task :app:generateReactNativeEntryPoint
+> Task :react-native-masked-view_masked-view:writeDebugAarMetadata
+> Task :react-native-worklets:assertMinimalReactNativeVersionTask
+> Task :react-native-reanimated:assertMinimalReactNativeVersionTask
+> Task :react-native-reanimated:assertWorkletsVersionTask
+> Task :react-native-safe-area-context:generateCodegenSchemaFromJavaScript
+> Task :react-native-gesture-handler:generateCodegenSchemaFromJavaScript
+> Task :react-native-worklets:generateCodegenSchemaFromJavaScript
+> Task :react-native-screens:generateCodegenSchemaFromJavaScript
+
+> Task :expo-constants:createExpoConfig
+The NODE_ENV environment variable is required but was not specified. Ensure the project is bundled with Expo CLI or NODE_ENV is set. Using only .env.local and .env
+
+> Task :expo-constants:preBuild
+> Task :expo-constants:preDebugBuild
+> Task :expo-constants:writeDebugAarMetadata
+> Task :react-native-reanimated:generateCodegenSchemaFromJavaScript
+> Task :react-native-worklets:generateCodegenArtifactsFromSchema
+> Task :react-native-safe-area-context:generateCodegenArtifactsFromSchema
+> Task :react-native-safe-area-context:preBuild
+> Task :react-native-safe-area-context:preDebugBuild
+> Task :react-native-safe-area-context:writeDebugAarMetadata
+> Task :react-native-gesture-handler:generateCodegenArtifactsFromSchema
+> Task :react-native-gesture-handler:preBuild
+> Task :react-native-gesture-handler:preDebugBuild
+> Task :react-native-gesture-handler:writeDebugAarMetadata
+> Task :react-native-screens:generateCodegenArtifactsFromSchema
+> Task :react-native-screens:preBuild
+> Task :react-native-screens:preDebugBuild
+> Task :react-native-screens:writeDebugAarMetadata
+> Task :react-native-worklets:prepareWorkletsHeadersForPrefabs
+> Task :react-native-worklets:preBuild
+> Task :react-native-worklets:preDebugBuild
+> Task :react-native-worklets:writeDebugAarMetadata
+> Task :react-native-reanimated:generateCodegenArtifactsFromSchema
+> Task :react-native-reanimated:prepareReanimatedHeadersForPrefabs
+> Task :react-native-reanimated:preBuild
+> Task :app:preBuild
+> Task :react-native-reanimated:preDebugBuild
+> Task :app:preDebugBuild
+> Task :react-native-reanimated:writeDebugAarMetadata
+> Task :app:checkDebugAarMetadata
+> Task :app:checkDebugAarMetadata FAILED
+
+[Incubating] Problems report is available at: file:///Users/dev/realexpo/android/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:checkDebugAarMetadata'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.CheckAarMetadataWorkAction
+   > 54 issues were found when checking AAR metadata:
+     
+       1.  Dependency 'androidx.core:core-splashscreen:1.2.0' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       2.  Dependency 'androidx.appcompat:appcompat-resources:1.7.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       3.  Dependency 'androidx.appcompat:appcompat:1.7.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       4.  Dependency 'androidx.fragment:fragment:1.8.9' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       5.  Dependency 'androidx.fragment:fragment-ktx:1.8.9' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       6.  Dependency 'androidx.compose.material3:material3-android:1.5.0-alpha17' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       7.  Dependency 'androidx.activity:activity:1.8.2' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       8.  Dependency 'androidx.activity:activity-ktx:1.8.2' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+       9.  Dependency 'androidx.activity:activity-compose:1.8.2' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      10.  Dependency 'androidx.compose.material:material-ripple-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      11.  Dependency 'androidx.compose.foundation:foundation-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      12.  Dependency 'androidx.compose.animation:animation-core-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      13.  Dependency 'androidx.compose.animation:animation-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      14.  Dependency 'androidx.compose.foundation:foundation-layout-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      15.  Dependency 'androidx.compose.ui:ui-graphics-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      16.  Dependency 'androidx.compose.ui:ui-geometry-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      17.  Dependency 'androidx.compose.ui:ui-unit-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      18.  Dependency 'androidx.compose.ui:ui-util-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      19.  Dependency 'androidx.compose.ui:ui-text-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      20.  Dependency 'androidx.compose.ui:ui-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      21.  Dependency 'androidx.autofill:autofill:1.3.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      22.  Dependency 'androidx.window:window-core-android:1.5.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      23.  Dependency 'androidx.window:window:1.5.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      24.  Dependency 'androidx.documentfile:documentfile:1.1.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      25.  Dependency 'androidx.browser:browser:1.6.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      26.  Dependency 'androidx.transition:transition-ktx:1.7.0' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      27.  Dependency 'androidx.transition:transition:1.7.0' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      28.  Dependency 'androidx.dynamicanimation:dynamicanimation:1.1.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      29.  Dependency 'androidx.emoji2:emoji2-views-helper:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      30.  Dependency 'androidx.emoji2:emoji2:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      31.  Dependency 'androidx.graphics:graphics-path:1.0.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      32.  Dependency 'androidx.core:core:1.18.0' requires libraries and applications that
+           depend on it to compile against version 36 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 36, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      33.  Dependency 'androidx.graphics:graphics-shapes-android:1.1.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      34.  Dependency 'androidx.compose.runtime:runtime-retain-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      35.  Dependency 'androidx.compose.runtime:runtime-annotation-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      36.  Dependency 'androidx.savedstate:savedstate-ktx:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      37.  Dependency 'androidx.savedstate:savedstate-android:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      38.  Dependency 'androidx.savedstate:savedstate-compose-android:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      39.  Dependency 'androidx.compose.runtime:runtime-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      40.  Dependency 'androidx.compose.runtime:runtime-saveable-android:1.11.0-beta02' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      41.  Dependency 'androidx.lifecycle:lifecycle-runtime-ktx-android:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      42.  Dependency 'androidx.lifecycle:lifecycle-runtime-compose-android:2.10.0' requires libraries and applications that
+           depend on it to compile against version 35 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 35, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      43.  Dependency 'androidx.lifecycle:lifecycle-viewmodel-android:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      44.  Dependency 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      45.  Dependency 'androidx.lifecycle:lifecycle-livedata:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      46.  Dependency 'androidx.lifecycle:lifecycle-process:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      47.  Dependency 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      48.  Dependency 'androidx.lifecycle:lifecycle-livedata-core:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      49.  Dependency 'androidx.lifecycle:lifecycle-runtime-android:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      50.  Dependency 'androidx.lifecycle:lifecycle-viewmodel-savedstate-android:2.10.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      51.  Dependency 'androidx.core:core-ktx:1.18.0' requires libraries and applications that
+           depend on it to compile against version 36 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 36, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      52.  Dependency 'androidx.profileinstaller:profileinstaller:1.4.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      53.  Dependency 'androidx.annotation:annotation-experimental:1.4.1' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+     
+      54.  Dependency 'androidx.core:core-viewtree:1.0.0' requires libraries and applications that
+           depend on it to compile against version 34 or later of the
+           Android APIs.
+     
+           :app is currently compiled against android-33.
+     
+           Recommended action: Update this project to use a newer compileSdk
+           of at least 34, for example 36.
+     
+           Note that updating a library or application's compileSdk (which
+           allows newer APIs to be used) can be done separately from updating
+           targetSdk (which opts the app in to new runtime behavior) and
+           minSdk (which determines which devices the app can be installed
+           on).
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.3.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 51s
+59 actionable tasks: 31 executed, 28 up-to-date

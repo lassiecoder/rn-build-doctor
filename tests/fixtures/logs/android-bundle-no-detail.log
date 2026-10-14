@@ -1,0 +1,19 @@
+> Task :app:createBundleReleaseJsAndAssets
+info Writing bundle output to:, /Users/dev/MyApp/android/app/build/generated/assets/createBundleReleaseJsAndAssets/index.android.bundle
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+[Error: ENOSPC: no space left on device, write]
+
+> Task :app:createBundleReleaseJsAndAssets FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:createBundleReleaseJsAndAssets'.
+> Process 'command 'node'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 48s

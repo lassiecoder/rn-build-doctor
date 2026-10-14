@@ -1,0 +1,2 @@
+{ "name": "expo-clean", "version": "1.0.0", "main": "expo-router/entry",
+  "dependencies": { "expo": "~54.0.0", "expo-router": "~6.0.0", "react": "19.1.0", "react-native": "0.81.4" } }

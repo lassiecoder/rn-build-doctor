@@ -1,0 +1,10 @@
+10-12 18:40:01.112 21455 21490 I ReactNativeJS: Running "main" with {"rootTag":1,"initialProps":{"exp":{"initialUri":"exp+myapp://"}}}
+10-12 18:40:01.530 21455 21490 E ReactNativeJS: Error: supabaseUrl is required.
+10-12 18:40:01.530 21455 21490 E ReactNativeJS:
+10-12 18:40:01.530 21455 21490 E ReactNativeJS: This error is located at:
+10-12 18:40:01.530 21455 21490 E ReactNativeJS:     in RootLayout
+10-12 18:40:01.612 21455 21491 E AndroidRuntime: FATAL EXCEPTION: mqt_v_native
+10-12 18:40:01.612 21455 21491 E AndroidRuntime: Process: com.example.myapp, PID: 21455
+10-12 18:40:01.612 21455 21491 E AndroidRuntime: com.facebook.react.common.JavascriptException: Error: supabaseUrl is required., stack:
+10-12 18:40:01.612 21455 21491 E AndroidRuntime: SupabaseClient@1:912345
+10-12 18:40:01.612 21455 21491 E AndroidRuntime: createClient@1:913001

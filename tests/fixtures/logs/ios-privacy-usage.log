@@ -1,0 +1,2 @@
+2026-10-12 11:02:44.120 MyApp[1234:56789] [javascript] Opening camera
+2026-10-12 11:02:44.385 MyApp[1234:56901] This app has crashed because it attempted to access privacy-sensitive data without a usage description.  The app's Info.plist must contain an NSCameraUsageDescription key with a string value explaining to the user how the app uses this data.

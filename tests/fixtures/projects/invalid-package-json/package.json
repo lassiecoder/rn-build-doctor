@@ -1,0 +1,6 @@
+{
+  "name": "broken",
+  "dependencies": {
+    "react-native": "0.81.4",
+  }
+}

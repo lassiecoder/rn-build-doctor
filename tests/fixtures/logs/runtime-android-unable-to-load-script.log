@@ -1,0 +1,6 @@
+--------- beginning of crash
+E/AndroidRuntime( 4321): FATAL EXCEPTION: create_react_context
+E/AndroidRuntime( 4321): Process: com.example.app, PID: 4321
+E/AndroidRuntime( 4321): java.lang.RuntimeException: Unable to load script. Make sure you're either running Metro (run 'npx react-native start') or that your bundle 'index.android.bundle' is packaged correctly for release.
+E/AndroidRuntime( 4321): 	at com.facebook.react.bridge.CatalystInstanceImpl.jniLoadScriptFromAssets(Native Method)
+E/AndroidRuntime( 4321): 	at com.facebook.react.bridge.CatalystInstanceImpl.loadScriptFromAssets(CatalystInstanceImpl.java:248)

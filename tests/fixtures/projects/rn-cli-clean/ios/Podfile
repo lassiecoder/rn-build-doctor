@@ -1,0 +1,3 @@
+platform :ios, '15.1'
+target 'rncli' do
+end

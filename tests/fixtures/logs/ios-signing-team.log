@@ -1,0 +1,13 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace MyApp.xcworkspace -scheme MyApp -configuration Release -sdk iphoneos archive
+
+Build settings from command line:
+    SDKROOT = iphoneos
+
+note: Building targets in dependency order
+/Users/dev/MyApp/ios/MyApp.xcodeproj: error: Signing for "MyApp" requires a development team. Select a development team in the Signing & Capabilities editor. (in target 'MyApp' from project 'MyApp')
+** ARCHIVE FAILED **
+
+The following build commands failed:
+	Archiving project MyApp with scheme MyApp
+(1 failure)

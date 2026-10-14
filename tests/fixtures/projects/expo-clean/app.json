@@ -1,0 +1,1 @@
+{ "expo": { "name": "clean", "slug": "clean", "scheme": "clean", "plugins": ["expo-router"] } }

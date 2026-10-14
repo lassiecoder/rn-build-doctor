@@ -1,0 +1,14 @@
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/Users/dev/MyApp/android/app/build.gradle' line: 1
+
+* What went wrong:
+An exception occurred applying plugin request [id: 'com.android.application']
+> Failed to apply plugin 'com.android.internal.application'.
+   > Minimum supported Gradle version is 8.13. Current version is 8.10.2. If using the gradle wrapper, try editing the distributionUrl in /Users/dev/MyApp/android/gradle/wrapper/gradle-wrapper.properties to gradle-8.13-all.zip
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 2s

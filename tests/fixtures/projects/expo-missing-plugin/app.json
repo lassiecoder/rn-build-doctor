@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "plugins",
+    "slug": "plugins",
+    "plugins": [
+      "expo-camera",
+      ["expo-build-properties", { "android": { "compileSdkVersion": 36 } }],
+      "./plugins/withCustomGradle"
+    ]
+  }
+}

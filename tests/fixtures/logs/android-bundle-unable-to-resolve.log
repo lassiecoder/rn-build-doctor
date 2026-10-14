@@ -1,0 +1,21 @@
+2026-10-12T09:14:02.1234567Z > Task :app:createBundleReleaseJsAndAssets
+2026-10-12T09:14:03.0000000Z warning: the transform cache was reset.
+2026-10-12T09:14:05.0000000Z                 Welcome to Metro v0.83.1
+2026-10-12T09:14:09.0000000Z error Unable to resolve module react-native-mmkv from /home/runner/work/app/src/storage/index.ts: react-native-mmkv could not be found within the project or in these directories:
+2026-10-12T09:14:09.0000000Z   node_modules
+2026-10-12T09:14:09.0000000Z > 1 | import { MMKV } from 'react-native-mmkv';
+2026-10-12T09:14:09.0000000Z     |                       ^
+2026-10-12T09:14:09.0000000Z   2 |
+2026-10-12T09:14:09.0000000Z   3 | export const storage = new MMKV();
+2026-10-12T09:14:10.0000000Z > Task :app:createBundleReleaseJsAndAssets FAILED
+2026-10-12T09:14:10.0000000Z
+2026-10-12T09:14:10.0000000Z FAILURE: Build failed with an exception.
+2026-10-12T09:14:10.0000000Z
+2026-10-12T09:14:10.0000000Z * What went wrong:
+2026-10-12T09:14:10.0000000Z Execution failed for task ':app:createBundleReleaseJsAndAssets'.
+2026-10-12T09:14:10.0000000Z > Process 'command 'node'' finished with non-zero exit value 1
+2026-10-12T09:14:10.0000000Z
+2026-10-12T09:14:10.0000000Z * Try:
+2026-10-12T09:14:10.0000000Z > Run with --stacktrace option to get the stack trace.
+2026-10-12T09:14:10.0000000Z
+2026-10-12T09:14:10.0000000Z BUILD FAILED in 1m 3s
