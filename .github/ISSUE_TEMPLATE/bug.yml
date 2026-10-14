@@ -1,0 +1,17 @@
+name: Bug
+description: Crash, wrong exit code, installation problem, or other tool bug
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Command, OS, Node version
+    validations:
+      required: true

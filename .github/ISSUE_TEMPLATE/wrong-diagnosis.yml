@@ -1,0 +1,36 @@
+name: Wrong or missing diagnosis
+description: The tool reported something incorrect, or missed a failure it should recognize
+labels: [diagnosis]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you! Please **review the report for secrets before posting**. Redaction is best-effort.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What happened?
+      options:
+        - False positive (reported a problem that wasn't the cause)
+        - Wrong explanation or next step
+        - Missed failure (no supported diagnosis)
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Report
+      description: Output of `rn-build-doctor report` (Markdown)
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual cause (if known)
+      description: What fixed it, and a link to the source if there is one
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: rn-build-doctor 0.1.0, Expo SDK 57, React Native 0.86, Gradle 9.3
