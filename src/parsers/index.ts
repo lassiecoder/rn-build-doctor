@@ -33,7 +33,8 @@ export function parseLog(doc: LogDocument): ParsedLog {
   if (cocoapods.detected) formats.push("cocoapods");
   if (runtime.androidFatals.length) formats.push("android-runtime");
   if (runtime.iosCrashes.length) formats.push("ios-crash");
-  if (runtime.jsExceptions.length) formats.push("javascript-runtime");
+  if (runtime.jsExceptions.length || runtime.bundleLoadFailures.length)
+    formats.push("javascript-runtime");
   return { doc, gradle, metro, xcode, cocoapods, runtime, formats };
 }
 
@@ -68,16 +69,23 @@ export function hasParsedFailure(log: ParsedLog): boolean {
     log.xcode.errors.length > 0 ||
     log.cocoapods.errors.length > 0 ||
     log.runtime.jsExceptions.length > 0 ||
+    log.runtime.bundleLoadFailures.length > 0 ||
     log.runtime.androidFatals.length > 0 ||
     log.runtime.iosCrashes.length > 0
   );
 }
 
-/** Returns indices of lines that look like errors, in order, without duplicates. */
-export function failureLines(doc: LogDocument, limit = 5): number[] {
+/**
+ * Returns indices of lines that look like errors, in order, without duplicates. Lines a parser
+ * classified as warnings (such as CocoaPods `[!]` notices) are skipped.
+ */
+export function failureLines(log: ParsedLog, limit = 5): number[] {
+  const doc = log.doc;
+  const ignore = new Set(log.cocoapods.notices);
   const found: number[] = [];
   const seen = new Set<string>();
   for (let i = 0; i < doc.lines.length && found.length < limit; i++) {
+    if (ignore.has(i)) continue;
     const line = doc.lines[i]!;
     if (!FAILURE_SIGNALS.some((p) => p.test(line))) continue;
     const key = line.trim();

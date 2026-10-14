@@ -1,5 +1,5 @@
 import type { PostRule } from "../../engine/rule.js";
-import { failureLines, hasParsedFailure } from "../../parsers/index.js";
+import { failureLines, hasParsedFailure, type ParsedLog } from "../../parsers/index.js";
 import { logEvidence, type Span } from "../../parsers/types.js";
 import type { DraftFinding } from "../../reports/schema.js";
 
@@ -32,7 +32,7 @@ export const noSupportedDiagnosis: PostRule = {
       const spans: Span[] = log.gradle.failures.map((f) => ({ start: f.start, end: f.end }));
       const covered = (i: number) => spans.some((s) => i >= s.start && i <= s.end);
       const extra = [
-        ...failureLines(log.doc, 10),
+        ...failureLines(log, 10),
         ...log.metro.events.map((e) => e.start),
         ...log.xcode.errors.map((e) => e.start),
         ...log.cocoapods.errors.map((e) => e.start),
@@ -42,7 +42,7 @@ export const noSupportedDiagnosis: PostRule = {
           spans.push({ start: i, end: i + 2 });
       }
       if (!spans.length) {
-        const first = failureLines(log.doc, 1)[0];
+        const first = failureLines(log, 1)[0];
         if (first === undefined && !hasParsedFailure(log)) continue;
         spans.push({ start: first ?? 0, end: (first ?? 0) + 2 });
       }
@@ -69,6 +69,16 @@ export const noSupportedDiagnosis: PostRule = {
   },
 };
 
+/** What the successful log was for, in words. */
+function successKind(log: ParsedLog): string {
+  if (log.gradle.outcome === "successful") return "build";
+  // `pod install` output mentions the .xcodeproj, so check it before Xcode builds.
+  if (log.cocoapods.completedIndex !== undefined) return "CocoaPods install";
+  if (log.xcode.detected) return "build";
+  if (log.metro.successIndex !== undefined) return "JavaScript bundle";
+  return "build";
+}
+
 export const noFailureDetected: PostRule = {
   meta: {
     id: "common.no-failure-detected",
@@ -86,10 +96,11 @@ export const noFailureDetected: PostRule = {
     const out: DraftFinding[] = [];
     for (const log of ctx.logs) {
       const any = findings.some((f) => f.evidence.some((e) => e.file === log.doc.path));
-      if (any || failureLines(log.doc, 1).length || hasParsedFailure(log)) continue;
+      if (any || failureLines(log, 1).length || hasParsedFailure(log)) continue;
       const success =
         log.gradle.outcome === "successful" ||
         log.metro.successIndex !== undefined ||
+        log.cocoapods.completedIndex !== undefined ||
         log.doc.lines.some((l) => /\*\* (?:BUILD|ARCHIVE) SUCCEEDED \*\*/.test(l));
       out.push({
         ruleId: this.meta.id,
@@ -99,7 +110,7 @@ export const noFailureDetected: PostRule = {
         severity: "info",
         confidence: success ? "high" : "medium",
         explanation: success
-          ? `The ${log.metro.successIndex !== undefined && log.gradle.outcome !== "successful" ? "JavaScript bundle" : "build"} in this log completed successfully. If the app still fails, the problem happens at runtime. Analyze a device log or crash report instead.`
+          ? `The ${successKind(log)} in this log completed successfully. If the app still fails, the problem happens at runtime. Analyze a device log or crash report instead.`
           : `No error markers were found in ${log.doc.lines.length} lines${log.formats.length ? ` (recognized: ${log.formats.join(", ")})` : ""}. The log may be incomplete, cut off before the failure, or a format this tool doesn't recognize.`,
         evidence: [],
         nextSteps: success

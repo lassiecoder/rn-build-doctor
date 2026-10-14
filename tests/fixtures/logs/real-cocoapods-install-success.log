@@ -1,0 +1,190 @@
+Found 3 modules for target `MyApp`
+link_native_modules! {ios_packages: [{configurations: [], name: "react-native-linear-gradient", root: "/Users/dev/MyApp/node_modules/react-native-linear-gradient", path: "../node_modules/react-native-linear-gradient", podspec_path: "/Users/dev/MyApp/node_modules/react-native-linear-gradient/BVLinearGradient.podspec", script_phases: []}, {configurations: [], name: "react-native-safe-area-context", root: "/Users/dev/MyApp/node_modules/react-native-safe-area-context", path: "../node_modules/react-native-safe-area-context", podspec_path: "/Users/dev/MyApp/node_modules/react-native-safe-area-context/react-native-safe-area-context.podspec", script_phases: []}, {configurations: [], name: "react-native-video", root: "/Users/dev/MyApp/node_modules/react-native-video", path: "../node_modules/react-native-video", podspec_path: "/Users/dev/MyApp/node_modules/react-native-video/react-native-video.podspec", script_phases: []}], ios_project_root_path: "/Users/dev/MyApp/ios", react_native_path: "../node_modules/react-native"}
+Auto-linking React Native modules for target `MyApp`: BVLinearGradient, react-native-safe-area-context, and react-native-video
+Framework build type is static library
+[ReactNativeDependencies] Setting up ReactNativeDependencies...
+[ReactNativeDependencies] Building from source: false
+[ReactNativeDependencies] Using tarball from URL: https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.87.0/react-native-artifacts-0.87.0-reactnative-dependencies-debug.tar.gz
+[ReactNativeDependencies] Verifying checksum for cached reactnative-dependencies-0.87.0-debug.tar.gz...
+[Cache] SHA1 verified for reactnative-dependencies-0.87.0-debug.tar.gz
+[ReactNativeDependencies] Cache hit: copying reactnative-dependencies-0.87.0-debug.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+[ReactNativeDependencies] Verifying checksum for cached reactnative-dependencies-0.87.0-release.tar.gz...
+[Cache] SHA1 verified for reactnative-dependencies-0.87.0-release.tar.gz
+[ReactNativeDependencies] Cache hit: copying reactnative-dependencies-0.87.0-release.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+[ReactNativeDependencies] Source: {http: "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.87.0/react-native-artifacts-0.87.0-reactnative-dependencies-debug.tar.gz"}
+[ReactNativeCore] Setting up ReactNativeCore...
+[ReactNativeCore] Building from source: false
+Configuring the target with the New Architecture
+[ReactNativeCore] Using React Native Core and React Native Dependencies prebuilt versions.
+[36m[1m[Codegen][0m Analyzing /Users/dev/MyApp/package.json[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in the app.[0m
+[36m[1m[Codegen][0m [33mThe "codegenConfig" field is not defined in package.json. Assuming there is nothing to generate at the app level.[0m
+[36m[1m[Codegen][0m [33mSearching for codegen-enabled libraries in react-native.config.js[0m
+[36m[1m[Codegen][0m Found react-native-safe-area-context[0m
+[36m[1m[Codegen][0m Processing safeareacontext[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for safeareacontext[0m
+[36m[1m[Codegen][0m Generating Native Code for safeareacontext - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generating RCTModulesProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.h[0m
+[36m[1m[Codegen][0m Generating RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.mm[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/ReactAppDependencyProvider.podspec[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/ReactCodegen.podspec[0m
+[36m[1m[Codegen][0m Generating Package.swift[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/Package.swift[0m
+[36m[1m[Codegen][0m [33mDone.[0m
+Analyzing dependencies
+Fetching podspec for `React-Core-prebuilt` from `../node_modules/react-native/React-Core-prebuilt.podspec`
+[ReactNativeCore] Verifying checksum for cached reactnative-core-0.87.0-debug.tar.gz...
+[Cache] SHA1 verified for reactnative-core-0.87.0-debug.tar.gz
+[ReactNativeCore] Cache hit: copying reactnative-core-0.87.0-debug.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+[ReactNativeCore] Verifying checksum for cached reactnative-core-0.87.0-release.tar.gz...
+[Cache] SHA1 verified for reactnative-core-0.87.0-release.tar.gz
+[ReactNativeCore] Cache hit: copying reactnative-core-0.87.0-release.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+[ReactNativeCore] Resolved stable ReactNativeCore-prebuilt version:
+[ReactNativeCore]   ../../ios/Pods/ReactNativeCore-artifacts/reactnative-core-0.87.0-debug.tar.gz
+[ReactNativeCore]   ../../ios/Pods/ReactNativeCore-artifacts/reactnative-core-0.87.0-release.tar.gz
+Fetching podspec for `ReactNativeDependencies` from `../node_modules/react-native/third-party-podspecs/ReactNativeDependencies.podspec`
+[ReactNativeDependencies] Using tarball from URL: https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.87.0/react-native-artifacts-0.87.0-reactnative-dependencies-debug.tar.gz
+[ReactNativeDependencies] Tarball reactnative-dependencies-0.87.0-debug.tar.gz already exists in Pods. Skipping download.
+[ReactNativeDependencies] Tarball reactnative-dependencies-0.87.0-release.tar.gz already exists in Pods. Skipping download.
+Fetching podspec for `hermes-engine` from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`
+[Hermes] Using release tarball from URL: https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/250829098.0.16/hermes-ios-250829098.0.16-hermes-ios-debug.tar.gz
+[Hermes] Verifying checksum for cached hermes-ios-250829098.0.16-debug.tar.gz...
+[Hermes] SHA1 verified for hermes-ios-250829098.0.16-debug.tar.gz
+[Hermes] Cache hit: copying hermes-ios-250829098.0.16-debug.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+[Hermes] Verifying checksum for cached hermes-ios-250829098.0.16-release.tar.gz...
+[Hermes] SHA1 verified for hermes-ios-250829098.0.16-release.tar.gz
+[Hermes] Cache hit: copying hermes-ios-250829098.0.16-release.tar.gz from shared cache (/Users/dev/Library/Caches/ReactNative)
+Downloading dependencies
+Installing BVLinearGradient (2.8.3)
+Installing DoubleConversion (1.1.6)
+Installing FBLazyVector (0.87.0)
+Installing RCT-Folly (2024.11.18.00)
+Installing RCTDeprecation (0.87.0)
+Installing RCTRequired (0.87.0)
+Installing RCTSwiftUI (0.87.0)
+Installing RCTSwiftUIWrapper (0.87.0)
+Installing RCTTypeSafety (0.87.0)
+Installing React (0.87.0)
+Installing React-Core (0.87.0)
+Installing React-Core-prebuilt (0.87.0)
+Installing React-CoreModules (0.87.0)
+Installing React-Fabric (0.87.0)
+Installing React-FabricComponents (0.87.0)
+Installing React-FabricImage (0.87.0)
+Installing React-ImageManager (0.87.0)
+Installing React-Mapbuffer (0.87.0)
+Installing React-NativeModulesApple (0.87.0)
+Installing React-RCTActionSheet (0.87.0)
+Installing React-RCTAnimatedModuleProvider (0.87.0)
+Installing React-RCTAnimation (0.87.0)
+Installing React-RCTAppDelegate (0.87.0)
+Installing React-RCTBlob (0.87.0)
+Installing React-RCTFBReactNativeSpec (0.87.0)
+Installing React-RCTFabric (0.87.0)
+Installing React-RCTImage (0.87.0)
+Installing React-RCTLinking (0.87.0)
+Installing React-RCTNetwork (0.87.0)
+Installing React-RCTRuntime (0.87.0)
+Installing React-RCTSettings (0.87.0)
+Installing React-RCTText (0.87.0)
+Installing React-RCTVibration (0.87.0)
+Installing React-RuntimeApple (0.87.0)
+Installing React-RuntimeCore (0.87.0)
+Installing React-RuntimeHermes (0.87.0)
+Installing React-bridging (0.87.0)
+Installing React-callinvoker (0.87.0)
+Installing React-cxxreact (0.87.0)
+Installing React-cxxstableapi (0.87.0)
+Installing React-debug (0.87.0)
+Installing React-defaultsnativemodule (0.87.0)
+Installing React-domnativemodule (0.87.0)
+Installing React-featureflags (0.87.0)
+Installing React-featureflagsnativemodule (0.87.0)
+Installing React-graphics (0.87.0)
+Installing React-hermes (0.87.0)
+Installing React-idlecallbacksnativemodule (0.87.0)
+Installing React-intersectionobservernativemodule (0.87.0)
+Installing React-jserrorhandler (0.87.0)
+Installing React-jsi (0.87.0)
+Installing React-jsiexecutor (0.87.0)
+Installing React-jsinspector (0.87.0)
+Installing React-jsinspectorcdp (0.87.0)
+Installing React-jsinspectornetwork (0.87.0)
+Installing React-jsinspectortracing (0.87.0)
+Installing React-jsitooling (0.87.0)
+Installing React-jsitracing (0.87.0)
+Installing React-logger (0.87.0)
+Installing React-microtasksnativemodule (0.87.0)
+Installing React-mutationobservernativemodule (0.87.0)
+Installing React-networking (0.87.0)
+Installing React-oscompat (0.87.0)
+Installing React-perflogger (0.87.0)
+Installing React-performancecdpmetrics (0.87.0)
+Installing React-performancetimeline (0.87.0)
+Installing React-rendererconsistency (0.87.0)
+Installing React-renderercss (0.87.0)
+Installing React-rendererdebug (0.87.0)
+Installing React-runtimeexecutor (0.87.0)
+Installing React-runtimescheduler (0.87.0)
+Installing React-timing (0.87.0)
+Installing React-utils (0.87.0)
+Installing React-viewtransitionnativemodule (0.87.0)
+Installing React-webperformancenativemodule (0.87.0)
+Installing ReactAppDependencyProvider (0.87.0)
+Installing ReactCodegen (0.87.0)
+Installing ReactCommon (0.87.0)
+Installing ReactNativeDependencies (0.87.0)
+Installing SocketRocket (0.7.1)
+Installing Yoga (0.0.0)
+Installing boost (1.84.0)
+Installing fast_float (8.0.0)
+Installing fmt (12.1.0)
+Installing glog (0.3.5)
+Installing hermes-engine (250829098.0.16)
+Installing react-native-safe-area-context (5.9.1)
+Installing react-native-video (6.19.2)
+Generating Pods project
+Setting USE_HERMES build settings
+Setting REACT_NATIVE_PATH build settings
+Setting SWIFT_ACTIVE_COMPILATION_CONDITIONS build settings
+[Ccache]: Removing Ccache from CC, LD, CXX & LDPLUSPLUS build settings
+[ReactNativeCore] Configuring xcconfig for prebuilt React Native Core...
+[ReactNativeCore] Prebuilt xcconfig configuration complete
+[ReactNativeDependencies] Configuring xcconfig for prebuilt React Native Dependencies...
+[ReactNativeDependencies] Prebuilt deps xcconfig configuration complete
+[SPM] Cleaning old SPM dependencies from Pods project
+[SPM] Adding SPM dependencies to Pods project
+[Privacy Manifest Aggregation] Appending aggregated reasons to existing PrivacyInfo.xcprivacy file.
+[Privacy Manifest Aggregation] Reading .xcprivacy files to aggregate all used Required Reason APIs.
+Setting CLANG_CXX_LANGUAGE_STANDARD to c++20 on /Users/dev/MyApp/ios/MyApp.xcodeproj
+
+==================== DEPRECATION NOTICE =====================
+Calling `pod install` directly is deprecated in React Native
+because we are moving away from Cocoapods toward alternative
+solutions to build the project.
+* If you are using Expo, please run:
+`npx expo run:ios`
+* If you are using the Community CLI, please run:
+`yarn ios`
+=============================================================
+
+Pod install took 19 [s] to run
+Integrating client project
+Pod installation complete! There are 89 dependencies from the Podfile and 88 total pods installed.
+
+[!] React-Core-prebuilt has added 1 script phase. Please inspect before executing a build. See `https://guides.cocoapods.org/syntax/podspec.html#script_phases` for more information.
+
+[!] ReactNativeDependencies has added 1 script phase. Please inspect before executing a build. See `https://guides.cocoapods.org/syntax/podspec.html#script_phases` for more information.
+
+[!] hermes-engine has added 1 script phase. Please inspect before executing a build. See `https://guides.cocoapods.org/syntax/podspec.html#script_phases` for more information.

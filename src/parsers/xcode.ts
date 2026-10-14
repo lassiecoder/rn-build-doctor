@@ -23,7 +23,19 @@ export interface CocoaPodsError extends Span {
 export interface CocoaPodsParseResult {
   detected: boolean;
   errors: CocoaPodsError[];
+  /** `[!]` lines that are warnings, not failures (for example after a completed install). */
+  notices: number[];
+  /** Index of "Pod installation complete!", when the install succeeded. */
+  completedIndex?: number;
 }
+
+/**
+ * CocoaPods prints warnings with the same `[!]` marker as errors. These never stop an install.
+ * React Native's pods print the script-phase notice on every fresh install.
+ */
+const POD_NOTICE =
+  /\[!\]\s+(?:.+ has added \d+ script phases?\b|Please close any current Xcode sessions|The `[^`]+` target overrides the|Automatically assigning platform|Your project does not explicitly specify the CocoaPods)/;
+const POD_COMPLETE = /^Pod installation complete!/;
 
 const XCODE_DETECT =
   /(?:\bxcodebuild\b|\*\* (?:BUILD|ARCHIVE) (?:FAILED|SUCCEEDED) \*\*|^CompileC |^PhaseScriptExecution |^Ld |^CodeSign |\.xcworkspace|\.xcodeproj|Build Settings from command line)/;
@@ -89,14 +101,22 @@ export function parseXcode(doc: LogDocument): XcodeParseResult {
 }
 
 export function parseCocoaPods(doc: LogDocument): CocoaPodsParseResult {
-  const result: CocoaPodsParseResult = { detected: false, errors: [] };
+  const result: CocoaPodsParseResult = { detected: false, errors: [], notices: [] };
   const lines = doc.lines;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]!;
     if (!result.detected && POD_DETECT.test(line)) result.detected = true;
+    if (POD_COMPLETE.test(line.trim())) {
+      result.detected = true;
+      result.completedIndex ??= i;
+    }
     const match = /^\s*\[!\]\s+(.+)$/.exec(line);
     if (!match) continue;
     result.detected = true;
+    if (POD_NOTICE.test(line)) {
+      result.notices.push(i);
+      continue;
+    }
     // Context continues until two consecutive blank lines or the next [!] message.
     let end = i;
     for (let j = i + 1; j < lines.length && j <= i + 40; j++) {
@@ -105,6 +125,12 @@ export function parseCocoaPods(doc: LogDocument): CocoaPodsParseResult {
       end = j;
     }
     result.errors.push({ start: i, end, message: match[1]!.trim() });
+  }
+  // CocoaPods only prints "Pod installation complete!" when nothing failed, so any `[!]` lines
+  // in that run are warnings.
+  if (result.completedIndex !== undefined && result.errors.length) {
+    result.notices.push(...result.errors.map((e) => e.start));
+    result.errors = [];
   }
   return result;
 }
