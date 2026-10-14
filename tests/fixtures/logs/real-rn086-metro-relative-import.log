@@ -1,0 +1,49 @@
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+                Welcome to Metro v0.84.4
+              Fast - Scalable - Integrated
+
+
+error Unable to resolve module ./src/screens/GhostScreen from /Users/dev/MyApp/App.tsx: 
+
+None of these files exist:
+  * src/screens/GhostScreen(.android.js|.native.js|.js|.android.jsx|.native.jsx|.jsx|.android.json|.native.json|.json|.android.ts|.native.ts|.ts|.android.tsx|.native.tsx|.tsx)
+  * src/screens/GhostScreen
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m [32m'./src/screens/GhostScreen'[39m[33m;[39m
+ [90m   |[39m         [31m[1m^[22m[39m
+ [90m 2 |[39m [90m/**[39m
+ [90m 3 |[39m [90m * Sample React Native App[39m
+ [90m 4 |[39m [90m * https://github.com/facebook/react-native[39m[0m.
+Error: Unable to resolve module ./src/screens/GhostScreen from /Users/dev/MyApp/App.tsx: 
+
+None of these files exist:
+  * src/screens/GhostScreen(.android.js|.native.js|.js|.android.jsx|.native.jsx|.jsx|.android.json|.native.json|.json|.android.ts|.native.ts|.ts|.android.tsx|.native.tsx|.tsx)
+  * src/screens/GhostScreen
+[0m[31m[1m>[22m[39m[90m 1 |[39m [36mimport[39m [32m'./src/screens/GhostScreen'[39m[33m;[39m
+ [90m   |[39m         [31m[1m^[22m[39m
+ [90m 2 |[39m [90m/**[39m
+ [90m 3 |[39m [90m * Sample React Native App[39m
+ [90m 4 |[39m [90m * https://github.com/facebook/react-native[39m[0m
+    at ModuleResolver.resolveDependency (/Users/dev/MyApp/node_modules/metro/src/node-haste/DependencyGraph/ModuleResolution.js:143:15)
+    at DependencyGraph.resolveDependency (/Users/dev/MyApp/node_modules/metro/src/node-haste/DependencyGraph.js:263:43)
+    at /Users/dev/MyApp/node_modules/metro/src/lib/transformHelpers.js:165:21
+    at resolveDependencies (/Users/dev/MyApp/node_modules/metro/src/DeltaBundler/buildSubgraph.js:43:25)
+    at visit (/Users/dev/MyApp/node_modules/metro/src/DeltaBundler/buildSubgraph.js:81:30)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Promise.all (index 3)
+    at async visit (/Users/dev/MyApp/node_modules/metro/src/DeltaBundler/buildSubgraph.js:90:5)
+    at async Promise.all (index 0)
+    at async buildSubgraph (/Users/dev/MyApp/node_modules/metro/src/DeltaBundler/buildSubgraph.js:105:3)

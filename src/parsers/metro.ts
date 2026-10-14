@@ -9,14 +9,17 @@ export type MetroEvent =
 export interface MetroParseResult {
   detected: boolean;
   events: MetroEvent[];
+  /** Index of a line saying the bundle was written (`react-native bundle`, `expo export`). */
+  successIndex?: number;
 }
 
 const DETECT =
   /(?:Welcome to Metro|^\s*BUNDLE\b|Bundling failed|bundl(?:e|ing) (?:failed|complete)|createBundle\w*JsAndAssets|Unable to resolve (?:module|")|metro-|Starting Metro|expo export|react-native bundle|Bundle React Native code and images)/i;
 
-// Metro: `Unable to resolve module foo from /path/App.js: foo could not be found ...`
+// Metro: `Unable to resolve module foo from /path/App.js: foo could not be found ...`. For relative
+// paths Metro ends the line with a colon and lists the tried files below it.
 const RESOLVE_METRO =
-  /Unable to resolve module\s+[`'"]?([^\s`'"]+)[`'"]?\s+from\s+[`'"]?(.+?)[`'"]?(?::\s+(.*))?$/;
+  /Unable to resolve module\s+[`'"]?([^\s`'"]+)[`'"]?\s+from\s+[`'"]?(.+?)[`'"]?(?::(?:\s+(.*))?)?$/;
 // Expo CLI: `Unable to resolve "foo" from "app/index.tsx"`
 const RESOLVE_EXPO = /Unable to resolve\s+"([^"]+)"\s+from\s+"([^"]+)"/;
 // `While trying to resolve module `foo` from file `/path/x.js`, the package ... main module field ...`
@@ -24,6 +27,8 @@ const RESOLVE_MAIN = /While trying to resolve module\s+`([^`]+)`\s+from file\s+`
 // Babel: `SyntaxError: /path/App.js: Unexpected token (12:4)`; Expo CLI repeats the prefix.
 const SYNTAX =
   /SyntaxError:\s+(?:SyntaxError:\s+)*(?:(\/[^:]+|[A-Za-z]:\\[^:]+|[\w./-]+\.[cm]?[jt]sx?):\s+)?(.+?)(?:\s+\((\d+:\d+)\))?$/;
+const BUNDLE_WRITTEN =
+  /^(?:LOG:?\s*|info\s+)?(?:Done writing bundle output|App exported to\b|Exported:\s)/;
 const BUNDLING_FAILED = /^(?:.*\s)?(?:Android|iOS|Web)?\s*Bundling failed\b.*$/i;
 
 /** Number of following lines kept as context for a Metro error. */
@@ -34,9 +39,11 @@ export function parseMetro(doc: LogDocument): MetroParseResult {
   let detected = false;
   const seen = new Set<string>();
   const lines = doc.lines;
+  let successIndex: number | undefined;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]!;
     if (!detected && DETECT.test(line)) detected = true;
+    if (BUNDLE_WRITTEN.test(line.trim())) successIndex ??= i;
     const end = Math.min(lines.length - 1, i + CONTEXT);
 
     const resolve = RESOLVE_EXPO.exec(line) ?? RESOLVE_METRO.exec(line) ?? RESOLVE_MAIN.exec(line);
@@ -82,5 +89,5 @@ export function parseMetro(doc: LogDocument): MetroParseResult {
       detected = true;
     }
   }
-  return { detected, events };
+  return { detected, events, ...(successIndex !== undefined ? { successIndex } : {}) };
 }

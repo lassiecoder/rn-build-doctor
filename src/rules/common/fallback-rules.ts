@@ -80,7 +80,7 @@ export const noFailureDetected: PostRule = {
     versionScope: "All",
     references: [],
     lastVerified: VERIFIED,
-    fixtures: ["logs/android-success.log"],
+    fixtures: ["logs/android-success.log", "logs/real-rn086-metro-bundle-success.log"],
   },
   run(ctx, findings) {
     const out: DraftFinding[] = [];
@@ -89,6 +89,7 @@ export const noFailureDetected: PostRule = {
       if (any || failureLines(log.doc, 1).length || hasParsedFailure(log)) continue;
       const success =
         log.gradle.outcome === "successful" ||
+        log.metro.successIndex !== undefined ||
         log.doc.lines.some((l) => /\*\* (?:BUILD|ARCHIVE) SUCCEEDED \*\*/.test(l));
       out.push({
         ruleId: this.meta.id,
@@ -98,13 +99,18 @@ export const noFailureDetected: PostRule = {
         severity: "info",
         confidence: success ? "high" : "medium",
         explanation: success
-          ? "The build in this log completed successfully. If the app still fails, the problem happens at runtime. Analyze a device log or crash report instead."
+          ? `The ${log.metro.successIndex !== undefined && log.gradle.outcome !== "successful" ? "JavaScript bundle" : "build"} in this log completed successfully. If the app still fails, the problem happens at runtime. Analyze a device log or crash report instead.`
           : `No error markers were found in ${log.doc.lines.length} lines${log.formats.length ? ` (recognized: ${log.formats.join(", ")})` : ""}. The log may be incomplete, cut off before the failure, or a format this tool doesn't recognize.`,
         evidence: [],
-        nextSteps: [
-          "Make sure the log covers the whole failing run. For Gradle, add `--info` or `--stacktrace`. For EAS, download the full build log.",
-          "For startup crashes, capture `adb logcat` (Android) or the device console or crash report (iOS).",
-        ],
+        nextSteps: success
+          ? [
+              "If the app fails after this, capture the device log while reproducing (`adb logcat -d` on Android, the device console or a crash report on iOS) and analyze that.",
+              "If a different build fails, analyze the log of that build.",
+            ]
+          : [
+              "Make sure the log covers the whole failing run. For Gradle, add `--info` or `--stacktrace`. For EAS, download the full build log.",
+              "For startup crashes, capture `adb logcat` (Android) or the device console or crash report (iOS).",
+            ],
       });
     }
     return out;

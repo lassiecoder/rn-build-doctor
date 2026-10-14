@@ -48,6 +48,7 @@ export const unableToResolveModule: Rule = {
       "logs/metro-unable-to-resolve.log",
       "logs/android-bundle-unable-to-resolve.log",
       "projects/rn-cli-missing-dependency",
+      "logs/real-rn086-metro-relative-import.log",
     ],
   },
   run(ctx) {
