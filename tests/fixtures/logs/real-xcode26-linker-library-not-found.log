@@ -1,0 +1,60 @@
+[36m[1m[Codegen][0m Processing safeareacontext[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for safeareacontext[0m
+[36m[1m[Codegen][0m Processing rnsvg[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rnsvg[0m
+[36m[1m[Codegen][0m Processing rnworklets[0m
+[36m[1m[Codegen][0m [33mSearching for podspec in the project dependencies.[0m
+[36m[1m[Codegen][0m Supported Apple platforms: ios, macos, tvos, visionos for rnworklets[0m
+[36m[1m[Codegen][0m Generating Native Code for rnreanimated - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for safeareacontext - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rnsvg - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating Native Code for rnworklets - ios[0m
+[36m[1m[Codegen][0m Generated artifacts: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.h[0m
+[36m[1m[Codegen][0m Generating RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTThirdPartyComponentsProvider.mm[0m
+[36m[1m[Codegen][0m Generating RCTModulesProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.h[0m
+[36m[1m[Codegen][0m Generating RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/RCTModuleProviders.mm[0m
+[36m[1m[Codegen][0m Generating RCTAppDependencyProvider[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.h[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/RCTAppDependencyProvider.mm[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/dev/MyApp/ios/build/generated/ios/ReactAppDependencyProvider/ReactAppDependencyProvider.podspec[0m
+[36m[1m[Codegen][0m Generated podspec: /Users/dev/MyApp/ios/build/generated/ios/ReactCodegen/ReactCodegen.podspec[0m
+[36m[1m[Codegen][0m Generating Package.swift[0m
+[36m[1m[Codegen][0m Generated artifact: /Users/dev/MyApp/ios/build/generated/ios/Package.swift[0m
+[36m[1m[Codegen][0m [33mDone.[0m
+
+ClangStatCache /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+    cd /Users/dev/MyApp/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang-stat-cache /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -o /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/SDKStatCaches.noindex/iphonesimulator26.5-23F81a-6cfe768891a92b912361537c460fe42b.sdkstatcache
+
+ProcessInfoPlistFile /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/RNSVG/RNSVGFilters.bundle/Info.plist /Users/dev/MyApp/ios/Pods/Target\ Support\ Files/RNSVG/ResourceBundle-RNSVGFilters-RNSVG-Info.plist (in target 'RNSVG-RNSVGFilters' from project 'Pods')
+    cd /Users/dev/MyApp/ios/Pods
+    builtin-infoPlistUtility /Users/dev/MyApp/ios/Pods/Target\ Support\ Files/RNSVG/ResourceBundle-RNSVGFilters-RNSVG-Info.plist -producttype com.apple.product-type.bundle -expandbuildsettings -format binary -platform iphonesimulator -o /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/RNSVG/RNSVGFilters.bundle/Info.plist
+
+warning: Run script build phase 'Bundle React Native code and images' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'MyApp' from project 'MyApp')
+PhaseScriptExecution [CP]\ Check\ Pods\ Manifest.lock /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Script-C38B50BA6285516D6DCD4F65.sh (in target 'MyApp' from project 'MyApp')
+    cd /Users/dev/MyApp/ios
+    /bin/sh -c /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Script-C38B50BA6285516D6DCD4F65.sh
+
+Ld /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/Binary/MyApp.debug.dylib normal arm64 (in target 'MyApp' from project 'MyApp')
+    cd /Users/dev/MyApp/ios
+    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios15.1-simulator -dynamiclib -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk -O0 -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator -L/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator26.5.sdk/usr/lib/swift -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/RNReanimated -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/RNSVG -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/RNWorklets -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/ReactAppDependencyProvider -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/ReactCodegen -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/react-native-safe-area-context -L/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/react-native-tracking-transparency -F/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator -F/Users/dev/MyApp/ios/Pods/React-Core-prebuilt -F/Users/dev/MyApp/ios/Pods/ReactNativeDependencies/framework/packages/react-native -F/Users/dev/MyApp/ios/Pods/hermes-engine/destroot/Library/Frameworks/universal -F/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/React-Core-prebuilt -F/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/ReactNativeDependencies -F/Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Products/Debug-iphonesimulator/XCFrameworkIntermediates/hermes-engine/Pre-built -filelist /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/MyApp.LinkFileList -install_name @rpath/MyApp.debug.dylib -Xlinker -rpath -Xlinker /usr/lib/swift -Xlinker -rpath -Xlinker @executable_path/Frameworks -Xlinker -rpath -Xlinker @loader_path/Frameworks -Xlinker -dead_strip -Xlinker -object_path_lto -Xlinker /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/MyApp_lto.o -rdynamic -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/MyApp_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/MyApp.swiftmodule -ObjC -lRNReanimated -lRNSVG -lRNWorklets -lReactAppDependencyProvider -lReactCodegen -lreact-native-safe-area-context -lreact-native-tracking-transparency -framework Accelerate -framework AudioToolbox -framework CoreGraphics -framework ImageIO -framework MobileCoreServices -framework QuartzCore -framework React -framework ReactNativeDependencies -framework UIKit -framework hermesvm -weak_framework AppTrackingTransparency -weak_framework JavaScriptCore -ObjC -lc++ -lrnbdmissing -Xlinker -alias -Xlinker _main -Xlinker ___debug_main_executable_dylib_entry_point -lPods-MyApp -Xlinker -no_adhoc_codesign -o /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/Binary/MyApp.debug.dylib
+ld: library 'rnbdmissing' not found
+/Users/dev/MyApp/ios/MyApp.xcodeproj: MyApp: clang: error: linker command failed with exit code 1 (use -v to see invocation)
+
+** BUILD FAILED **
+
+
+The following build commands failed:
+	Ld /Users/dev/Library/Developer/Xcode/DerivedData/MyApp/Build/Intermediates.noindex/MyApp.build/Debug-iphonesimulator/MyApp.build/Objects-normal/arm64/Binary/MyApp.debug.dylib normal arm64 (in target 'MyApp' from project 'MyApp')
+	Building workspace MyApp with scheme MyApp and configuration Debug
+(2 failures)

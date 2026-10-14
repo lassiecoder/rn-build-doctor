@@ -21,7 +21,7 @@ export const cocoapodsIncompatibleVersions: Rule = {
     versionScope: "CocoaPods 1.x",
     references: COCOAPODS_REFS,
     lastVerified: VERIFIED,
-    fixtures: ["logs/ios-cocoapods-incompatible.log"],
+    fixtures: ["logs/ios-cocoapods-incompatible.log", "logs/real-cocoapods-no-such-version.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -34,6 +34,13 @@ export const cocoapodsIncompatibleVersions: Rule = {
         const context = log.doc.lines.slice(error.start, error.end + 1).join("\n");
         const deploymentTarget = /required a higher minimum deployment target/.test(context);
         const snapshot = /In snapshot \(Podfile\.lock\)/.test(context);
+        // A single requirement (no comma-separated list) that no spec satisfies: the version doesn't
+        // exist, and nothing conflicts.
+        const unsatisfiable =
+          /None of your spec sources contain a spec satisfying the dependency: `([^`]+)`/.exec(
+            context,
+          )?.[1];
+        const missingVersion = unsatisfiable !== undefined && !unsatisfiable.includes(",");
         const evidence: Evidence[] = [logEvidence(log.doc, error)];
         const target = ctx.project?.versions["ios deployment target (Podfile)"];
         if (target)
@@ -44,11 +51,15 @@ export const cocoapodsIncompatibleVersions: Rule = {
           });
         out.push(
           finding(this.meta, {
-            title: `CocoaPods could not find compatible versions for pod "${pod}"`,
+            title: missingVersion
+              ? `CocoaPods found no version of "${pod}" matching ${unsatisfiable}`
+              : `CocoaPods could not find compatible versions for pod "${pod}"`,
             severity: "error",
             confidence: "high",
             explanation:
-              `The version requirements for ${pod} conflict, so CocoaPods can't pick a version.` +
+              (missingVersion
+                ? `No version of ${pod} matching ${unsatisfiable} exists in the spec sources this machine knows about. Nothing else conflicts: either the version doesn't exist, or the local spec repo is out of date.`
+                : `The version requirements for ${pod} conflict, so CocoaPods can't pick a version.`) +
               (deploymentTarget
                 ? " CocoaPods also reported that matching versions exist but need a higher minimum iOS deployment target than this project declares."
                 : "") +
@@ -68,7 +79,13 @@ export const cocoapodsIncompatibleVersions: Rule = {
                   ]
                 : []),
               "Update the local spec repo with `cd ios && pod install --repo-update`.",
-              "Check that the JavaScript packages that bring in the pod are on versions compatible with your React Native or Expo SDK.",
+              ...(missingVersion
+                ? [
+                    `Check that ${unsatisfiable} is a published version (\`pod trunk info ${pod}\` or the pod's releases), and fix the version in the Podfile or in the podspec that requires it.`,
+                  ]
+                : [
+                    "Check that the JavaScript packages that bring in the pod are on versions compatible with your React Native or Expo SDK.",
+                  ]),
             ],
             verification: "`cd ios && pod install` completes without errors.",
           }),
@@ -291,12 +308,12 @@ export const linkerError: Rule = {
     platforms: ["ios"],
     scope: "log",
     trigger:
-      "Linker output: 'Undefined symbols for architecture', 'ld: library not found', or 'ld: framework not found'.",
+      "Linker output: 'Undefined symbols for architecture', 'ld: library not found for -lX' / 'ld: library 'X' not found' (Xcode 15+), or the framework equivalents.",
     evidence: "The linker error lines and the missing symbol or library.",
     versionScope: "Xcode 14+",
     references: ["https://guides.cocoapods.org/using/troubleshooting.html"],
     lastVerified: VERIFIED,
-    fixtures: ["logs/ios-linker.log"],
+    fixtures: ["logs/ios-linker.log", "logs/real-xcode26-linker-library-not-found.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -308,22 +325,57 @@ export const linkerError: Rule = {
         ),
       );
       if (!errors.length) continue;
-      const missing = errors
-        .map(
-          (e) =>
-            /(?:library|framework) not found for -?l?(\S+)|not found for (\S+)/.exec(
-              e.message,
-            )?.[1],
-        )
+      const text = errors.map((e) => e.message).join("\n");
+      // ld64 (Xcode 14 and earlier): `ld: library not found for -lFoo`, `ld: framework not found Foo`.
+      // ld-prime (Xcode 15+): `ld: library 'Foo' not found`, `ld: framework 'Foo' not found`.
+      const missingMatch =
+        /ld: (library|framework) '([^']+)' not found/.exec(text) ??
+        /ld: (library) not found for -l(\S+)/.exec(text) ??
+        /ld: (framework) not found (\S+)/.exec(text);
+      const kind = missingMatch?.[1] as "library" | "framework" | undefined;
+      const missing = missingMatch?.[2];
+      const symbol = log.doc.lines
+        .slice(errors[0]!.start, errors[0]!.start + 12)
+        .map((l) => /^\s*"([^"]+)", referenced from:/.exec(l)?.[1])
         .find(Boolean);
+      const fromPods = missing !== undefined && /^Pods[-_]/.test(missing);
+      const evidence = errors.slice(0, 3).map((e) => logEvidence(log.doc, e));
+      if (missing) {
+        out.push(
+          finding(this.meta, {
+            title: `Linker could not find ${kind} '${missing}'`,
+            severity: "error",
+            confidence: "high",
+            explanation: fromPods
+              ? `The app target links ${missing}, which CocoaPods generates. It wasn't built, which usually means the build opened the .xcodeproj instead of the .xcworkspace, or pods weren't installed for this checkout.`
+              : `The link step was told to link the ${kind} '${missing}' (\`${kind === "library" ? `-l${missing}` : `-framework ${missing}`}\`), but no ${kind} with that name exists in the search paths. Either the flag is stale (left in OTHER_LDFLAGS, an .xcconfig, or a podspec after a library was removed), or the library that provides it isn't installed or built.`,
+            evidence,
+            nextSteps: fromPods
+              ? [
+                  "Build the .xcworkspace, not the .xcodeproj.",
+                  "Run `cd ios && pod install` (Expo: `npx pod-install` or `npx expo prebuild`).",
+                ]
+              : [
+                  `Find where the flag comes from: \`grep -rn "${missing}" ios --include=*.pbxproj --include=*.xcconfig --include=*.podspec\` and check Other Linker Flags in the target's Build Settings.`,
+                  `If a dependency should provide '${missing}', check that it's installed and that \`cd ios && pod install\` ran after adding it. If nothing should, remove the stale flag.`,
+                ],
+            verification: "The link step succeeds.",
+          }),
+        );
+        continue;
+      }
       out.push(
         finding(this.meta, {
-          title: missing ? `Linker could not find ${missing}` : "Undefined symbols while linking",
+          title: symbol
+            ? `Undefined symbol ${symbol} while linking`
+            : "Undefined symbols while linking",
           severity: "error",
           confidence: "medium",
           explanation:
-            "Linking failed after compilation. Possible causes: a native library that isn't installed or linked, a pod built for a different architecture, or mixed static and dynamic framework settings. The log alone doesn't show which.",
-          evidence: errors.slice(0, 3).map((e) => logEvidence(log.doc, e)),
+            "Linking failed after compilation" +
+            (symbol ? `: nothing provides ${symbol}.` : ".") +
+            " Possible causes: a native library that isn't installed or linked, a pod built for a different architecture, or mixed static and dynamic framework settings. The log alone doesn't show which.",
+          evidence,
           nextSteps: [
             "Reinstall pods (`cd ios && pod deintegrate && pod install`) and clean the build folder.",
             "Check `use_frameworks!` settings against what the failing library documents.",
