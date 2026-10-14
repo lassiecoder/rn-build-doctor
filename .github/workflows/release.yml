@@ -23,7 +23,10 @@ jobs:
         run: test "v$(node -p 'require("./package.json").version')" = "$GITHUB_REF_NAME"
       - name: Publish (prerelease versions go to the "next" tag)
         run: |
-          if node -p 'require("./package.json").version' | grep -q -- '-'; then
+          VERSION=$(node -p 'require("./package.json").version')
+          if npm view "rn-build-doctor@$VERSION" version >/dev/null 2>&1; then
+            echo "rn-build-doctor@$VERSION is already on npm; skipping publish."
+          elif echo "$VERSION" | grep -q -- '-'; then
             npm publish --tag next
           else
             npm publish
