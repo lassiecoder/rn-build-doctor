@@ -71,6 +71,10 @@ export function formatReport(
       `${pc.bold("Project:")} ${p.kind}${p.packageManager ? ` · ${p.packageManager}` : ""}${p.hasAndroid ? " · android/" : ""}${p.hasIos ? " · ios/" : ""}`,
     );
     if (versions) out.push(pc.dim(`         ${versions}`));
+    const environment = Object.entries(p.environment ?? {})
+      .map(([k, v]) => `${k} ${v}`)
+      .join(", ");
+    if (environment) out.push(pc.dim(`         this machine: ${environment}`));
   }
   for (const input of report.inputs.filter((i) => i.kind === "log")) {
     out.push(

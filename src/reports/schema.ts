@@ -67,6 +67,8 @@ export const ProjectSummarySchema = z
     hasAndroid: z.boolean(),
     hasIos: z.boolean(),
     versions: z.record(z.string(), z.string()),
+    /** Toolchain detected on the machine that ran the scan (for example the JDK and Node.js). */
+    environment: z.record(z.string(), z.string()).optional(),
     notes: z.array(z.string()),
   })
   .strict();

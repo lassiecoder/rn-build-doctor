@@ -162,6 +162,8 @@ export function toMarkdown(report: Report): string {
     );
     for (const [k, v] of Object.entries(p.versions))
       out.push(`- ${escapeInline(k)}: ${escapeInline(v)}`);
+    for (const [k, v] of Object.entries(p.environment ?? {}))
+      out.push(`- ${escapeInline(k)} (this machine): ${escapeInline(v)}`);
     for (const n of p.notes) out.push(`- Note: ${escapeInline(n)}`);
     out.push("");
   }

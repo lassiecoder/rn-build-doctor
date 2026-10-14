@@ -43,9 +43,11 @@ export function runScan(options: ScanOptions): Report {
       runExpoDoctor(project, options.env),
     ]);
   }
+  const environment: Record<string, string> = { "Node.js": env.nodeVersion };
+  if (env.java) environment["JDK"] = `${env.java.raw} (${env.java.source})`;
   return buildReport({
     command: "scan",
-    project: summarizeProject(project),
+    project: { ...summarizeProject(project), environment },
     inputs: [{ kind: "project", path: project.root, detectedFormats: [], truncated: false }],
     findings,
     redactor: makeRedactor(options),
