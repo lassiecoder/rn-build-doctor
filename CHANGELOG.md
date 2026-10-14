@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.3 (2026-10-15)
+
+Fixes from retesting 0.1.2 the same way, with live pipes from real builds and an emulator.
+
+- New rule `runtime.js-bundle-not-loaded`: the app can't load its JavaScript bundle. With the New Architecture, a debug app that can't reach Metro shows a red screen and logs "Unable to load script" without a fatal exception, so it was reported as "No failure detected". Also covers iOS "No bundle URL present".
+- CocoaPods: `[!]` warnings such as "hermes-engine has added 1 script phase", printed on every fresh React Native install, are no longer treated as failures. A completed `pod install` is reported as successful.
+- `android.compile-error`: a javac-only failure is called a Java error, and the explanation reads "The Java compiler reported 1 error, so :app:compileDebugJavaWithJavac failed."
+- `android.jvm-option-unrecognized`: when the option is found in android/gradle.properties, the explanation names that line instead of also listing GRADLE_OPTS and JAVA_OPTS.
+- `runtime.missing-configuration-suspected`: React Native CLI projects get advice about .env files and libraries such as react-native-config instead of EAS commands.
+
 ## 0.1.2 (2026-10-15)
 
 Fixes from testing 0.1.1 against two real React Native CLI apps (0.86 and 0.87) on Android, iOS, and an emulator.

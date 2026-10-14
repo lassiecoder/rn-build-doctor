@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-39 rules: 13 project checks (`scan`) and 26 log rules (`analyze`).
+40 rules: 13 project checks (`scan`) and 27 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -363,7 +363,7 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Trigger             | Log line 'Unrecognized VM option 'X'' or 'Unrecognized option: X' together with 'Could not create the Java Virtual Machine'.                 |
 | Evidence            | The rejected option, the java command from the Gradle daemon command line when present, and the android/gradle.properties line that sets it. |
 | Sources             | <https://docs.gradle.org/current/userguide/build_environment.html#sec:configuring_jvm_memory><br><https://openjdk.org/jeps/122>              |
-| Regression fixtures | `tests/fixtures/logs/real-gradle93-jvm-maxpermsize.log`                                                                                      |
+| Regression fixtures | `tests/fixtures/logs/real-gradle93-jvm-maxpermsize.log`<br>`tests/fixtures/projects/rn-cli-old-permgen`                                      |
 | Last verified       | 2026-10-15                                                                                                                                   |
 
 ### `javascript.unable-to-resolve-module`
@@ -477,6 +477,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://reactnative.dev/docs/environment-setup><br><https://metrobundler.dev/docs/troubleshooting>                                        |
 | Regression fixtures | `tests/fixtures/logs/ios-node-binary.log`                                                                                                  |
 | Last verified       | 2026-10-14                                                                                                                                 |
+
+### `runtime.js-bundle-not-loaded`
+
+**The app couldn't load its JavaScript bundle**
+
+| Field               | Value                                                                                                                                                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android, ios, javascript                                                                                                                                                                                                                      |
+| Applicable versions | React Native (all versions); New Architecture red screen since 0.76                                                                                                                                                                           |
+| Trigger             | A device log with 'Unable to load script' (Android, including the New Architecture's non-fatal handleHostException), 'No bundle URL present' (iOS), or 'Could not connect to development server', when no fatal exception for it is reported. |
+| Evidence            | The bundle-loading error from the app's process and, when present, the line saying the packager (Metro) couldn't be reached.                                                                                                                  |
+| Sources             | <https://reactnative.dev/docs/running-on-device><br><https://reactnative.dev/docs/signed-apk-android>                                                                                                                                         |
+| Regression fixtures | `tests/fixtures/logs/real-logcat-metro-not-running.log`                                                                                                                                                                                       |
+| Last verified       | 2026-10-15                                                                                                                                                                                                                                    |
 
 ### `runtime.javascript-exception`
 

@@ -1,6 +1,6 @@
 {
   "name": "rn-build-doctor",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Evidence-based diagnostics for React Native and Expo build, release, and startup failures.",
   "license": "MIT",
   "repository": {
