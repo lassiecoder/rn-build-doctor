@@ -58,6 +58,12 @@ export class AnthropicProvider implements AiProvider {
       if (error instanceof Anthropic.APIError) {
         throw new AiError(`Anthropic API error ${error.status ?? ""}: ${error.message}`.trim());
       }
+      // The SDK raises a plain Error before any request when it finds no credentials.
+      if (/Could not resolve authentication method/i.test((error as Error).message)) {
+        throw new AiError(
+          "No Anthropic credentials found. Set ANTHROPIC_API_KEY (or ANTHROPIC_AUTH_TOKEN, or run `ant auth login`) and try again.",
+        );
+      }
       throw new AiError(`AI request failed: ${(error as Error).message}`);
     }
     if (response.stop_reason === "refusal") {

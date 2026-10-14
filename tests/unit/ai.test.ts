@@ -70,6 +70,18 @@ describe("AnthropicProvider failure handling", async () => {
     await expect(p.explain(req, { timeoutMs: 1000 })).rejects.toThrow(/timed out/);
   });
 
+  it("explains how to configure missing credentials", async () => {
+    const p = new AnthropicProvider(
+      "claude-opus-5-5",
+      fake(() =>
+        Promise.reject(
+          new Error("Could not resolve authentication method. Expected one of apiKey"),
+        ),
+      ),
+    );
+    await expect(p.explain(req, { timeoutMs: 1000 })).rejects.toThrow(/Set ANTHROPIC_API_KEY/);
+  });
+
   it("reports refusals and truncated output", async () => {
     const refused = new AnthropicProvider(
       "m",
