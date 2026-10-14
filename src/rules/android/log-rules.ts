@@ -773,6 +773,12 @@ function nodeModulesPackage(path: string): string | undefined {
   return match?.[1]?.replace(/\\/g, "/");
 }
 
+/** "Kotlin", "Java", or "Kotlin and Java", depending on which compilers reported errors. */
+function languages(errors: SourceError[]): string {
+  const set = new Set(errors.map((e) => e.language));
+  return set.size > 1 ? "Kotlin and Java" : [...set][0]!;
+}
+
 export const androidCompileError: Rule = {
   meta: {
     id: "android.compile-error",
@@ -856,7 +862,7 @@ export const androidCompileError: Rule = {
           severity: "error",
           confidence: "high",
           explanation:
-            `${errors.length} ${first.language === "Kotlin" && errors.every((e) => e.language === "Kotlin") ? "Kotlin" : "Kotlin/Java"} compiler error${errors.length === 1 ? "" : "s"}${task ? ` failed ${task}` : ""}. The first is in ${first.file} at ${position}: ${first.message}` +
+            `The ${languages(errors)} compiler reported ${errors.length} error${errors.length === 1 ? "" : "s"}${task ? `, so ${task} failed` : ""}. The first is in ${first.file} at ${position}: ${first.message}` +
             (pkg
               ? ` The file belongs to the npm package ${pkg}${installed ? ` (${installed})` : ""}, not to your app code. A library that doesn't compile usually doesn't support the installed React Native${rn ? ` (${rn})` : ""}, Kotlin, or Android Gradle Plugin version.`
               : ""),
@@ -895,7 +901,7 @@ export const jvmOptionUnrecognized: Rule = {
       PERMGEN_REMOVED.source,
     ],
     lastVerified: PERMGEN_REMOVED.lastVerified,
-    fixtures: ["logs/real-gradle93-jvm-maxpermsize.log"],
+    fixtures: ["logs/real-gradle93-jvm-maxpermsize.log", "projects/rn-cli-old-permgen"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -925,7 +931,7 @@ export const jvmOptionUnrecognized: Rule = {
           file: log.doc.path,
           detail: `Gradle started the daemon with ${java}`,
         });
-      let source = "org.gradle.jvmargs";
+      let source: string | undefined;
       if (ctx.project) {
         const props = readProjectFile(ctx.project.root, "android/gradle.properties");
         if (props.ok) {
@@ -948,7 +954,7 @@ export const jvmOptionUnrecognized: Rule = {
           severity: "error",
           confidence: "high",
           explanation:
-            `Gradle couldn't start its daemon because the JVM rejected the option ${flag}, set by ${source}, GRADLE_OPTS, or JAVA_OPTS.` +
+            `Gradle couldn't start its daemon because the JVM rejected the option ${flag}, ${source ? `set by ${source}` : "set by org.gradle.jvmargs (android/gradle.properties or ~/.gradle/gradle.properties), GRADLE_OPTS, or JAVA_OPTS"}.` +
             (permgen
               ? ` JDK ${PERMGEN_REMOVED.removedInJava} removed the permanent generation, so ${optionName} has no effect, and newer JDKs refuse to start with it. Old React Native templates set it by default.`
               : " This JVM version doesn't support the option. It was probably removed from the JDK or is misspelled."),
