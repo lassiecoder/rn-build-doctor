@@ -168,15 +168,24 @@ export const missingConfigurationSuspected: Rule = {
             confidence: "medium",
             explanation: `The exception message "${ex.message}" says a configuration value is absent at runtime. A common cause is a value that exists in development (.env, local shell) but not in the production or release build environment. This is a hypothesis based on the message. The build's environment wasn't inspected.`,
             evidence: [exceptionEvidence(log, ex, `Configuration term: ${match[1] ?? match[0]}`)],
-            nextSteps: [
-              "Run `rn-build-doctor scan` in the project to list environment variables the code references and where they're defined locally.",
-              "For EAS builds, check the environment used by the build profile: `eas env:list --environment production` and the `env`/`environment` fields in eas.json.",
-              "Remember that EXPO_PUBLIC_ variables are inlined at build time. Changing them requires a new build or update, not just a restart.",
-            ],
+            nextSteps:
+              ctx.project?.kind === "react-native-cli"
+                ? [
+                    `Find where ${match[1] ?? "the value"} is supposed to come from (search the source for it): a .env file read by a library such as react-native-config or a Babel plugin, a config file, or a native build setting.`,
+                    "Check that the source exists for this build: .env files are often git-ignored, so CI and other machines don't have them.",
+                    "Values read from .env at build time are compiled into the app. Rebuild the app after changing them; reloading JavaScript isn't always enough.",
+                  ]
+                : [
+                    "Run `rn-build-doctor scan` in the project to list environment variables the code references and where they're defined locally.",
+                    "For EAS builds, check the environment used by the build profile: `eas env:list --environment production` and the `env`/`environment` fields in eas.json.",
+                    "Remember that EXPO_PUBLIC_ variables are inlined at build time. Changing them requires a new build or update, not just a restart.",
+                  ],
             verification:
               "Build again with the value defined for that environment, and confirm the exception no longer occurs at startup.",
             limitations: [
-              "Local scanning can't see variables stored in EAS or another CI service.",
+              ctx.project?.kind === "react-native-cli"
+                ? "This tool doesn't know how this app loads configuration, and can't see values stored in CI."
+                : "Local scanning can't see variables stored in EAS or another CI service.",
             ],
           }),
         );
@@ -373,7 +382,81 @@ export const iosCrash: Rule = {
   },
 };
 
+export const jsBundleNotLoaded: Rule = {
+  meta: {
+    id: "runtime.js-bundle-not-loaded",
+    title: "The app couldn't load its JavaScript bundle",
+    platforms: ["android", "ios", "javascript"],
+    scope: "log",
+    trigger:
+      "A device log with 'Unable to load script' (Android, including the New Architecture's non-fatal handleHostException), 'No bundle URL present' (iOS), or 'Could not connect to development server', when no fatal exception for it is reported.",
+    evidence:
+      "The bundle-loading error from the app's process and, when present, the line saying the packager (Metro) couldn't be reached.",
+    versionScope: "React Native (all versions); New Architecture red screen since 0.76",
+    references: [
+      "https://reactnative.dev/docs/running-on-device",
+      "https://reactnative.dev/docs/signed-apk-android",
+    ],
+    lastVerified: "2026-10-15",
+    fixtures: ["logs/real-logcat-metro-not-running.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const failure = log.runtime.bundleLoadFailures[0];
+      if (!failure) continue;
+      // The fatal-exception rule already explains "Unable to load script" crashes.
+      if (
+        log.runtime.androidFatals.some((f) =>
+          /Unable to load script/.test([f.message, ...f.causes].join(" ")),
+        )
+      )
+        continue;
+      const evidence: Evidence[] = [
+        failure.lines?.length
+          ? logEvidenceLines(
+              log.doc,
+              failure.lines,
+              `Only lines from process ${failure.pid} are shown`,
+            )
+          : logEvidence(log.doc, failure),
+      ];
+      const unreachable = failure.packagerUnreachableIndex;
+      if (unreachable !== undefined)
+        evidence.push(
+          logEvidenceLines(log.doc, [unreachable], "Metro (the packager) was not reachable"),
+        );
+      out.push(
+        finding(this.meta, {
+          title:
+            unreachable !== undefined
+              ? "The app couldn't reach Metro to load its JavaScript bundle"
+              : this.meta.title,
+          severity: "error",
+          confidence: unreachable !== undefined ? "high" : "medium",
+          explanation:
+            "The app started, but React Native found no JavaScript to run: " +
+            (unreachable !== undefined
+              ? "it's a debug build, which loads JavaScript from the Metro dev server, and Metro wasn't reachable from the device."
+              : "either a debug build couldn't reach Metro, or a release build doesn't contain the bundled JavaScript.") +
+            " The app shows a red error screen instead of crashing, so nothing appears as a fatal exception.",
+          evidence,
+          nextSteps: [
+            "Start Metro in the project folder (`npx react-native start`, or `npx expo start` for Expo) and keep it running, then reload the app.",
+            "On a USB-connected Android device, run `adb reverse tcp:8081 tcp:8081`. On Wi-Fi, set the dev server address in the dev menu to your computer's IP and port 8081, on the same network.",
+            "If this is a release build, the bundle wasn't packaged: check that createBundleReleaseJsAndAssets ran (Android) or the 'Bundle React Native code and images' phase ran (iOS).",
+          ],
+          verification:
+            "Reload the app. It shows your first screen instead of the red error screen.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const runtimeRules: Rule[] = [
+  jsBundleNotLoaded,
   javascriptException,
   missingConfigurationSuspected,
   androidFatalException,

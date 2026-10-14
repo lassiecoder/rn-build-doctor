@@ -39,8 +39,19 @@ export interface IosCrash extends Span {
   appName?: string;
 }
 
+/** The app started but couldn't load its JavaScript bundle (Metro unreachable or no bundle). */
+export interface BundleLoadFailure extends Span {
+  message: string;
+  pid?: string;
+  /** Excerpt lines from the same process (logcat). */
+  lines?: number[];
+  /** Line where React Native reported that it couldn't reach the packager (Metro). */
+  packagerUnreachableIndex?: number;
+}
+
 export interface RuntimeParseResult {
   detected: boolean;
+  bundleLoadFailures: BundleLoadFailure[];
   jsExceptions: JsException[];
   androidFatals: AndroidFatal[];
   iosCrashes: IosCrash[];
@@ -59,6 +70,7 @@ const JS_CHANNELS: [RegExp, string][] = [
 export function parseRuntime(doc: LogDocument): RuntimeParseResult {
   const result: RuntimeParseResult = {
     detected: false,
+    bundleLoadFailures: [],
     jsExceptions: [],
     androidFatals: [],
     iosCrashes: [],
@@ -74,6 +86,20 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
 
   for (let i = 0; i < lines.length; i++) {
     const { tag, pid, message } = stripLogcatPrefix(lines[i]!);
+
+    // Bundle not loaded. With the New Architecture (bridgeless), a debug app without Metro shows a
+    // red screen and logs this through handleHostException instead of crashing.
+    if (!result.bundleLoadFailures.length && BUNDLE_NOT_LOADED.test(message)) {
+      result.detected = true;
+      const packager = lines.findIndex((l) => PACKAGER_UNREACHABLE.test(l));
+      result.bundleLoadFailures.push({
+        start: i,
+        end: Math.min(lines.length - 1, i + 8),
+        message: BUNDLE_NOT_LOADED.exec(message)![0],
+        ...(pid ? { pid, lines: sameProcessLines(lines, i, pid, EXCERPT_LINES) } : {}),
+        ...(packager >= 0 ? { packagerUnreachableIndex: packager } : {}),
+      });
+    }
 
     // Android fatal exception block.
     if (/^FATAL EXCEPTION:/.test(message.trim())) {
@@ -167,6 +193,10 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
 }
 
 const EXCERPT_LINES = 9;
+const BUNDLE_NOT_LOADED =
+  /Unable to load script\.?|No bundle URL present|Could not connect to development server/;
+const PACKAGER_UNREACHABLE =
+  /packager does not seem to be running|Couldn't connect to "ws:\/\/[^"]*:8081|Could not connect to development server/;
 /** How far ahead to look for lines of the same process in an interleaved logcat. */
 const SAME_PROCESS_WINDOW = 400;
 
