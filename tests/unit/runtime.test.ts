@@ -4,7 +4,7 @@ import { parseRuntime } from "../../src/parsers/runtime.js";
 import { stripLogcatPrefix } from "../../src/parsers/types.js";
 import { runAnalyze } from "../../src/pipeline.js";
 import { groupJsExceptions } from "../../src/rules/common/runtime-rules.js";
-import { EMPTY_ENV, NO_PROJECT, logFixture } from "../helpers/fixtures.js";
+import { EMPTY_ENV, NO_PROJECT, logFixture, projectFixture } from "../helpers/fixtures.js";
 
 const analyze = (name: string) =>
   runAnalyze([logFixture(name)], { cwd: NO_PROJECT, env: EMPTY_ENV });
@@ -86,5 +86,43 @@ describe("successful runs", () => {
     const f = analyze("real-rn086-metro-bundle-success.log").findings[0]!;
     expect(f.title).toBe("The log shows a successful build");
     expect(f.explanation).toContain("JavaScript bundle");
+  });
+});
+
+describe("wording for real-world variants", () => {
+  it("names CocoaPods when a pod install succeeded", () => {
+    const f = analyze("real-cocoapods-install-success.log").findings[0]!;
+    expect(f.ruleId).toBe("common.no-failure-detected");
+    expect(f.explanation).toContain("CocoaPods install");
+  });
+
+  it("calls a javac-only failure a Java error", () => {
+    const f = analyze("real-rn087-gradle-java-error.log").findings[0]!;
+    expect(f.explanation).toMatch(
+      /^The Java compiler reported 1 error, so :app:compileDebugJavaWithJavac failed\./,
+    );
+  });
+
+  it("points to gradle.properties instead of listing every possible source", () => {
+    const report = runAnalyze([logFixture("real-gradle93-jvm-maxpermsize.log")], {
+      cwd: projectFixture("rn-cli-old-permgen"),
+      env: EMPTY_ENV,
+    });
+    const f = report.findings[0]!;
+    expect(f.explanation).toContain(
+      "set by org.gradle.jvmargs in android/gradle.properties (line 3).",
+    );
+    expect(f.explanation).not.toContain("GRADLE_OPTS");
+  });
+
+  it("gives React Native CLI advice for missing configuration in a CLI project", () => {
+    const report = runAnalyze([logFixture("real-logcat-js-startup-crash.log")], {
+      cwd: projectFixture("rn-cli-clean"),
+      env: EMPTY_ENV,
+    });
+    const f = report.findings.find((x) => x.ruleId === "runtime.missing-configuration-suspected")!;
+    const steps = f.nextSteps.join(" ");
+    expect(steps).toContain("react-native-config");
+    expect(steps).not.toContain("eas env:list");
   });
 });

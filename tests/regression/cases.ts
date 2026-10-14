@@ -204,6 +204,14 @@ export const CASES: Case[] = [
     mustMention: ["-XX:MaxPermSize", "removed in JDK 8", "openjdk@17"],
   },
   {
+    name: "MaxPermSize in an old React Native project's gradle.properties",
+    kind: "log",
+    input: "real-gradle93-jvm-maxpermsize.log",
+    cwd: "rn-cli-old-permgen",
+    expect: ["android.jvm-option-unrecognized"],
+    mustMention: ["android/gradle.properties (line 3)", '"line":3'],
+  },
+  {
     name: "near miss: CLI flag error is not a JVM option",
     kind: "log",
     input: "near-miss-cli-unrecognized-option.log",
@@ -244,6 +252,22 @@ export const CASES: Case[] = [
     input: "real-logcat-js-startup-crash.log",
     expect: ["runtime.javascript-exception", "runtime.missing-configuration-suspected"],
     mustMention: ["API_URL is not configured", "Follow-on error", "has not been registered"],
+  },
+  {
+    name: "real: successful fresh pod install with [!] notices",
+    kind: "log",
+    input: "real-cocoapods-install-success.log",
+    expect: [],
+    info: ["common.no-failure-detected"],
+    forbid: ["common.no-supported-diagnosis"],
+  },
+  {
+    name: "real: New Architecture debug app without Metro (no fatal exception)",
+    kind: "log",
+    input: "real-logcat-metro-not-running.log",
+    expect: ["runtime.js-bundle-not-loaded"],
+    forbid: ["common.no-failure-detected"],
+    mustMention: ["couldn't reach Metro", "adb reverse tcp:8081 tcp:8081"],
   },
   // --- iOS
   {
@@ -357,7 +381,7 @@ export const CASES: Case[] = [
     input: "android-kotlin-app-error.log",
     expect: ["android.compile-error"],
     forbid: ["android.dependency-resolution", "common.no-supported-diagnosis"],
-    mustMention: ["MainApplication.kt:28:24", "PackageList", "2 Kotlin compiler errors"],
+    mustMention: ["MainApplication.kt:28:24", "PackageList", "Kotlin compiler reported 2 errors"],
   },
   {
     name: "unsupported native toolchain failure",
