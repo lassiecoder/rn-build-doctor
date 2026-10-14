@@ -9,7 +9,7 @@ This walkthrough reproduces a common Expo failure. The production build crashes 
 `tests/fixtures/projects/expo-env-missing-in-eas` contains:
 
 - `lib/supabase.ts` reads `process.env.EXPO_PUBLIC_SUPABASE_URL`
-- `.env` defines it, and `.gitignore` ignores `.env`
+- `env.fixture` defines it (placeholder values; it becomes `.env` when copied, see below), and `.gitignore` ignores `.env`
 - the `eas.json` `production` profile defines only `EXPO_PUBLIC_SUPABASE_ANON_KEY`
 
 Locally, `npx expo start` reads `.env`, so everything works.
@@ -18,6 +18,7 @@ Locally, `npx expo start` reads `.env`, so everything works.
 
 ```sh
 cp -R tests/fixtures/projects/expo-env-missing-in-eas /tmp/envdemo && cd /tmp/envdemo
+mv env.fixture .env   # stored under another name so the repo never contains a .env file
 npx rn-build-doctor scan
 ```
 
