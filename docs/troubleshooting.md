@@ -20,6 +20,15 @@ No error markers were found. The log may be cut off before the failure, or it ma
 
 PowerShell's `>` writes UTF-16. The tool detects UTF-16 with or without a byte-order mark. If detection still fails, write logs with `| Out-File -Encoding utf8 build.log`.
 
+## `npx rn-build-doctor` hangs inside a project
+
+Before starting a package, `npx` reads the current project's `node_modules`. If the project is in a folder that syncs to the cloud (for example `~/Documents` or `~/Desktop` with iCloud Drive "Optimize Mac Storage"), files that aren't downloaded can make that step stall, before rn-build-doctor even starts. `npm ls` hangs in the same project too. Run it from another directory and point it at the app, or install it globally:
+
+```sh
+cd ~ && npx rn-build-doctor scan --cwd ~/Documents/my-app
+npm install -g rn-build-doctor && rn-build-doctor scan --cwd ~/Documents/my-app
+```
+
 ## Huge logs
 
 Logs above 32 MB are read from the beginning and the end, and the middle is omitted. Line numbers still refer to the original file. Raise the limit with `--max-log-mb 128` if the failure is in the middle.

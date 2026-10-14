@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { Command, CommanderError, InvalidArgumentError, Option } from "commander";
@@ -61,6 +61,16 @@ function emit(report: Report, options: OutputOptions): number {
 
 const collect = (value: string, previous: string[] = []) => [...previous, value];
 
+/**
+ * Reads all of stdin. Uses the stream API rather than readFileSync(0), which throws EAGAIN when
+ * stdin is a pipe from a process that is still writing (e.g. `./gradlew build 2>&1 | ...`).
+ */
+async function readStdin(): Promise<string> {
+  const chunks: Buffer[] = [];
+  for await (const chunk of process.stdin) chunks.push(Buffer.from(chunk as Uint8Array));
+  return Buffer.concat(chunks).toString("utf8");
+}
+
 export function buildProgram(): Command {
   const program = new Command();
   // Set before subcommands are created so they inherit it (usage errors must exit 2, not 1).
@@ -122,8 +132,8 @@ Examples:
         .argParser(parsePositive)
         .default(32),
     )
-    .action((logs: string[], opts) => {
-      const stdinText = logs.includes("-") ? readFileSync(0, "utf8") : undefined;
+    .action(async (logs: string[], opts) => {
+      const stdinText = logs.includes("-") ? await readStdin() : undefined;
       const report = runAnalyze(logs, {
         cwd: resolve(opts.cwd),
         redact: opts.redact,

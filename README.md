@@ -11,7 +11,7 @@ Evidence-based diagnostics for React Native and Expo build, release, and startup
 
 It never guesses silently. When a log doesn't match a supported pattern, it says **"No supported diagnosis"** and shows the first error lines instead of inventing a cause. AI is optional, opt-in, and shown separately from verified findings.
 
-> **Status: 0.1.0 preview.** The rule catalog is narrow on purpose: 36 rules, each with fixtures and a cited source. See [supported checks](docs/supported-checks.md) and [known limitations](#limitations).
+> **Status: 0.1 preview.** The rule catalog is narrow on purpose: 37 rules, each with fixtures and a cited source. See [supported checks](docs/supported-checks.md) and [known limitations](#limitations).
 
 ## Install
 

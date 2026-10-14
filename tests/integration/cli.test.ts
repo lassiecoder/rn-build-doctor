@@ -1,4 +1,4 @@
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -108,6 +108,36 @@ describe("CLI", () => {
     const report = JSON.parse(res.stdout);
     expect(report.findings[0].ruleId).toBe("ios.code-signing");
     expect(report.findings[0].evidence[0].file).toBe("<stdin>");
+  });
+
+  it("reads stdin piped from a process that is still writing", async () => {
+    // A live build pipes output slowly; readFileSync(0) used to fail with EAGAIN here.
+    const log = readFileSync(logFixture("ios-signing-team.log"), "utf8");
+    const writer = spawn(
+      process.execPath,
+      [
+        "-e",
+        `const t=${JSON.stringify(log)};process.stdout.write(t.slice(0,40));setTimeout(()=>process.stdout.write(t.slice(40)),700);`,
+      ],
+      { stdio: ["ignore", "pipe", "inherit"] },
+    );
+    const reader = spawn(
+      process.execPath,
+      ["--require", NO_NETWORK, BIN, "analyze", "-", "--json", "--no-save"],
+      {
+        cwd: mkdtempSync(join(tmpdir(), "rnbd-pipe-")),
+        env: { ...baseEnv(), NO_COLOR: "1" },
+        stdio: [writer.stdout, "pipe", "pipe"],
+      },
+    );
+    let stdout = "";
+    let stderr = "";
+    reader.stdout.on("data", (d: Buffer) => (stdout += d));
+    reader.stderr.on("data", (d: Buffer) => (stderr += d));
+    const code = await new Promise<number | null>((done) => reader.on("close", done));
+    expect(stderr).not.toContain("EAGAIN");
+    expect(code).toBe(0);
+    expect(JSON.parse(stdout).findings[0].ruleId).toBe("ios.code-signing");
   });
 
   it("scans offline, saves reports locally, and exports Markdown without secrets", () => {
