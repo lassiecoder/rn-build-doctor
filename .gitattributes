@@ -1,0 +1,3 @@
+* text=auto eol=lf
+# Fixtures must stay byte-exact (encodings, line endings, ANSI codes).
+tests/fixtures/** -text

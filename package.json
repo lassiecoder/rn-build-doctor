@@ -1,0 +1,72 @@
+{
+  "name": "rn-build-doctor",
+  "version": "0.1.0",
+  "description": "Evidence-based diagnostics for React Native and Expo build, release, and startup failures.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lassiecoder/rn-build-doctor.git"
+  },
+  "homepage": "https://github.com/lassiecoder/rn-build-doctor#readme",
+  "bugs": {
+    "url": "https://github.com/lassiecoder/rn-build-doctor/issues"
+  },
+  "type": "module",
+  "bin": {
+    "rn-build-doctor": "dist/cli/bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "docs"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "gradle",
+    "xcode",
+    "cocoapods",
+    "metro",
+    "build",
+    "diagnostics",
+    "cli"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "prebuild": "npm run clean",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "benchmark": "vitest run tests/regression",
+    "check": "npm run typecheck && npm run lint && npm run format:check && npm run build && npm test",
+    "prepublishOnly": "npm run check",
+    "catalog": "node scripts/catalog.mjs && prettier --log-level warn --write docs/supported-checks.md"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "commander": "^15.0.0",
+    "json5": "^2.2.3",
+    "picocolors": "^1.1.1",
+    "semver": "^7.8.5",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^22.20.5",
+    "@types/semver": "^7.8.0",
+    "eslint": "^10.12.0",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.4"
+  }
+}

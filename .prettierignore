@@ -1,0 +1,6 @@
+dist
+node_modules
+tests/fixtures
+coverage
+plan.txt
+package-lock.json

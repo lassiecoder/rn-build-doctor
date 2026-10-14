@@ -1,0 +1,9 @@
+/node_modules
+/dist
+/coverage
+*.tgz
+.rn-build-doctor
+.DS_Store
+
+# Local planning notes
+plan.txt
