@@ -11,7 +11,7 @@ Evidence-based diagnostics for React Native and Expo build, release, and startup
 
 It never guesses silently. When a log doesn't match a supported pattern, it says **"No supported diagnosis"** and shows the first error lines instead of inventing a cause. AI is optional, opt-in, and shown separately from verified findings.
 
-> **Status: 0.1 preview.** The rule catalog is narrow on purpose: 40 rules, each with fixtures and a cited source. See [supported checks](docs/supported-checks.md) and [known limitations](#limitations).
+> **Status: 0.1 preview.** The rule catalog is narrow on purpose: 40 rules, each with fixtures and a cited source. See [supported checks](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/supported-checks.md) and [known limitations](#limitations).
 
 ## Install
 
@@ -22,6 +22,8 @@ npx rn-build-doctor --help          # run without installing
 npm install --save-dev rn-build-doctor
 ```
 
+Run the commands from your project's root folder (the one with `package.json`), or pass `--cwd <dir>`. The project files are what let it tell, for example, an uninstalled package from a Metro cache problem.
+
 ## Quickstart
 
 ```sh
@@ -30,13 +32,13 @@ npx rn-build-doctor scan
 
 # 2. Analyze a failing build, device log, or crash report
 npx rn-build-doctor analyze ./android-build.log
-cd android && ./gradlew assembleRelease 2>&1 | npx rn-build-doctor analyze -   # or pipe it in
+(cd android && ./gradlew assembleRelease) 2>&1 | npx rn-build-doctor analyze -   # or pipe it in
 
 # 3. Export everything as a shareable, redacted report
 npx rn-build-doctor report --output build-report.md
 ```
 
-Example: the output for a real `npx expo export` failure (Expo SDK 57). The log is in `tests/fixtures/logs/real-expo57-metro-syntax.log`.
+Example: the output for a real `npx expo export` failure (Expo SDK 57), shortened. The log is in `tests/fixtures/logs/real-expo57-metro-syntax.log`.
 
 ```text
 ERROR F1 Syntax error in /Users/dev/realexpo/src/app/index.tsx (1:11)
@@ -54,6 +56,21 @@ ERROR F1 Syntax error in /Users/dev/realexpo/src/app/index.tsx (1:11)
       Verify: The bundle builds without the syntax error.
 ```
 
+## Common situations
+
+Run these from the project root. Each pipes the output straight in, so you don't need to save a log first. Add `2>&1` so errors printed to stderr are included.
+
+| Situation                                 | Command                                                                                                                                         |
+| ----------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Android build fails                       | `(cd android && ./gradlew assembleDebug) 2>&1 \| npx rn-build-doctor analyze -`                                                                 |
+| iOS build fails                           | `xcodebuild -workspace ios/MyApp.xcworkspace -scheme MyApp -sdk iphonesimulator build 2>&1 \| npx rn-build-doctor analyze -`                    |
+| `pod install` fails                       | `(cd ios && pod install) 2>&1 \| npx rn-build-doctor analyze -`                                                                                 |
+| JavaScript bundling fails                 | `npx expo export 2>&1 \| npx rn-build-doctor analyze -`, or the same with `npx react-native bundle ...`                                         |
+| Android app crashes or shows a red screen | Reproduce the problem, then `adb logcat -d \| npx rn-build-doctor analyze -`                                                                    |
+| iOS app crashes                           | Export the crash report (`.ips` or `.crash`) from Xcode > Devices or the device's Analytics Data, then `npx rn-build-doctor analyze report.ips` |
+| EAS build fails                           | Download the build log from the EAS build page and run `npx rn-build-doctor analyze build.log`                                                  |
+| Before a release, or in CI                | `npx rn-build-doctor scan --fail-on error`                                                                                                      |
+
 ## Commands
 
 | Command             | What it does                                                                                                    | Network                                                    |
@@ -66,30 +83,32 @@ ERROR F1 Syntax error in /Users/dev/realexpo/src/app/index.tsx (1:11)
 
 Common options: `--cwd <dir>`, `--json`, `--no-save`, `--fail-on <error|warning|info|none>`, `--redact <value>` (repeatable), `--verbose`, `--no-color`.
 
-`scan` and `analyze` save their results to `.rn-build-doctor/` in the project. The folder contains its own `.gitignore`, so reports are never committed.
+`scan` and `analyze` save their results to `.rn-build-doctor/` in the project (use `--no-save` to skip). The folder contains its own `.gitignore`, so reports are never committed.
 
 **Exit codes:** `0` completed · `1` a finding at or above `--fail-on` · `2` invalid input or usage · `3` internal error · `4` AI provider failure.
 
 ### Use in CI
 
 ```yaml
-- run: npx expo export --platform android 2>&1 | tee build.log
+- run: |
+    set -o pipefail   # without it, the step takes tee's exit code and never fails
+    npx expo export --platform android 2>&1 | tee build.log
 - if: failure()
-  run: npx rn-build-doctor analyze build.log && npx rn-build-doctor report --output $GITHUB_STEP_SUMMARY
+  run: npx rn-build-doctor analyze build.log && npx rn-build-doctor report --output "$GITHUB_STEP_SUMMARY"
 ```
 
 ## What it can diagnose
 
-| Area                  | Examples                                                                                                                                                                                                                                |
-| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Expo configuration    | invalid `app.json`, config plugins that aren't installed, packages outside the SDK's expected versions (from the installed `expo` package's data), committed native folders that ignore app config                                      |
-| Environment variables | `EXPO_PUBLIC_` values read with bracket syntax, variables defined only in a git-ignored `.env` that EAS Build never receives, variables defined nowhere locally                                                                         |
-| Android / Gradle      | unresolved dependencies, JDK vs AGP mismatches, Gradle too old, class-file version errors, missing SDK or licenses, AAR metadata (`compileSdk` / AGP requirements), duplicate classes, manifest merge failures, JS bundle task failures |
-| Metro                 | unresolved modules (missing package, undeclared package, path alias, Node built-in, relative path case), Babel syntax errors                                                                                                            |
-| iOS                   | CocoaPods version conflicts and missing specs, code signing, compile errors (including missing headers), linker errors, the bundle build phase (including `node` not found)                                                             |
-| Runtime               | JavaScript exceptions, Android fatal exceptions (including "Unable to load script"), iOS crash reports (text and `.ips`), missing Info.plist usage descriptions, configuration-related startup errors                                   |
+| Area                  | Examples                                                                                                                                                                                                                                                                                                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Expo configuration    | invalid `app.json`, config plugins that aren't installed, packages outside the SDK's expected versions (from the installed `expo` package's data), committed native folders that ignore app config                                                                                                                                                                       |
+| Environment variables | `EXPO_PUBLIC_` values read with bracket syntax, variables defined only in a git-ignored `.env` that EAS Build never receives, variables defined nowhere locally                                                                                                                                                                                                          |
+| Android / Gradle      | unresolved dependencies, JDK vs AGP mismatches, Gradle too old, class-file version errors, JVM options the JDK rejects (such as `-XX:MaxPermSize`), missing SDK or licenses, AAR metadata (`compileSdk` / AGP requirements), duplicate classes, manifest merge failures (including a library's higher `minSdk`), Kotlin and Java compile errors, JS bundle task failures |
+| Metro                 | unresolved modules (missing package, undeclared package, path alias, Node built-in, relative path case), Babel syntax errors                                                                                                                                                                                                                                             |
+| iOS                   | CocoaPods version conflicts, missing versions and specs, code signing, compile errors (including missing headers), linker errors (missing libraries and undefined symbols), the bundle build phase (including `node` not found)                                                                                                                                          |
+| Runtime               | JavaScript exceptions (with follow-on errors grouped), apps that can't load their JavaScript bundle or reach Metro, Android fatal exceptions, iOS crash reports (text and `.ips`), missing Info.plist usage descriptions, configuration-related startup errors                                                                                                           |
 
-The full catalog with triggers, evidence, version scope, sources, and fixtures is in [docs/supported-checks.md](docs/supported-checks.md).
+The full catalog with triggers, evidence, version scope, sources, and fixtures is in [docs/supported-checks.md](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/supported-checks.md), or run `npx rn-build-doctor doctor`.
 
 ## How it decides
 
@@ -101,6 +120,17 @@ Every finding has a **confidence** level:
 
 Findings explain what is confirmed and what is only a hypothesis, and list the tool's own limitations for that case. High confidence in a diagnosis doesn't mean a fix is safe. Review each next step.
 
+## Optional: AI explanation
+
+`explain` sends the saved, redacted findings to Anthropic's API and shows suggestions labeled as unverified, next to the verified findings. It needs an API key in `ANTHROPIC_API_KEY`.
+
+```sh
+npx rn-build-doctor explain --dry-run   # print exactly what would be sent; sends nothing
+npx rn-build-doctor explain             # asks for confirmation, then sends
+```
+
+In non-interactive shells such as CI, it refuses to send unless you pass `--yes`.
+
 ## Privacy
 
 - `scan` and `analyze` run entirely locally. There's no telemetry, and the test suite fails if they open a network connection.
@@ -108,7 +138,7 @@ Findings explain what is confirmed and what is only a hypothesis, and list the t
 - Reports are redacted (tokens, keys, passwords, auth headers, cookies, private keys, URL credentials, sensitive environment values, and your home directory) before they're printed or saved. Redaction is best-effort, so review reports before sharing them.
 - `explain` shows what will be sent and where, asks for confirmation, and supports `--dry-run`. It never runs suggested commands or edits files.
 
-Details: [docs/privacy.md](docs/privacy.md).
+Details: [docs/privacy.md](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/privacy.md).
 
 ## Benchmark
 
@@ -126,13 +156,13 @@ The authors built this small benchmark alongside the rules, so treat it as a reg
 
 ## Documentation
 
-- [Architecture](docs/architecture.md)
-- [Supported checks](docs/supported-checks.md)
-- [Privacy](docs/privacy.md)
-- [Troubleshooting](docs/troubleshooting.md)
-- [Demo walkthrough](docs/demo.md)
-- [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Changelog](CHANGELOG.md)
+- [Architecture](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/architecture.md)
+- [Supported checks](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/supported-checks.md)
+- [Privacy](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/privacy.md)
+- [Troubleshooting](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/troubleshooting.md)
+- [Demo walkthrough](https://github.com/lassiecoder/rn-build-doctor/blob/main/docs/demo.md)
+- [Contributing](https://github.com/lassiecoder/rn-build-doctor/blob/main/CONTRIBUTING.md) · [Security](https://github.com/lassiecoder/rn-build-doctor/blob/main/SECURITY.md) · [Changelog](https://github.com/lassiecoder/rn-build-doctor/blob/main/CHANGELOG.md)
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/lassiecoder/rn-build-doctor/blob/main/LICENSE)
