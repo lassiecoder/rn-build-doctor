@@ -27,6 +27,24 @@ export function logEvidence(doc: LogDocument, span: Span, detail?: string): Evid
   };
 }
 
+/**
+ * Builds log evidence from selected, possibly non-adjacent lines (for example only the lines of one
+ * process in an interleaved logcat). The reported line number is the first selected line.
+ */
+export function logEvidenceLines(doc: LogDocument, indices: number[], detail?: string): Evidence {
+  const picked = indices.slice(0, MAX_EXCERPT_LINES);
+  const lines = picked
+    .map((i) => doc.lines[i] ?? "")
+    .map((l) => (l.length > MAX_EXCERPT_LINE_CHARS ? `${l.slice(0, MAX_EXCERPT_LINE_CHARS)}…` : l));
+  return {
+    source: "log",
+    file: doc.path,
+    line: lineNumber(doc, picked[0] ?? 0),
+    excerpt: lines.join("\n"),
+    ...(detail ? { detail } : {}),
+  };
+}
+
 /** Finds the first line index at or after `from` matching `pattern`. */
 export function findIndex(
   doc: LogDocument,
@@ -50,13 +68,15 @@ export function flatten(doc: LogDocument, span: Span): string {
 }
 
 /** Removes logcat prefixes such as `10-14 20:00:00.000  1234  1234 E AndroidRuntime: `. */
-export function stripLogcatPrefix(line: string): { tag?: string; message: string } {
+export function stripLogcatPrefix(line: string): { tag?: string; pid?: string; message: string } {
   const threadtime =
-    /^\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+\s+\d+\s+\d+\s+[VDIWEFA]\s+([^:]+?)\s*:\s?(.*)$/.exec(
+    /^\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+\s+(\d+)\s+\d+\s+[VDIWEFA]\s+([^:]+?)\s*:\s?(.*)$/.exec(
       line,
     );
-  if (threadtime) return { tag: threadtime[1]!.trim(), message: threadtime[2]! };
-  const brief = /^[VDIWEFA]\/([^(:]+?)\s*(?:\(\s*\d+\))?:\s?(.*)$/.exec(line);
-  if (brief) return { tag: brief[1]!.trim(), message: brief[2]! };
+  if (threadtime)
+    return { tag: threadtime[2]!.trim(), pid: threadtime[1]!, message: threadtime[3]! };
+  const brief = /^[VDIWEFA]\/([^(:]+?)\s*(?:\(\s*(\d+)\))?:\s?(.*)$/.exec(line);
+  if (brief)
+    return { tag: brief[1]!.trim(), ...(brief[2] ? { pid: brief[2] } : {}), message: brief[3]! };
   return { message: line };
 }

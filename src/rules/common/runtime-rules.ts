@@ -1,9 +1,48 @@
 import { finding, type Rule } from "../../engine/rule.js";
-import { logEvidence } from "../../parsers/types.js";
+import type { ParsedLog } from "../../parsers/index.js";
+import type { JsException } from "../../parsers/runtime.js";
+import { logEvidence, logEvidenceLines } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
 const VERIFIED = "2026-10-14";
 const MAX_PER_LOG = 3;
+
+/**
+ * Errors React Native reports after an earlier JavaScript error stopped the bundle from loading or
+ * the surface from starting. On their own they don't point at a cause.
+ */
+const FOLLOW_ON = [
+  /has not been registered\b/,
+  /\bGlobal was not installed\b/,
+  /is not a registered callable module/,
+];
+
+interface ExceptionGroup {
+  primary: JsException;
+  followOns: JsException[];
+}
+
+/** Groups follow-on errors under the earlier exception from the same process. */
+export function groupJsExceptions(exceptions: JsException[]): ExceptionGroup[] {
+  const groups: ExceptionGroup[] = [];
+  for (const ex of exceptions) {
+    const owner = FOLLOW_ON.some((p) => p.test(ex.message))
+      ? [...groups].reverse().find((g) => !g.primary.pid || !ex.pid || g.primary.pid === ex.pid)
+      : undefined;
+    if (owner) owner.followOns.push(ex);
+    else groups.push({ primary: ex, followOns: [] });
+  }
+  return groups;
+}
+
+/** Evidence for an exception: only lines from the same process when the log is an interleaved logcat. */
+function exceptionEvidence(log: ParsedLog, ex: JsException, detail?: string): Evidence {
+  if (ex.lines?.length) {
+    const note = `Only lines from process ${ex.pid} are shown`;
+    return logEvidenceLines(log.doc, ex.lines, detail ? `${detail}; ${note}` : note);
+  }
+  return logEvidence(log.doc, ex, detail);
+}
 
 export const javascriptException: Rule = {
   meta: {
@@ -21,15 +60,37 @@ export const javascriptException: Rule = {
       "https://docs.expo.dev/debugging/runtime-issues/",
     ],
     lastVerified: VERIFIED,
-    fixtures: ["logs/runtime-android-js-exception.log"],
+    fixtures: ["logs/runtime-android-js-exception.log", "logs/real-logcat-js-startup-crash.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
     for (const log of ctx.logs) {
-      for (const ex of log.runtime.jsExceptions.slice(0, MAX_PER_LOG)) {
+      for (const { primary: ex, followOns } of groupJsExceptions(log.runtime.jsExceptions).slice(
+        0,
+        MAX_PER_LOG,
+      )) {
         const minified =
           ex.firstFrame &&
           /index\.android\.bundle|main\.jsbundle|^\s*\w@\d+:\d+/.test(ex.firstFrame);
+        const evidence: Evidence[] = [
+          exceptionEvidence(
+            log,
+            ex,
+            [
+              ex.firstFrame && `First stack frame: ${ex.firstFrame}`,
+              ex.component && `Thrown while rendering <${ex.component}> (React component stack)`,
+            ]
+              .filter(Boolean)
+              .join("; ") || undefined,
+          ),
+          ...followOns.map((f) =>
+            logEvidenceLines(
+              log.doc,
+              [f.start],
+              `Follow-on error caused by the first one: ${f.type}: ${f.message.slice(0, 160)}`,
+            ),
+          ),
+        ];
         out.push(
           finding(this.meta, {
             title: `${ex.type}: ${ex.message.length > 120 ? `${ex.message.slice(0, 117)}…` : ex.message}`,
@@ -37,29 +98,24 @@ export const javascriptException: Rule = {
             confidence: "high",
             explanation:
               `The app reported a JavaScript ${ex.type} (via ${ex.channel}). This finding confirms the exception, not its root cause.` +
+              (followOns.length
+                ? ` ${followOns.length} later error${followOns.length === 1 ? "" : "s"} (such as "${followOns[0]!.message.slice(0, 80)}") ${followOns.length === 1 ? "is a consequence" : "are consequences"} of this one: once the bundle fails to run, React Native can't register or start the app. ${followOns.length === 1 ? "It's" : "They're"} listed as evidence here instead of as separate findings.`
+                : "") +
               (minified
                 ? " The stack trace points into a minified release bundle and needs source maps to map back to your code."
                 : ""),
-            evidence: [
-              logEvidence(
-                log.doc,
-                ex,
-                [
-                  ex.firstFrame && `First stack frame: ${ex.firstFrame}`,
-                  ex.component &&
-                    `Thrown while rendering <${ex.component}> (React component stack)`,
-                ]
-                  .filter(Boolean)
-                  .join("; ") || undefined,
-              ),
-            ],
+            evidence,
             nextSteps: [
               ...(minified
                 ? [
                     "Symbolicate the stack trace with the source map from the same release build (see React Native 'Debugging release builds').",
                   ]
-                : []),
-              "Reproduce in a local release build (`npx expo run:android --variant release` / `npx react-native run-android --mode release`, or the iOS equivalents).",
+                : ex.firstFrame
+                  ? [`Start at the first stack frame: ${ex.firstFrame}.`]
+                  : [
+                      `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
+                    ]),
+              "If it happens only in release builds, reproduce with a local release build (`npx expo run:android --variant release` / `npx react-native run-android --mode release`, or the iOS equivalents).",
               "Compare the configuration and environment variables of the failing build with the working one.",
             ],
             limitations: [
@@ -99,7 +155,10 @@ export const missingConfigurationSuspected: Rule = {
   run(ctx) {
     const out: DraftFinding[] = [];
     for (const log of ctx.logs) {
-      for (const ex of log.runtime.jsExceptions.slice(0, MAX_PER_LOG)) {
+      for (const { primary: ex } of groupJsExceptions(log.runtime.jsExceptions).slice(
+        0,
+        MAX_PER_LOG,
+      )) {
         const match = CONFIG_MESSAGE.map((p) => p.exec(ex.message)).find(Boolean);
         if (!match) continue;
         out.push(
@@ -108,7 +167,7 @@ export const missingConfigurationSuspected: Rule = {
             severity: "warning",
             confidence: "medium",
             explanation: `The exception message "${ex.message}" says a configuration value is absent at runtime. A common cause is a value that exists in development (.env, local shell) but not in the production or release build environment. This is a hypothesis based on the message. The build's environment wasn't inspected.`,
-            evidence: [logEvidence(log.doc, ex, `Configuration term: ${match[1] ?? match[0]}`)],
+            evidence: [exceptionEvidence(log, ex, `Configuration term: ${match[1] ?? match[0]}`)],
             nextSteps: [
               "Run `rn-build-doctor scan` in the project to list environment variables the code references and where they're defined locally.",
               "For EAS builds, check the environment used by the build profile: `eas env:list --environment production` and the `env`/`environment` fields in eas.json.",

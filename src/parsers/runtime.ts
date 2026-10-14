@@ -11,6 +11,13 @@ export interface JsException extends Span {
   firstFrame?: string;
   /** Innermost React component from the component stack ("in RootLayout"), not a stack frame. */
   component?: string;
+  /** Logcat process id, when the log has one. */
+  pid?: string;
+  /**
+   * Line indices for the excerpt when the log interleaves several processes (logcat): the exception
+   * line and the following lines from the same process only.
+   */
+  lines?: number[];
 }
 
 export interface AndroidFatal extends Span {
@@ -66,7 +73,7 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
   }
 
   for (let i = 0; i < lines.length; i++) {
-    const { tag, message } = stripLogcatPrefix(lines[i]!);
+    const { tag, pid, message } = stripLogcatPrefix(lines[i]!);
 
     // Android fatal exception block.
     if (/^FATAL EXCEPTION:/.test(message.trim())) {
@@ -103,14 +110,19 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
         if (!seenJs.has(key)) {
           seenJs.add(key);
           result.detected = true;
-          const frameIndex = findNear(lines, i + 1, i + 8, tag, STACK_FRAME);
-          const componentIndex = findNear(lines, i + 1, i + 8, tag, COMPONENT_FRAME);
+          const excerpt = pid ? sameProcessLines(lines, i, pid, EXCERPT_LINES) : undefined;
+          const after = excerpt
+            ? excerpt.slice(1)
+            : Array.from({ length: 8 }, (_, k) => i + 1 + k).filter((k) => k < lines.length);
+          const frameIndex = findNear(lines, after, tag, STACK_FRAME);
+          const componentIndex = findNear(lines, after, tag, COMPONENT_FRAME);
           result.jsExceptions.push({
             start: i,
             end: Math.min(lines.length - 1, i + 8),
             type,
             message: msg,
             channel,
+            ...(pid && excerpt ? { pid, lines: excerpt } : {}),
             ...(frameIndex !== undefined
               ? { firstFrame: stripLogcatPrefix(lines[frameIndex]!).message.trim() }
               : {}),
@@ -154,6 +166,20 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
   return result;
 }
 
+const EXCERPT_LINES = 9;
+/** How far ahead to look for lines of the same process in an interleaved logcat. */
+const SAME_PROCESS_WINDOW = 400;
+
+/** The line at `start` plus following lines logged by the same process, up to `limit` lines. */
+function sameProcessLines(lines: string[], start: number, pid: string, limit: number): number[] {
+  const picked = [start];
+  for (let j = start + 1; j < lines.length && j <= start + SAME_PROCESS_WINDOW; j++) {
+    if (picked.length >= limit) break;
+    if (stripLogcatPrefix(lines[j]!).pid === pid) picked.push(j);
+  }
+  return picked;
+}
+
 const STACK_FRAME = /^\s*(?:at\s+\S|\S+@\S*:\d+:\d+)/;
 const COMPONENT_FRAME = /^\s*in\s+\S/;
 
@@ -164,12 +190,11 @@ const COMPONENT_FRAME = /^\s*in\s+\S/;
  */
 function findNear(
   lines: string[],
-  from: number,
-  to: number,
+  candidates: number[],
   tag: string | undefined,
   pattern: RegExp,
 ): number | undefined {
-  for (let i = from; i <= Math.min(to, lines.length - 1); i++) {
+  for (const i of candidates) {
     const line = stripLogcatPrefix(lines[i]!);
     if (tag && line.tag !== tag) continue;
     if (pattern.test(line.message)) return i;
