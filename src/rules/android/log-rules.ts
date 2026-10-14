@@ -3,9 +3,11 @@ import { finding, type Rule, type RuleContext } from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import { findIndex, flatten, logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
+import { readProjectFile } from "../../collectors/project-files.js";
 import {
   AGP_JDK_REQUIREMENT,
   GRADLE_MIN_FOR_JAVA,
+  PERMGEN_REMOVED,
   compareVersions,
   javaFromClassFileMajor,
 } from "./compat.js";
@@ -582,7 +584,8 @@ export const manifestMergerFailed: Rule = {
     title: "Android manifest merger failed",
     platforms: ["android"],
     scope: "log",
-    trigger: "Log line 'Manifest merger failed'.",
+    trigger:
+      "Log line 'Manifest merger failed', including 'uses-sdk:minSdkVersion N cannot be smaller than version M declared in library'.",
     evidence: "The merger error line and the conflicting attribute or element.",
     versionScope: "All Android Gradle Plugin versions",
     references: [
@@ -590,7 +593,7 @@ export const manifestMergerFailed: Rule = {
       "https://developer.android.com/about/versions/12/behavior-changes-12#exported",
     ],
     lastVerified: VERIFIED,
-    fixtures: ["logs/android-manifest-exported.log"],
+    fixtures: ["logs/android-manifest-exported.log", "logs/real-rn087-gradle-manifest-minsdk.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -601,6 +604,41 @@ export const manifestMergerFailed: Rule = {
       )) {
         const end = Math.min(log.doc.lines.length - 1, index + 6);
         const context = log.doc.lines.slice(index, end + 1).join(" ");
+        const minSdk =
+          /uses-sdk:minSdkVersion (\d+) cannot be smaller than version (\d+) declared in library \[([^\]]+)\]/.exec(
+            context,
+          );
+        if (minSdk) {
+          const [, appMin, libMin, library] = minSdk;
+          const coordinate = library!.split(/\s+/)[0]!;
+          const evidence: Evidence[] = [logEvidence(log.doc, { start: index, end })];
+          const declared = ctx.project?.versions["minSdk"];
+          if (declared)
+            evidence.push({
+              source: "project",
+              file: "android/build.gradle",
+              detail: `minSdk: ${declared}`,
+            });
+          out.push(
+            finding(this.meta, {
+              title: `${coordinate} needs minSdk ${libMin}, but the app's minSdk is ${appMin}`,
+              severity: "error",
+              confidence: "high",
+              explanation: `The library ${coordinate} declares minSdkVersion ${libMin} in its manifest. The app declares ${appMin}, so it would install on devices the library doesn't support, and the manifest merger stops the build.`,
+              evidence,
+              nextSteps: [
+                ctx.project?.kind === "expo"
+                  ? `Raise the minimum SDK to ${libMin} with expo-build-properties (\`android.minSdkVersion\` in app config), then rebuild.`
+                  : `Raise minSdkVersion to ${libMin} in android/build.gradle (the \`minSdkVersion\` value in \`buildscript.ext\`). This drops support for Android versions below API ${libMin}.`,
+                `Or use a version of ${coordinate.split(":").slice(0, 2).join(":")} (or of the package that pulls it in) that supports minSdk ${appMin}. \`cd android && ./gradlew :app:dependencies\` shows which package requires it.`,
+                "Only use tools:overrideLibrary if every call into the library is guarded by a runtime API-level check. Otherwise the app crashes on older devices.",
+              ],
+              verification:
+                "`./gradlew :app:processDebugMainManifest` (or the release variant) succeeds.",
+            }),
+          );
+          continue;
+        }
         const exported = /android:exported/.test(context);
         const conflict =
           /Attribute ([\w@:.-]+) value=\(([^)]*)\) from .+? is also present at (.+?) value=\(([^)]*)\)/.exec(
@@ -714,6 +752,221 @@ export const jsBundleTaskFailed: Rule = {
   },
 };
 
+// Kotlin 2: `e: file:///path/File.kt:12:5 message`; Kotlin 1: `e: /path/File.kt: (12, 5): message`.
+const KOTLIN_ERROR =
+  /^e:\s+(?:file:\/\/)?(.+?\.kts?)(?::(\d+):(\d+)\s+|:\s+\((\d+),\s*(\d+)\):\s+)(.+)$/;
+// javac: `/path/File.java:12: error: message`
+const JAVA_ERROR = /^(.+?\.java):(\d+):\s+error:\s+(.+)$/;
+
+interface SourceError {
+  index: number;
+  language: "Kotlin" | "Java";
+  file: string;
+  line: string;
+  column?: string;
+  message: string;
+}
+
+/** The npm package that owns a path inside node_modules (`node_modules/@scope/pkg/android/...`). */
+function nodeModulesPackage(path: string): string | undefined {
+  const match = /node_modules[\\/]((?:@[^\\/]+[\\/])?[^\\/]+)[\\/]/.exec(path);
+  return match?.[1]?.replace(/\\/g, "/");
+}
+
+export const androidCompileError: Rule = {
+  meta: {
+    id: "android.compile-error",
+    title: "Kotlin or Java compilation failed",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "A Gradle log with Kotlin compiler errors ('e: <file>:<line>:<col> <message>', Kotlin 1 and 2 formats) or javac errors ('<file>.java:<line>: error: <message>').",
+    evidence:
+      "The first compiler errors with file and position, the owning npm package when the file is in node_modules, and the installed versions.",
+    versionScope: "Kotlin 1.x and 2.x compiler output; javac (all versions)",
+    references: [
+      "https://kotlinlang.org/docs/gradle-compiler-options.html",
+      "https://reactnative.dev/docs/upgrading",
+    ],
+    lastVerified: "2026-10-15",
+    fixtures: [
+      "logs/real-rn087-gradle-kotlin-error.log",
+      "logs/real-rn087-gradle-java-error.log",
+      "logs/android-kotlin-library-error.log",
+      "logs/android-kotlin-app-error.log",
+    ],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      if (!log.gradle.detected) continue;
+      const errors: SourceError[] = [];
+      const seen = new Set<string>();
+      log.doc.lines.forEach((raw, index) => {
+        const line = raw.trim();
+        const kt = KOTLIN_ERROR.exec(line);
+        const java = kt ? undefined : JAVA_ERROR.exec(line);
+        const error: SourceError | undefined = kt
+          ? {
+              index,
+              language: "Kotlin",
+              file: kt[1]!,
+              line: kt[2] ?? kt[4]!,
+              column: kt[3] ?? kt[5]!,
+              message: kt[6]!.trim(),
+            }
+          : java
+            ? { index, language: "Java", file: java[1]!, line: java[2]!, message: java[3]!.trim() }
+            : undefined;
+        if (!error) return;
+        const key = `${error.file}:${error.line}:${error.message}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        errors.push(error);
+      });
+      if (!errors.length) continue;
+      const first = errors[0]!;
+      const name = first.file.split(/[\\/]/).pop()!;
+      const position = `${first.line}${first.column ? `:${first.column}` : ""}`;
+      const pkg = nodeModulesPackage(first.file);
+      const installed = pkg ? ctx.project?.installedVersion(pkg) : undefined;
+      const rn = ctx.project?.versions["react-native"];
+      const task = log.gradle.failures.find((f) =>
+        /compile\w*(?:Kotlin|JavaWithJavac)/.test(f.task ?? ""),
+      )?.task;
+      const evidence: Evidence[] = errors
+        .slice(0, 5)
+        .map((e) =>
+          logEvidence(
+            log.doc,
+            { start: e.index, end: e.index + (e.language === "Java" ? 4 : 0) },
+            `${e.file}:${e.line}${e.column ? `:${e.column}` : ""}`,
+          ),
+        );
+      if (pkg)
+        evidence.push({
+          source: "project",
+          detail: `${name} belongs to the npm package ${pkg}${installed ? `@${installed}` : ""}${rn ? `; react-native ${rn}` : ""}`,
+        });
+      out.push(
+        finding(this.meta, {
+          title: pkg
+            ? `${first.language} compile error in ${pkg}: ${first.message.slice(0, 100)}`
+            : `${first.language} compile error in ${name}:${position}: ${first.message.slice(0, 100)}`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `${errors.length} ${first.language === "Kotlin" && errors.every((e) => e.language === "Kotlin") ? "Kotlin" : "Kotlin/Java"} compiler error${errors.length === 1 ? "" : "s"}${task ? ` failed ${task}` : ""}. The first is in ${first.file} at ${position}: ${first.message}` +
+            (pkg
+              ? ` The file belongs to the npm package ${pkg}${installed ? ` (${installed})` : ""}, not to your app code. A library that doesn't compile usually doesn't support the installed React Native${rn ? ` (${rn})` : ""}, Kotlin, or Android Gradle Plugin version.`
+              : ""),
+          evidence,
+          nextSteps: pkg
+            ? [
+                `Check which ${pkg} version supports React Native${rn ? ` ${rn}` : ""} (its changelog, README compatibility table, or issues for this error message), and upgrade or downgrade it.`,
+                "If you patched native code in node_modules (patch-package), check that the patch still applies to the installed version.",
+                "Don't edit files in node_modules directly. Changes are lost on the next install.",
+              ]
+            : [
+                `Open ${first.file} at ${position} and fix the reported error.`,
+                "If the error appeared after an upgrade, compare the file with the React Native Upgrade Helper diff for your versions.",
+              ],
+          verification: `\`cd android && ./gradlew ${task ?? ":app:compileDebugKotlin"}\` succeeds.`,
+        }),
+      );
+    }
+    return out;
+  },
+};
+
+export const jvmOptionUnrecognized: Rule = {
+  meta: {
+    id: "android.jvm-option-unrecognized",
+    title: "The JVM rejected an option from the Gradle configuration",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "Log line 'Unrecognized VM option 'X'' or 'Unrecognized option: X' together with 'Could not create the Java Virtual Machine'.",
+    evidence:
+      "The rejected option, the java command from the Gradle daemon command line when present, and the android/gradle.properties line that sets it.",
+    versionScope: `All Gradle versions; PermGen options (${PERMGEN_REMOVED.options.join(", ")}) are obsolete since JDK ${PERMGEN_REMOVED.removedInJava}`,
+    references: [
+      "https://docs.gradle.org/current/userguide/build_environment.html#sec:configuring_jvm_memory",
+      PERMGEN_REMOVED.source,
+    ],
+    lastVerified: PERMGEN_REMOVED.lastVerified,
+    fixtures: ["logs/real-gradle93-jvm-maxpermsize.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const index = log.doc.lines.findIndex((l) =>
+        /Unrecognized VM option '[^']+'|Unrecognized option: -\S+/.test(l),
+      );
+      if (index < 0) continue;
+      // Other tools also print "Unrecognized option"; require the JVM's own startup failure.
+      if (!log.doc.lines.some((l) => /Could not create the Java Virtual Machine/.test(l))) continue;
+      const line = log.doc.lines[index]!;
+      const raw =
+        /Unrecognized VM option '([^']+)'/.exec(line)?.[1] ??
+        /Unrecognized option: (-\S+)/.exec(line)![1]!;
+      const flag = /Unrecognized VM option/.test(line) ? `-XX:${raw}` : raw;
+      const optionName = raw.replace(/^[+-]/, "").split("=")[0]!;
+      const permgen = PERMGEN_REMOVED.options.includes(optionName);
+      const java = log.doc.lines
+        .map((l) => /Process command line:\s+(\S+\/bin\/java)\b/.exec(l)?.[1])
+        .find(Boolean);
+      const evidence: Evidence[] = [
+        logEvidence(log.doc, { start: index, end: Math.min(log.doc.lines.length - 1, index + 2) }),
+      ];
+      if (java)
+        evidence.push({
+          source: "log",
+          file: log.doc.path,
+          detail: `Gradle started the daemon with ${java}`,
+        });
+      let source = "org.gradle.jvmargs";
+      if (ctx.project) {
+        const props = readProjectFile(ctx.project.root, "android/gradle.properties");
+        if (props.ok) {
+          const lines = props.text.split(/\r?\n/);
+          const at = lines.findIndex((l) => !/^\s*#/.test(l) && l.includes(flag.split("=")[0]!));
+          if (at >= 0) {
+            evidence.push({
+              source: "project",
+              file: "android/gradle.properties",
+              line: at + 1,
+              excerpt: lines[at]!.trim(),
+            });
+            source = `org.gradle.jvmargs in android/gradle.properties (line ${at + 1})`;
+          }
+        }
+      }
+      out.push(
+        finding(this.meta, {
+          title: `The JVM doesn't accept ${flag}${permgen ? " (removed in JDK 8)" : ""}`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `Gradle couldn't start its daemon because the JVM rejected the option ${flag}, set by ${source}, GRADLE_OPTS, or JAVA_OPTS.` +
+            (permgen
+              ? ` JDK ${PERMGEN_REMOVED.removedInJava} removed the permanent generation, so ${optionName} has no effect, and newer JDKs refuse to start with it. Old React Native templates set it by default.`
+              : " This JVM version doesn't support the option. It was probably removed from the JDK or is misspelled."),
+          evidence,
+          nextSteps: [
+            permgen
+              ? `Remove ${flag} from org.gradle.jvmargs in android/gradle.properties. If you need a metadata limit, use -XX:MaxMetaspaceSize instead.`
+              : `Remove or replace ${flag} in org.gradle.jvmargs (android/gradle.properties), GRADLE_OPTS, or JAVA_OPTS.`,
+            "Run `cd android && ./gradlew --stop` so no daemon started with the old options is reused.",
+          ],
+          verification: "`cd android && ./gradlew help` starts the daemon and succeeds.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const androidLogRules: Rule[] = [
   dependencyResolution,
   agpRequiresNewerJdk,
@@ -725,4 +978,6 @@ export const androidLogRules: Rule[] = [
   duplicateClass,
   manifestMergerFailed,
   jsBundleTaskFailed,
+  androidCompileError,
+  jvmOptionUnrecognized,
 ];

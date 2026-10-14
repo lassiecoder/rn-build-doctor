@@ -1,0 +1,4 @@
+$ npx react-native start --resetCache
+error: Unrecognized option: --resetCache
+Did you mean --reset-cache?
+Run CLI with --verbose flag for more details.

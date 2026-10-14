@@ -1,0 +1,16 @@
+> Task :react-native-legacy-camera:compileDebugKotlin FAILED
+e: /Users/dev/MyApp/node_modules/react-native-legacy-camera/android/src/main/java/com/legacycamera/CameraViewManager.kt: (42, 18): Unresolved reference: ReactShadowNodeImpl
+e: /Users/dev/MyApp/node_modules/react-native-legacy-camera/android/src/main/java/com/legacycamera/CameraViewManager.kt: (57, 9): 'createShadowNodeInstance' overrides nothing
+w: /Users/dev/MyApp/node_modules/react-native-legacy-camera/android/src/main/java/com/legacycamera/CameraModule.kt: (12, 5): Parameter 'promise' is never used
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':react-native-legacy-camera:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 41s

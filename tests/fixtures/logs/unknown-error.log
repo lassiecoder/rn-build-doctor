@@ -1,0 +1,12 @@
+> Task :app:configureCMakeDebug[arm64-v8a] FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:configureCMakeDebug[arm64-v8a]'.
+> [CXX1416] Could not find Ninja on PATH or in SDK CMake bin folders.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 12s

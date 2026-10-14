@@ -54,3 +54,15 @@ export function compareVersions(a: string, b: string): number {
   }
   return 0;
 }
+
+/**
+ * JDK 8 removed the permanent generation and made its command-line flags obsolete. Old React Native
+ * templates set `-XX:MaxPermSize` in org.gradle.jvmargs; JDK 17 rejects it with "Unrecognized VM
+ * option" (observed with OpenJDK 17.0.20 and Gradle 9.3.1 on 2026-10-15).
+ */
+export const PERMGEN_REMOVED = {
+  source: "https://openjdk.org/jeps/122",
+  lastVerified: "2026-10-15",
+  removedInJava: 8,
+  options: ["MaxPermSize", "PermSize"],
+};
