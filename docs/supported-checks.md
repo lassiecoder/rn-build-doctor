@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-37 rules: 13 project checks (`scan`) and 24 log rules (`analyze`).
+39 rules: 13 project checks (`scan`) and 26 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -318,10 +318,10 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | Platforms           | android                                                                                                                                  |
 | Applicable versions | All Android Gradle Plugin versions                                                                                                       |
-| Trigger             | Log line 'Manifest merger failed'.                                                                                                       |
+| Trigger             | Log line 'Manifest merger failed', including 'uses-sdk:minSdkVersion N cannot be smaller than version M declared in library'.            |
 | Evidence            | The merger error line and the conflicting attribute or element.                                                                          |
 | Sources             | <https://developer.android.com/build/manage-manifests><br><https://developer.android.com/about/versions/12/behavior-changes-12#exported> |
-| Regression fixtures | `tests/fixtures/logs/android-manifest-exported.log`                                                                                      |
+| Regression fixtures | `tests/fixtures/logs/android-manifest-exported.log`<br>`tests/fixtures/logs/real-rn087-gradle-manifest-minsdk.log`                       |
 | Last verified       | 2026-10-14                                                                                                                               |
 
 ### `android.js-bundle-task-failed`
@@ -338,19 +338,47 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Regression fixtures | `tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-no-detail.log` |
 | Last verified       | 2026-10-14                                                                                                       |
 
+### `android.compile-error`
+
+**Kotlin or Java compilation failed**
+
+| Field               | Value                                                                                                                                                                                                                              |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                                                            |
+| Applicable versions | Kotlin 1.x and 2.x compiler output; javac (all versions)                                                                                                                                                                           |
+| Trigger             | A Gradle log with Kotlin compiler errors ('e: <file>:<line>:<col> <message>', Kotlin 1 and 2 formats) or javac errors ('<file>.java:<line>: error: <message>').                                                                    |
+| Evidence            | The first compiler errors with file and position, the owning npm package when the file is in node_modules, and the installed versions.                                                                                             |
+| Sources             | <https://kotlinlang.org/docs/gradle-compiler-options.html><br><https://reactnative.dev/docs/upgrading>                                                                                                                             |
+| Regression fixtures | `tests/fixtures/logs/real-rn087-gradle-kotlin-error.log`<br>`tests/fixtures/logs/real-rn087-gradle-java-error.log`<br>`tests/fixtures/logs/android-kotlin-library-error.log`<br>`tests/fixtures/logs/android-kotlin-app-error.log` |
+| Last verified       | 2026-10-15                                                                                                                                                                                                                         |
+
+### `android.jvm-option-unrecognized`
+
+**The JVM rejected an option from the Gradle configuration**
+
+| Field               | Value                                                                                                                                        |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                      |
+| Applicable versions | All Gradle versions; PermGen options (MaxPermSize, PermSize) are obsolete since JDK 8                                                        |
+| Trigger             | Log line 'Unrecognized VM option 'X'' or 'Unrecognized option: X' together with 'Could not create the Java Virtual Machine'.                 |
+| Evidence            | The rejected option, the java command from the Gradle daemon command line when present, and the android/gradle.properties line that sets it. |
+| Sources             | <https://docs.gradle.org/current/userguide/build_environment.html#sec:configuring_jvm_memory><br><https://openjdk.org/jeps/122>              |
+| Regression fixtures | `tests/fixtures/logs/real-gradle93-jvm-maxpermsize.log`                                                                                      |
+| Last verified       | 2026-10-15                                                                                                                                   |
+
 ### `javascript.unable-to-resolve-module`
 
 **Metro could not resolve an imported module**
 
-| Field               | Value                                                                                                                                                                  |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | javascript                                                                                                                                                             |
-| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                         |
-| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                       |
-| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                |
-| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                         |
-| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency` |
-| Last verified       | 2026-10-14                                                                                                                                                             |
+| Field               | Value                                                                                                                                                                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | javascript                                                                                                                                                                                                                           |
+| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                                                                                       |
+| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                                                                                     |
+| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                                                                              |
+| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                                                                                       |
+| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency`<br>`tests/fixtures/logs/real-rn086-metro-relative-import.log` |
+| Last verified       | 2026-10-14                                                                                                                                                                                                                           |
 
 ### `javascript.bundle-syntax-error`
 
@@ -377,7 +405,7 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Trigger             | CocoaPods output '[!] CocoaPods could not find compatible versions for pod "X"'.                                             |
 | Evidence            | The CocoaPods error with the conflicting requirements (Podfile, Podfile.lock, dependents).                                   |
 | Sources             | <https://guides.cocoapods.org/using/pod-install-vs-update.html><br><https://guides.cocoapods.org/using/troubleshooting.html> |
-| Regression fixtures | `tests/fixtures/logs/ios-cocoapods-incompatible.log`                                                                         |
+| Regression fixtures | `tests/fixtures/logs/ios-cocoapods-incompatible.log`<br>`tests/fixtures/logs/real-cocoapods-no-such-version.log`             |
 | Last verified       | 2026-10-14                                                                                                                   |
 
 ### `ios.cocoapods-spec-not-found`
@@ -426,15 +454,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **iOS linker error**
 
-| Field               | Value                                                                                                       |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- |
-| Platforms           | ios                                                                                                         |
-| Applicable versions | Xcode 14+                                                                                                   |
-| Trigger             | Linker output: 'Undefined symbols for architecture', 'ld: library not found', or 'ld: framework not found'. |
-| Evidence            | The linker error lines and the missing symbol or library.                                                   |
-| Sources             | <https://guides.cocoapods.org/using/troubleshooting.html>                                                   |
-| Regression fixtures | `tests/fixtures/logs/ios-linker.log`                                                                        |
-| Last verified       | 2026-10-14                                                                                                  |
+| Field               | Value                                                                                                                                                         |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                           |
+| Applicable versions | Xcode 14+                                                                                                                                                     |
+| Trigger             | Linker output: 'Undefined symbols for architecture', 'ld: library not found for -lX' / 'ld: library 'X' not found' (Xcode 15+), or the framework equivalents. |
+| Evidence            | The linker error lines and the missing symbol or library.                                                                                                     |
+| Sources             | <https://guides.cocoapods.org/using/troubleshooting.html>                                                                                                     |
+| Regression fixtures | `tests/fixtures/logs/ios-linker.log`<br>`tests/fixtures/logs/real-xcode26-linker-library-not-found.log`                                                       |
+| Last verified       | 2026-10-14                                                                                                                                                    |
 
 ### `ios.bundle-phase-failed`
 
@@ -461,7 +489,7 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Trigger             | A JavaScript error surfaced through a React Native runtime channel: logcat ReactNativeJS, JavascriptException, RCTFatal/'Unhandled JS Exception', Metro console ERROR, or uncaught errors. |
 | Evidence            | The exception line, the channel it came through, and the first stack frame when present.                                                                                                   |
 | Sources             | <https://reactnative.dev/docs/debugging-release-builds><br><https://docs.expo.dev/debugging/runtime-issues/>                                                                               |
-| Regression fixtures | `tests/fixtures/logs/runtime-android-js-exception.log`                                                                                                                                     |
+| Regression fixtures | `tests/fixtures/logs/runtime-android-js-exception.log`<br>`tests/fixtures/logs/real-logcat-js-startup-crash.log`                                                                           |
 | Last verified       | 2026-10-14                                                                                                                                                                                 |
 
 ### `runtime.missing-configuration-suspected`
@@ -524,12 +552,12 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **No failure detected in the log**
 
-| Field               | Value                                                                    |
-| ------------------- | ------------------------------------------------------------------------ |
-| Platforms           | common                                                                   |
-| Applicable versions | All                                                                      |
-| Trigger             | A log produced no findings and contains no recognizable failure markers. |
-| Evidence            | Recognized formats and build outcome, when present.                      |
-| Sources             | — (fallback rule)                                                        |
-| Regression fixtures | `tests/fixtures/logs/android-success.log`                                |
-| Last verified       | 2026-10-14                                                               |
+| Field               | Value                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| Platforms           | common                                                                                                 |
+| Applicable versions | All                                                                                                    |
+| Trigger             | A log produced no findings and contains no recognizable failure markers.                               |
+| Evidence            | Recognized formats and build outcome, when present.                                                    |
+| Sources             | — (fallback rule)                                                                                      |
+| Regression fixtures | `tests/fixtures/logs/android-success.log`<br>`tests/fixtures/logs/real-rn086-metro-bundle-success.log` |
+| Last verified       | 2026-10-14                                                                                             |

@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.2 (2026-10-15)
+
+Fixes from testing 0.1.1 against two real React Native CLI apps (0.86 and 0.87) on Android, iOS, and an emulator.
+
+- New rule `android.compile-error`: Kotlin (1.x and 2.x formats) and javac errors, with the file, position, and, for files inside `node_modules`, the npm package that owns them.
+- New rule `android.jvm-option-unrecognized`: Gradle's daemon fails to start because the JVM rejects an option such as `-XX:MaxPermSize` from `org.gradle.jvmargs` (old React Native templates on JDK 17+). Points to the line in `android/gradle.properties`.
+- `ios.linker-error`: recognizes the Xcode 15+ linker message `ld: library 'X' not found`. It was reported as "Undefined symbols" with unrelated advice. Missing libraries now get their own next steps.
+- Runtime logs: excerpts from an interleaved `adb logcat` show only lines from the crashing process. Errors that follow from an earlier one (`"App" has not been registered`, `Global was not installed`) are listed as evidence of the first error instead of as separate findings.
+- `android.manifest-merger-failed`: a library that needs a higher `minSdk` gets a specific title and fix (raise minSdk or use another library version).
+- `ios.cocoapods-incompatible-versions`: a requested version that doesn't exist is no longer described as a conflict.
+- A successful `react-native bundle` / `expo export` log is reported as successful instead of "may be incomplete".
+- Metro errors for relative imports no longer show a stray colon after the file name.
+- `scan` shows the JDK and Node.js version it used (`this machine: …`) in the terminal, Markdown, and JSON (`project.environment`).
+
 ## 0.1.1 (2026-10-15)
 
 - Fix: `analyze -` crashed with `EAGAIN` when piped from a build that is still running (for example `./gradlew assembleRelease 2>&1 | npx rn-build-doctor analyze -`). Stdin is now read as a stream.

@@ -11,7 +11,7 @@ Evidence-based diagnostics for React Native and Expo build, release, and startup
 
 It never guesses silently. When a log doesn't match a supported pattern, it says **"No supported diagnosis"** and shows the first error lines instead of inventing a cause. AI is optional, opt-in, and shown separately from verified findings.
 
-> **Status: 0.1 preview.** The rule catalog is narrow on purpose: 37 rules, each with fixtures and a cited source. See [supported checks](docs/supported-checks.md) and [known limitations](#limitations).
+> **Status: 0.1 preview.** The rule catalog is narrow on purpose: 39 rules, each with fixtures and a cited source. See [supported checks](docs/supported-checks.md) and [known limitations](#limitations).
 
 ## Install
 
@@ -112,7 +112,7 @@ Details: [docs/privacy.md](docs/privacy.md).
 
 ## Benchmark
 
-The labeled regression benchmark (`npm run benchmark`) has **48 cases**: 37 log cases and 11 project cases. Seven of the logs were captured from real builds of a fresh `create-expo-app` project (Expo SDK 57, React Native 0.86, Gradle 9.3.1, CocoaPods 1.16, Xcode 26.6) with deliberately introduced failures. The rest are synthetic logs that reproduce documented error formats, including near misses that must not trigger rules. The current result is **100% precision, 100% recall, and 0 false positives**.
+The labeled regression benchmark (`npm run benchmark`) has **64 cases**: 49 log cases and 15 project cases. Sixteen of the logs were captured from real builds with deliberately introduced failures: a fresh `create-expo-app` project (Expo SDK 57, React Native 0.86, Gradle 9.3.1, CocoaPods 1.16, Xcode 26.6), two React Native CLI apps (React Native 0.86 and 0.87, Gradle 9.3 and 9.4, AGP 8.12 and 9.2, Kotlin 2.1 and 2.2), and an Android 14 emulator. The rest are synthetic logs that reproduce documented error formats, including near misses that must not trigger rules. The current result is **100% precision, 100% recall, and 0 false positives**.
 
 The authors built this small benchmark alongside the rules, so treat it as a regression gate, not as proof of real-world accuracy. Real, anonymized failure logs are the most valuable contribution.
 
