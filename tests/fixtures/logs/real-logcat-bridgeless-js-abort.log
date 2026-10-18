@@ -1,0 +1,648 @@
+--------- beginning of main
+10-19 02:39:35.913  1525  1552 I ogle.android.as: Background concurrent copying GC freed 74297(3141KB) AllocSpace objects, 2(104KB) LOS objects, 49% free, 4723KB/9446KB, paused 117us,16us total 203.065ms
+10-19 02:39:35.923  1528  1578 I hbox:interactor: Background concurrent copying GC freed 61970(3241KB) AllocSpace objects, 1(48KB) LOS objects, 49% free, 9564KB/18MB, paused 123us,14us total 222.408ms
+--------- beginning of system
+10-19 02:39:35.928   541   568 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-19 02:39:35.929  1525  1554 E native  : E0000 00:00:1792357775.925024    1554 mmap.cc:233] Error during Unmap / munmap: Invalid argument
+10-19 02:39:35.936   541   568 W WindowMagnificationMgr: requestConnection duplicated request: connect=false, mConnectionState=DISCONNECTED
+10-19 02:39:35.968  1525  1525 I AiAiEcho: AppFetcherImpl onPackageChanged com.myapp.
+10-19 02:39:35.977  1525  5078 I AiAiEcho: AppIndexer Package:[com.myapp] UserProfile:[0] Enabled:[true].
+10-19 02:39:35.977  1525  5078 I AiAiEcho: AppFetcherImplV2 updateApps package:[com.myapp], userId:[0], reason:[package is updated.].
+10-19 02:39:36.240  1528  1528 I GsaVoiceInteractionSrv: (REDACTED) O received %s
+10-19 02:39:36.246  1522  1522 W MediaProvider: WorkProfileOwnerApps cache is empty
+10-19 02:39:36.252   754   754 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-19 02:39:36.253   541  2167 D ActivityManager: sync unfroze 1462 com.google.android.apps.wellbeing for 7
+10-19 02:39:36.256   754   754 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-19 02:39:36.260   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode 1
+10-19 02:39:36.260   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode -1
+10-19 02:39:36.261   754   754 D ControlsListingControllerImpl: ServiceConfig reloaded, count: 0
+10-19 02:39:36.272   541  2658 D CompatibilityChangeReporter: Compat change id reported: 261072174; UID 10146; state: ENABLED
+10-19 02:39:36.283  1528  1528 I GsaVoiceInteractionSrv: (REDACTED) O received %s
+10-19 02:39:36.287  1528  2033 W A       : Failed to notify listeners
+10-19 02:39:36.287  1528  2033 W A       : java.util.concurrent.CancellationException
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.FutureTask.report(FutureTask.java:121)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.FutureTask.get(FutureTask.java:191)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.bv.get(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.ee.a(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.cj.r(PG:2)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.cc.run(PG:4)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.bg.execute(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.bj.c(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.bj.b(PG:3)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.cy.done(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.FutureTask.finishCompletion(FutureTask.java:381)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.FutureTask.cancel(FutureTask.java:179)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.bv.cancel(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.android.libraries.search.assistant.fulfillment.server.l.o.run(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.apps.tiktok.tracing.er.run(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.eb.a(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.cw.run(PG:4)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.common.w.a.ec.run(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.android.libraries.i.z.run(PG:1)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.android.libraries.i.h.run(PG:2)
+10-19 02:39:36.287  1528  2033 W A       : 	at java.lang.Thread.run(Thread.java:1012)
+10-19 02:39:36.287  1528  2033 W A       : 	at com.google.android.libraries.i.ai.run(PG:5)
+10-19 02:39:36.292  1528  1528 I GsaVoiceInteractionSrv: (REDACTED) O received %s
+10-19 02:39:36.306  5076  5076 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-19 02:39:36.313  5076  5076 I AndroidRuntime: Using default boot image
+10-19 02:39:36.313  5076  5076 I AndroidRuntime: Leaving lock profiling enabled
+10-19 02:39:36.316  5076  5076 I app_process: Core platform API reporting enabled, enforcing=false
+10-19 02:39:36.317  5076  5076 I app_process: Using CollectorTypeCC GC.
+10-19 02:39:36.368  1267  5083 I Fitness : FitCleanupIntentOperation received Intent android.intent.action.PACKAGE_REMOVED [CONTEXT service_id=17 ]
+10-19 02:39:36.373  1267  5085 I ProximityAuth: [RecentAppsMediator] Package added: (user=UserHandle{0}) com.myapp
+10-19 02:39:36.381  1657  2805 W SearchServiceCore: Abort, client detached.
+10-19 02:39:36.381  1657  2805 W SearchServiceCore: Abort, client detached.
+10-19 02:39:36.392  1657  2805 W SearchServiceCore: Abort, client detached.
+10-19 02:39:36.421   541   550 I system_server: Background young concurrent copying GC freed 498899(20MB) AllocSpace objects, 80(1568KB) LOS objects, 42% free, 29MB/50MB, paused 12.482ms,206us total 117.784ms
+10-19 02:39:36.425  1747  5086 I Auth    : [SupervisedAccountIntentOperation] onHandleIntent(): android.intent.action.PACKAGE_ADDED
+10-19 02:39:36.434  1747  1747 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+10-19 02:39:36.434  1747  1747 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+10-19 02:39:36.440  5076  5076 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-19 02:39:36.440  1747  1747 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.BIND_SHARED_PREFS pkg=com.google.android.gms }
+10-19 02:39:36.446   541   561 I DropBoxManagerService: add tag=system_server_strictmode isTagEnabled=true flags=0x2
+10-19 02:39:36.467  1462  1473 I .apps.wellbeing: Background concurrent copying GC freed 12146(795KB) AllocSpace objects, 0(0B) LOS objects, 49% free, 4352KB/8705KB, paused 32us,9us total 157.482ms
+10-19 02:39:36.468   541   554 D CompatibilityChangeReporter: Compat change id reported: 161252188; UID 10196; state: DISABLED
+10-19 02:39:36.491  5076  5076 D app_process: Time zone APEX ICU file found: /apex/com.android.tzdata/etc/icu/icu_tzdata.dat
+10-19 02:39:36.491  5076  5076 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt72l.dat
+10-19 02:39:36.495   541  1773 D ActivityManager: sync unfroze 1651 com.google.process.gservices for 7
+10-19 02:39:36.508  1747  5086 W SQLiteLog: (28) double-quoted string literal: "com.myapp"
+10-19 02:39:36.520  1267  1359 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-19 02:39:36.534  1267  1359 W ChimeraUtils: Module com.google.android.gms.nearby_en missing resource null(0)
+10-19 02:39:36.548  1267  1277 W .gms.persistent: Cleared Reference was only reachable from finalizer (only reported once)
+10-19 02:39:36.551  1267  1277 I .gms.persistent: Background young concurrent copying GC freed 245848(10190KB) AllocSpace objects, 26(628KB) LOS objects, 31% free, 22MB/33MB, paused 2.624ms,17us total 136.334ms
+10-19 02:39:36.557  5076  5076 W main    : type=1400 audit(0.0:70): avc:  denied  { read } for  name="u:object_r:build_attestation_prop:s0" dev="tmpfs" ino=77 scontext=u:r:shell:s0 tcontext=u:object_r:build_attestation_prop:s0 tclass=file permissive=0
+10-19 02:39:36.557  5076  5076 W main    : type=1400 audit(0.0:71): avc:  denied  { read } for  name="u:object_r:build_attestation_prop:s0" dev="tmpfs" ino=77 scontext=u:r:shell:s0 tcontext=u:object_r:build_attestation_prop:s0 tclass=file permissive=0
+10-19 02:39:36.557  5076  5076 W main    : type=1400 audit(0.0:72): avc:  denied  { read } for  name="u:object_r:build_attestation_prop:s0" dev="tmpfs" ino=77 scontext=u:r:shell:s0 tcontext=u:object_r:build_attestation_prop:s0 tclass=file permissive=0
+10-19 02:39:36.560  5076  5076 W libc    : Access denied finding property "ro.product.name_for_attestation"
+10-19 02:39:36.560  1267  1267 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.nearby.exposurenotification.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiServiceNoInstantApps }
+10-19 02:39:36.560  1267  1267 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.nearby.exposurenotification.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentApiServiceNoInstantApps }
+10-19 02:39:36.560  5076  5076 W libc    : Access denied finding property "ro.product.brand_for_attestation"
+10-19 02:39:36.560  5076  5076 W libc    : Access denied finding property "ro.product.model_for_attestation"
+10-19 02:39:36.562  5076  5076 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-19 02:39:36.563  5076  5076 W Monkey  : args: [-p, com.myapp, -c, android.intent.category.LAUNCHER, 1]
+10-19 02:39:36.564  5076  5076 W Monkey  :  arg: "-p"
+10-19 02:39:36.564  5076  5076 W Monkey  :  arg: "com.myapp"
+10-19 02:39:36.564  5076  5076 W Monkey  :  arg: "-c"
+10-19 02:39:36.564  5076  5076 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-19 02:39:36.564  5076  5076 W Monkey  :  arg: "1"
+10-19 02:39:36.564  5076  5076 W Monkey  : data="com.myapp"
+10-19 02:39:36.564  5076  5076 W Monkey  : data="android.intent.category.LAUNCHER"
+10-19 02:39:36.585  1747  2734 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=AppsCorpus serviceId=36
+10-19 02:39:36.598   541  2450 W ActivityManager: registerReceiverWithFeature: no app for null
+10-19 02:39:36.600  5076  5076 W System  : No Compatibility callbacks set! Querying change 263076149
+10-19 02:39:36.600  5076  5076 W System  : No Compatibility callbacks set! Querying change 263076149
+10-19 02:39:36.600  5076  5076 W System  : No Compatibility callbacks set! Querying change 263076149
+10-19 02:39:36.604   541  1775 W ActivityTaskManager: callingPackage for (uid=2000, pid=5076) has no WPC
+10-19 02:39:36.604   541  1775 D CompatibilityChangeReporter: Compat change id reported: 244637991; UID 2000; state: ENABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 265464455; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 265452344; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 266124927; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 265451093; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 265456536; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 255940284; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 236283604; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 263959004; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 264304459; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 264301586; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 254631730; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 273509367; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 263259275; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 174042980; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 174042936; UID 10196; state: DISABLED
+10-19 02:39:36.609   541  1775 D CompatibilityChangeReporter: Compat change id reported: 181136395; UID 10196; state: DISABLED
+10-19 02:39:36.614   541  1775 D CompatibilityChangeReporter: Compat change id reported: 194480991; UID 10196; state: ENABLED
+10-19 02:39:36.617  1747  2747 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-19 02:39:36.621  1747  2734 I Icing   : IndexChimeraService.getServiceInterface callingPackage=com.google.android.gms componentName=null serviceId=30
+10-19 02:39:36.628   541  1775 D CompatibilityChangeReporter: Compat change id reported: 184838306; UID 10196; state: DISABLED
+10-19 02:39:36.628   541  1775 D CompatibilityChangeReporter: Compat change id reported: 185004937; UID 10196; state: DISABLED
+10-19 02:39:36.629   541  1775 D CompatibilityChangeReporter: Compat change id reported: 197654537; UID 10196; state: ENABLED
+10-19 02:39:36.631   541  1775 D CompatibilityChangeReporter: Compat change id reported: 205907456; UID 10196; state: ENABLED
+10-19 02:39:36.647   541  1775 D CompatibilityChangeReporter: Compat change id reported: 194833441; UID 10196; state: ENABLED
+10-19 02:39:36.647   541  1775 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myapp/.MainActivity} with LAUNCH_SINGLE_TASK from uid 2000 (BAL_ALLOW_PERMISSION) result code=0
+10-19 02:39:36.675   541   562 D CompatibilityChangeReporter: Compat change id reported: 135634846; UID 10196; state: DISABLED
+10-19 02:39:36.675   541   562 D CompatibilityChangeReporter: Compat change id reported: 177438394; UID 10196; state: DISABLED
+10-19 02:39:36.675   541   562 D CompatibilityChangeReporter: Compat change id reported: 135772972; UID 10196; state: DISABLED
+10-19 02:39:36.675   541   562 D CompatibilityChangeReporter: Compat change id reported: 135754954; UID 10196; state: ENABLED
+10-19 02:39:36.685   754   796 V WindowManagerShell: Transition requested: android.os.BinderProxy@7ade451 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myapp/.MainActivity } baseActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} topActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} origActivity=null realActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} numActivities=1 lastActiveTime=228276 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@84114b6} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 145 - 0, 0) topActivityInfo=ActivityInfo{2c975b7 com.myapp.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+10-19 02:39:36.695  5076  5076 I Monkey  : Events injected: 1
+10-19 02:39:36.696   541   570 D CompatibilityChangeReporter: Compat change id reported: 143937733; UID 10196; state: ENABLED
+10-19 02:39:36.697  5076  5076 I Monkey  : ## Network stats: elapsed time=94ms (0ms mobile, 0ms wifi, 94ms not connected)
+10-19 02:39:36.698   352   352 I Zygote  : Entering forkRepeatedly native zygote loop
+10-19 02:39:36.701  5076  5076 I app_process: System.exit called, status: 0
+10-19 02:39:36.701  5076  5076 I AndroidRuntime: VM exiting with result code 0.
+10-19 02:39:36.703   541   617 D CompatibilityChangeReporter: Compat change id reported: 265195908; UID 10196; state: ENABLED
+10-19 02:39:36.711   754   873 D SplashScreenView: Build android.window.SplashScreenView{51b748d V.E...... ......ID 0,0-0,0}
+10-19 02:39:36.711   754   873 D SplashScreenView: Icon: view: android.widget.ImageView{c41c642 V.ED..... ......I. 0,0-0,0 #10204f0 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@b75b653 size: 672
+10-19 02:39:36.711   754   873 D SplashScreenView: Branding: view: android.view.View{5de1b90 G.ED..... ......I. 0,0-0,0 #10204ef android:id/splashscreen_branding_view} drawable: null size w: 0 h: 0
+10-19 02:39:36.728  1528  1958 W native  : W0000 00:00:1792357776.714363    1958 input-utils.cc:142] Failed to get value for update inducing feature |latitude| due to INVALID_ARGUMENT: No feature generators for feature "latitude"
+10-19 02:39:36.728  1528  1958 W native  : === Source Location Trace: === 
+10-19 02:39:36.728  1528  1958 W native  : ./speech/service/context/features/feature-dictionary-provider.h:99
+10-19 02:39:36.728  1528  1958 W native  :  Subgraphs depending on this feature will not have a new revision.
+10-19 02:39:36.728  1528  1958 W native  : W0000 00:00:1792357776.728277    1958 input-utils.cc:142] Failed to get value for update inducing feature |longitude| due to INVALID_ARGUMENT: No feature generators for feature "longitude"
+10-19 02:39:36.728  1528  1958 W native  : === Source Location Trace: === 
+10-19 02:39:36.728  1528  1958 W native  : ./speech/service/context/features/feature-dictionary-provider.h:99
+10-19 02:39:36.728  1528  1958 W native  :  Subgraphs depending on this feature will not have a new revision.
+10-19 02:39:36.728  1528  1958 W native  : W0000 00:00:1792357776.728604    1958 input-utils.cc:142] Failed to get value for update inducing feature |latitude| due to INVALID_ARGUMENT: No feature generators for feature "latitude"
+10-19 02:39:36.728  1528  1958 W native  : === Source Location Trace: === 
+10-19 02:39:36.728  1528  1958 W native  : ./speech/service/context/features/feature-dictionary-provider.h:99
+10-19 02:39:36.728  1528  1958 W native  :  Subgraphs depending on this feature will not have a new revision.
+10-19 02:39:36.728  1528  1958 W native  : W0000 00:00:1792357776.728622    1958 input-utils.cc:142] Failed to get value for update inducing feature |longitude| due to INVALID_ARGUMENT: No feature generators for feature "longitude"
+10-19 02:39:36.728  1528  1958 W native  : === Source Location Trace: === 
+10-19 02:39:36.728  1528  1958 W native  : ./speech/service/context/features/feature-dictionary-provider.h:99
+10-19 02:39:36.728  1528  1958 W native  :  Subgraphs depending on this feature will not have a new revision.
+10-19 02:39:36.745   541  2477 D CoreBackPreview: Window{33e83df u0 Splash Screen com.myapp}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@a317efb, mPriority=0, mIsAnimationCallback=false}
+10-19 02:39:36.751   352   352 D Zygote  : Forked child process 5134
+10-19 02:39:36.751   541   570 W ActivityManager: Slow operation: 75ms so far, now at startProcess: returned from zygote!
+10-19 02:39:36.751   541   570 W ActivityManager: Slow operation: 75ms so far, now at startProcess: done updating battery stats
+10-19 02:39:36.751   541   570 W ActivityManager: Slow operation: 75ms so far, now at startProcess: building log message
+10-19 02:39:36.751   541   570 I ActivityManager: Start proc 5134:com.myapp/u0a196 for next-top-activity {com.myapp/com.myapp.MainActivity}
+10-19 02:39:36.751   541   570 W ActivityManager: Slow operation: 75ms so far, now at startProcess: starting to update pids map
+10-19 02:39:36.751   541   570 W ActivityManager: Slow operation: 75ms so far, now at startProcess: done updating pids map
+10-19 02:39:36.755  1747  2747 I Icing   : Usage reports ok 0, Failed Usage reports 0, indexed 0, rejected 0
+10-19 02:39:36.758   754   882 E OpenGLRenderer: Unable to match the desired swap behavior.
+10-19 02:39:36.764  1747  2747 I Icing   : Indexing com.google.android.gms-apps from com.google.android.gms
+10-19 02:39:36.766   390   390 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-19 02:39:36.770  5134  5134 I com.myapp: Using CollectorTypeCC GC.
+10-19 02:39:36.780  1747  2747 I Icing   : Indexing done com.google.android.gms-apps
+10-19 02:39:36.805  5134  5134 E com.myapp: Not starting debugger since process cannot load the jdwp agent.
+10-19 02:39:36.822  1045  1689 D EGL_emulation: app_time_stats: avg=188883.69ms min=188883.69ms max=188883.69ms count=1
+10-19 02:39:36.837   541  1779 W ActivityTaskManager: takeTaskSnapshot: taskId=7 not found or not visible
+10-19 02:39:36.867  5134  5134 D CompatibilityChangeReporter: Compat change id reported: 171979766; UID 10196; state: ENABLED
+10-19 02:39:36.867  5134  5134 D CompatibilityChangeReporter: Compat change id reported: 242716250; UID 10196; state: ENABLED
+10-19 02:39:36.876   541  1779 D CompatibilityChangeReporter: Compat change id reported: 170503758; UID 10196; state: ENABLED
+10-19 02:39:36.880  5134  5134 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+10-19 02:39:36.880  5134  5134 D ApplicationLoaders: Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+10-19 02:39:36.881   541   559 V WindowManager: Sent Transition #5 createdAt=10-19 02:39:36.617 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=7 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=com.myapp/.MainActivity } baseActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} topActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} origActivity=null realActivity=ComponentInfo{com.myapp/com.myapp.MainActivity} numActivities=1 lastActiveTime=228276 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{c73ee2 Task{4aebe01 #7 type=standard A=10196:com.myapp}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 145 - 0, 0) topActivityInfo=ActivityInfo{ecad273 com.myapp.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isVisible=false isVisibleRequested=false isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+10-19 02:39:36.881   541   559 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-19 02:39:36.881   541   559 V WindowManager:     info={id=5 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{c73ee2 Task{4aebe01 #7 type=standard A=10196:com.myapp}}} m=OPEN f=NONE leash=Surface(name=Task=7)/@0xc0770c4 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{RemoteToken{6cd530 Task{bc93b3f #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x1194b60 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:36.903   754   796 V WindowManagerShell: onTransitionReady android.os.BinderProxy@7ade451: {id=5 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@7ed3aa7} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x411cca8 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c0b0b54} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9df83c1 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:36.903   754   796 V WindowManagerShell: Playing animation for (#5)android.os.BinderProxy@7ade451@0
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@cf3b8f
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@bfc1e1c
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@12d8a25
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@e1947fa
+10-19 02:39:36.904   754   796 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@a0e01ab
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@1bb0008
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@4d1a3a1
+10-19 02:39:36.904   754   796 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=5 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@7ed3aa7} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x411cca8 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c0b0b54} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9df83c1 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:36.904   754   796 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@51f9afd, appThread = android.app.IApplicationThread$Stub$Proxy@c5c43f2, debugName = LauncherToDream }}
+10-19 02:39:36.904   754   796 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@f28da43, appThread = android.app.IApplicationThread$Stub$Proxy@9b788c0, debugName = QuickstepLaunchHome }}
+10-19 02:39:36.904   754   796 V WindowManagerShell:  Delegate animation for #5 to null
+10-19 02:39:36.904   754   796 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultTransitionHandler@ce4dc52
+10-19 02:39:36.904   754   796 V WindowManagerShell: start default transition animation, info = {id=5 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@7ed3aa7} m=OPEN f=NONE leash=Surface(name=Task=7)/@0x411cca8 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@c0b0b54} m=TO_BACK f=SHOW_WALLPAPER leash=Surface(name=Task=1)/@0x9df83c1 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:36.917   754   796 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@3f4d79f animAttr=0x13 type=OPEN isEntrance=false
+10-19 02:39:36.936   754   796 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@594ebb animAttr=0x12 type=OPEN isEntrance=true
+10-19 02:39:36.937   754   796 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@ce4dc52
+10-19 02:39:36.938  5134  5134 I com.myapp: Failed to add image file: Failed to find OatDexFile for DexFile /data/app/~~x173zEAqmSWO_CN_BcXTWA==/com.myapp-jRuYDMURFZK83tXEtZ2QQg==/base.apk (canonical path /data/app/~~x173zEAqmSWO_CN_BcXTWA==/com.myapp-jRuYDMURFZK83tXEtZ2QQg==/base.apk) in OatFile /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/oat/arm64/base.odex
+10-19 02:39:36.938   754   796 W Looper  : Slow dispatch took 36ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda0@a2fdf31 m=0
+10-19 02:39:36.938   754   818 W Looper  : Drained
+10-19 02:39:36.939   754   796 W Looper  : Slow delivery took 35ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda5@d492616 m=0
+10-19 02:39:36.939  5134  5134 D nativeloader: Configuring clns-6 for other apk /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/lib/arm64:/data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!/lib/arm64-v8a, permitted_path=/data:/mnt/expand:/data/user/0/com.myapp
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment: Currently set values for:
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment: ANGLE GameManagerService for com.myapp: false
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment: com.myapp is not listed in per-application setting
+10-19 02:39:36.966  5134  5134 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-19 02:39:36.989  5134  5134 W SoLoader: Initializing SoLoader: 0
+10-19 02:39:36.990  5134  5134 W SoLoader: Recording new base apk path: /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk
+10-19 02:39:36.990  5134  5134 W SoLoader: Previously recorded 0 base apk paths.
+10-19 02:39:36.991  5134  5134 I SoLoader: Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+10-19 02:39:36.991  5134  5134 I SoLoader: Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+10-19 02:39:36.991  5134  5134 I SoLoader: Preparing SO source: DirectApkSoSource[root = [/data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!/lib/arm64-v8a]]
+10-19 02:39:36.994  5134  5134 I SoLoader: Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/lib/arm64 flags = 0]]
+10-19 02:39:36.994  5134  5134 I SoLoader: init finish: 4 SO sources prepared
+10-19 02:39:36.994  5134  5134 W SoLoader: SoLoader initialized: 8
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Entering merged library JNI_OnLoad.
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing 13 pre-merged libs (including stub)
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libfabricjni_so.  onload_func: 0x7ac8e3eb5c
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreact_devsupportjni_so.  onload_func: 0x7ac8f163d0
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreact_featureflagsjni_so.  onload_func: 0x7ac8f2f64c
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreact_newarchdefaults_so.  onload_func: 0x7ac8f711d8
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreact_tracingjni_so.  onload_func: 0x7ac90584cc
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreactnativeblob_so.  onload_func: 0x7ac905d760
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreactnativejni_so.  onload_func: 0x7ac90697f4
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libreactnativejni_common_so.  onload_func: 0x7ac906c838
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register librninstance_so.  onload_func: 0x7ac9091f50
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libturbomodulejsijni_so.  onload_func: 0x7ac9127f48
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libuimanagerjni_so.  onload_func: 0x7ac912e93c
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: Preparing to register libyoga_so.  onload_func: 0x7ac91363b8
+10-19 02:39:37.023  5134  5134 D jni_lib_merge: About to register 12 actual methods.
+10-19 02:39:37.038   541  2172 I ActivityManager: Flag disabled. Ignoring finishAttachApplication from uid: 10196. pid: 5134
+10-19 02:39:37.048  5134  5134 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+10-19 02:39:37.053   754   796 W Looper  : Drained
+10-19 02:39:37.078  5134  5154 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+10-19 02:39:37.081  5134  5154 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+10-19 02:39:37.082  5134  5154 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: Entering merged library JNI_OnLoad.
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: Preparing 4 pre-merged libs (including stub)
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: Preparing to register libhermes_executor_so.  onload_func: 0x7ac36a1eec
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: Preparing to register libhermesinstancejni_so.  onload_func: 0x7ac36a969c
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: Preparing to register libjsijniprofiler_so.  onload_func: 0x7ac36a9f44
+10-19 02:39:37.094  5134  5134 D jni_lib_merge: About to register 3 actual methods.
+10-19 02:39:37.102  5134  5134 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Schedule
+10-19 02:39:37.105  5134  5134 W unknown:BridgelessReact: ReactHost{0}.attachSurface(surfaceId = 0)
+10-19 02:39:37.108  5134  5134 W unknown:BridgelessReact: ReactHost{0}.onHostResume(activity)
+10-19 02:39:37.108  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask()
+10-19 02:39:37.108  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Start
+10-19 02:39:37.108  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getJSBundleLoader()
+10-19 02:39:37.108  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+10-19 02:39:37.110  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+10-19 02:39:37.115  5134  5134 D CompatibilityChangeReporter: Compat change id reported: 237531167; UID 10196; state: DISABLED
+10-19 02:39:37.117  5134  5134 W OpenGLRenderer: Unknown dataspace 0
+10-19 02:39:37.131  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+10-19 02:39:37.131  5134  5157 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+10-19 02:39:37.142  5134  5157 W unknown:BridgelessReact: ReactHost{0}.startSurface(surfaceId = 0): Execute
+10-19 02:39:37.153  5134  5158 E ReactNativeJS: [runtime not ready]: Error: API_BASE_URL is not configured for this build
+10-19 02:39:37.153  5134  5159 W unknown:bk0: Failed to instantiate GIF decoder via reflection
+10-19 02:39:37.153  5134  5159 W unknown:bk0: java.lang.NoSuchMethodException: sd0.<init> [class l51, boolean, boolean, boolean]
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at java.lang.Class.getConstructor0(Class.java:3325)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at java.lang.Class.getConstructor(Class.java:2485)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at bk0.c(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:92)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at g51.<init>(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:17)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.modules.fresco.FrescoModule.initialize(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:226)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.internal.turbomodule.core.TurboModuleManager.getOrCreateModule(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:86)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.internal.turbomodule.core.TurboModuleManager.getModule(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:92)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at c61.run(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:579)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at android.os.Handler.handleCallback(Handler.java:958)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:4)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at android.os.Looper.loop(Looper.java:294)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.startNewBackgroundThread$lambda$0(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:29)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.a(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:1)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at h3.run(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:207)
+10-19 02:39:37.153  5134  5159 W unknown:bk0: 	at java.lang.Thread.run(Thread.java:1012)
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: ReactHost{0}.handleHostException(message = "[runtime not ready]: Error: API_BASE_URL is not configured for this build, stack:
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: anonymous@1:144891
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: loadModuleImplementation@1:172096
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: guardedLoadModule@1:171717
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: metroRequire@1:171156
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: anonymous@1:20170
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: loadModuleImplementation@1:172096
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: guardedLoadModule@1:171676
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: metroRequire@1:171156
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: global@1:20130
+10-19 02:39:37.153  5134  5158 W unknown:BridgelessReact: ")
+10-19 02:39:37.154  5134  5158 E libc++abi: terminating due to uncaught exception of type facebook::jni::JniException: com.facebook.react.common.JavascriptException: [runtime not ready]: Error: API_BASE_URL is not configured for this build, stack:
+10-19 02:39:37.154  5134  5158 E libc++abi: anonymous@1:144891
+10-19 02:39:37.154  5134  5158 E libc++abi: loadModuleImplementation@1:172096
+10-19 02:39:37.154  5134  5158 E libc++abi: guardedLoadModule@1:171717
+10-19 02:39:37.154  5134  5158 E libc++abi: metroRequire@1:171156
+10-19 02:39:37.154  5134  5158 E libc++abi: anonymous@1:20170
+10-19 02:39:37.154  5134  5158 E libc++abi: loadModuleImplementation@1:172096
+10-19 02:39:37.154  5134  5158 E libc++abi: guardedLoadModule@1:171676
+10-19 02:39:37.154  5134  5158 E libc++abi: metroRequire@1:171156
+10-19 02:39:37.154  5134  5158 E libc++abi: global@1:20130
+10-19 02:39:37.154  5134  5158 E libc++abi: 
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at com.facebook.react.modules.core.ExceptionsManagerModule.reportException(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:104)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at be1.reportJsException(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:181)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at com.facebook.jni.NativeRunnable.run(Native Method)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at android.os.Handler.handleCallback(Handler.java:958)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:4)
+10-19 02:39:37.154  5134  5158 E libc++abi: 	at android.os.
+--------- beginning of crash
+10-19 02:39:37.154  5134  5158 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 5158 (mqt_v_js), pid 5134 (com.myapp)
+10-19 02:39:37.163   541  1779 D CoreBackPreview: Window{f0a92f4 u0 com.myapp/com.myapp.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@e8d3e63, mPriority=0, mIsAnimationCallback=false}
+10-19 02:39:37.197   390   889 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10196 pid=0
+10-19 02:39:37.197   390   889 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10196 => denied (221 us)
+10-19 02:39:37.199   390   589 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10196 pid=5134
+10-19 02:39:37.199   390   589 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10196 => denied (1805 us)
+10-19 02:39:37.199   390   889 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10196 pid=0
+10-19 02:39:37.199   390   889 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10196 => denied (1807 us)
+10-19 02:39:37.201   390   889 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10196 pid=0
+10-19 02:39:37.201   390   889 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10196 => denied (2126 us)
+10-19 02:39:37.201   390   589 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10196 pid=5134
+10-19 02:39:37.201   390   589 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10196 => denied (2767 us)
+10-19 02:39:37.209   754   882 D EGL_emulation: app_time_stats: avg=37122.78ms min=37122.78ms max=37122.78ms count=1
+10-19 02:39:37.238   754   796 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#5)android.os.BinderProxy@7ade451@0
+10-19 02:39:37.239  5163  5163 I crash_dump64: obtaining output fd from tombstoned, type: kDebuggerdTombstoneProto
+10-19 02:39:37.246   541   559 V WindowManager: Finish Transition #5: created at 10-19 02:39:36.617 collect-started=0.061ms request-sent=27.62ms started=76.748ms ready=242.751ms sent=262.893ms finished=622.381ms
+10-19 02:39:37.253   205   205 I tombstoned: received crash request for pid 5158
+10-19 02:39:37.255  5134  5152 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-19 02:39:37.255  5134  5152 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-19 02:39:37.259   754   796 V WindowManagerShell: Track 0 became idle
+10-19 02:39:37.259   754   796 V WindowManagerShell: All active transition animations finished
+10-19 02:39:37.260  5163  5163 I crash_dump64: performing dump of process 5134 (target tid = 5158)
+--------- beginning of kernel
+08-27 02:42:34.390   153   153 I servicemanager: Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest.
+10-19 02:39:37.326   154   154 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+10-19 02:39:37.327  5134  5152 I Gralloc4: mapper 4.x is not supported
+10-19 02:39:37.353   754   882 D EGL_emulation: app_time_stats: avg=188067.56ms min=188067.56ms max=188067.56ms count=1
+10-19 02:39:37.356  5134  5152 E OpenGLRenderer: Unable to match the desired swap behavior.
+10-19 02:39:37.406   541  1775 W ServiceManagerCppClient: Permission failure: android.permission.ROTATE_SURFACE_FLINGER from uid=10196 pid=0
+10-19 02:39:37.406   541  1775 D PermissionCache: checking android.permission.ROTATE_SURFACE_FLINGER for uid=10196 => denied (96 us)
+10-19 02:39:37.406   541  1775 W ServiceManagerCppClient: Permission failure: android.permission.INTERNAL_SYSTEM_WINDOW from uid=10196 pid=0
+10-19 02:39:37.406   541  1775 D PermissionCache: checking android.permission.INTERNAL_SYSTEM_WINDOW for uid=10196 => denied (16 us)
+10-19 02:39:37.406   541  1775 W ServiceManagerCppClient: Permission failure: android.permission.ACCESS_SURFACE_FLINGER from uid=10196 pid=0
+10-19 02:39:37.406   541  1775 D PermissionCache: checking android.permission.ACCESS_SURFACE_FLINGER for uid=10196 => denied (7 us)
+10-19 02:39:37.413   541   559 I ActivityTaskManager: Displayed com.myapp/.MainActivity for user 0: +805ms
+10-19 02:39:37.414  5134  5134 W unknown:BridgelessReact: ReactHost{0}.ReactContext.onHostResume()
+10-19 02:39:37.414  5134  5134 W unknown:BridgelessReact: ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+10-19 02:39:37.414  5134  5134 W unknown:ViewManagerPropertyUpdater: Could not find generated setter for class com.facebook.react.uimanager.RootViewManager
+10-19 02:39:37.430   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode 1
+10-19 02:39:37.430   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode -1
+10-19 02:39:37.440  1045  1871 D OneSearchSuggestProvider: Shut down the binder channel
+10-19 02:39:37.446  1045  1343 I IPCThreadState: oneway function results for code 2 on binder at 0xb400007ce3a278e0 will be dropped but finished with status UNKNOWN_TRANSACTION
+10-19 02:39:37.447  1528  2033 I AssistantForeground: (REDACTED) Get launcher package: %s
+10-19 02:39:37.459   541  1775 D CompatibilityChangeReporter: Compat change id reported: 214016041; UID 10196; state: ENABLED
+10-19 02:39:37.459   541  1775 I ImeTracker: com.myapp:f2dcef43: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_UNSPECIFIED_WINDOW
+10-19 02:39:37.459   541  1775 I ImeTracker: com.myapp:f2dcef43: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-19 02:39:37.464  1045  1114 I ImeTracker: com.google.android.apps.nexuslauncher:72bd40a8: onRequestHide at ORIGIN_CLIENT_HIDE_SOFT_INPUT reason HIDE_SOFT_INPUT
+10-19 02:39:37.464  1045  1114 I ImeTracker: com.google.android.apps.nexuslauncher:72bd40a8: onFailed at PHASE_CLIENT_VIEW_SERVED
+10-19 02:39:37.496  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():3227 
+10-19 02:39:37.505  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2087 repeatCheckTimes = 0, unlocked = true
+10-19 02:39:37.505  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.myapp fieldId=0 fieldName=null extras=null}, false)
+10-19 02:39:37.505  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.shouldHideHeaderOnInitialState():4008 ShouldHideHeaderOnInitialState = false
+10-19 02:39:37.506  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2087 repeatCheckTimes = 2, unlocked = true
+10-19 02:39:37.658   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode 1
+10-19 02:39:37.658   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode -1
+10-19 02:39:37.658  1267  1284 I FontLog : Received query Noto Color Emoji Compat, URI content://com.google.android.gms.fonts [CONTEXT service_id=132 ]
+10-19 02:39:37.658  1267  1284 I FontLog : Query [emojicompat-emoji-font] resolved to {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+10-19 02:39:37.660  1267  1284 I FontLog : Fetch {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null} [CONTEXT service_id=132 ]
+10-19 02:39:37.663  1267  1284 I FontLog : Pulling font file for id = 9, cache size = 7 [CONTEXT service_id=132 ]
+10-19 02:39:37.671  1267  1284 I FontLog : Pulling font file for id = 9, cache size = 7 [CONTEXT service_id=132 ]
+10-19 02:39:38.046  5055  5055 I AidlLazyServiceRegistrar: Process has 0 (of 1 available) client(s) in use after notification artd has clients: 0
+10-19 02:39:38.046  5055  5055 I AidlLazyServiceRegistrar: Trying to shut down the service. No clients in use for any service in process.
+08-27 02:42:35.114   153   153 I servicemanager: Notifying artd they don't (previously: do) have clients when we now have no record of a client
+08-27 02:42:35.115   153   153 I servicemanager: Unregistering artd
+08-27 02:42:35.115   153   153 I BpBinder: onLastStrongRef automatically unlinking death recipients:
+10-19 02:39:38.047  5055  5055 I AidlLazyServiceRegistrar: Unregistered all clients and exiting
+10-19 02:39:38.057   754   872 W WindowOnBackDispatcher: sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@e9b64af
+10-19 02:39:38.057   541  1775 D CoreBackPreview: Window{33e83df u0 Splash Screen com.myapp EXITING}: Setting back callback null
+10-19 02:39:38.058   541  2172 W InputManager-JNI: Input channel object '33e83df Splash Screen com.myapp (client)' was disposed without first being removed with the input manager!
+08-27 02:42:35.169     1     1 I init    : Service 'artd' (pid 5055) exited with status 0 oneshot service took 2.969000 seconds in background
+08-27 02:42:35.169     1     1 I init    : Sending signal 9 to service 'artd' (pid 5055) process group...
+08-27 02:42:35.169     1     1 I libprocessgroup: Successfully killed process cgroup uid 1082 pid 5055 in 0ms
+10-19 02:39:38.309  5163  5163 F DEBUG   : *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+10-19 02:39:38.309  5163  5163 F DEBUG   : Build fingerprint: 'google/sdk_gphone64_arm64/emu64a:14/UE1A.230829.050/12077443:userdebug/dev-keys'
+10-19 02:39:38.309  5163  5163 F DEBUG   : Revision: '0'
+10-19 02:39:38.309  5163  5163 F DEBUG   : ABI: 'arm64'
+10-19 02:39:38.309  5163  5163 F DEBUG   : Timestamp: 2026-10-19 02:39:37.264289970+0530
+10-19 02:39:38.309  5163  5163 F DEBUG   : Process uptime: 1s
+10-19 02:39:38.309  5163  5163 F DEBUG   : Cmdline: com.myapp
+10-19 02:39:38.309  5163  5163 F DEBUG   : pid: 5134, tid: 5158, name: mqt_v_js  >>> com.myapp <<<
+10-19 02:39:38.309  5163  5163 F DEBUG   : uid: 10196
+10-19 02:39:38.309  5163  5163 F DEBUG   : tagged_addr_ctrl: 0000000000000001 (PR_TAGGED_ADDR_ENABLE)
+10-19 02:39:38.309  5163  5163 F DEBUG   : pac_enabled_keys: 000000000000000f (PR_PAC_APIAKEY, PR_PAC_APIBKEY, PR_PAC_APDAKEY, PR_PAC_APDBKEY)
+10-19 02:39:38.309  5163  5163 F DEBUG   : signal 6 (SIGABRT), code -1 (SI_QUEUE), fault addr --------
+10-19 02:39:38.309  5163  5163 F DEBUG   : Abort message: 'terminating due to uncaught exception of type facebook::jni::JniException: com.facebook.react.common.JavascriptException: [runtime not ready]: Error: API_BASE_URL is not configured for this build, stack:
+10-19 02:39:38.309  5163  5163 F DEBUG   : anonymous@1:144891
+10-19 02:39:38.309  5163  5163 F DEBUG   : loadModuleImplementation@1:172096
+10-19 02:39:38.309  5163  5163 F DEBUG   : guardedLoadModule@1:171717
+10-19 02:39:38.309  5163  5163 F DEBUG   : metroRequire@1:171156
+10-19 02:39:38.309  5163  5163 F DEBUG   : anonymous@1:20170
+10-19 02:39:38.309  5163  5163 F DEBUG   : loadModuleImplementation@1:172096
+10-19 02:39:38.309  5163  5163 F DEBUG   : guardedLoadModule@1:171676
+10-19 02:39:38.309  5163  5163 F DEBUG   : metroRequire@1:171156
+10-19 02:39:38.309  5163  5163 F DEBUG   : global@1:20130
+10-19 02:39:38.309  5163  5163 F DEBUG   : 
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at com.facebook.react.modules.core.ExceptionsManagerModule.reportException(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:104)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at be1.reportJsException(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:181)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at com.facebook.jni.NativeRunnable.run(Native Method)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at android.os.Handler.handleCallback(Handler.java:958)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:4)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at android.os.Looper.loopOnce(Looper.java:205)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at android.os.Looper.loop(Looper.java:294)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.startNewBackgroundThread$lambda$0(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:29)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.a(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:1)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at h3.run(r8-map-id-8ba1ac07caac7e66a4567a573fc70970fc6ad35dc6d3ed2e9b14a99c85594b28:207)
+10-19 02:39:38.309  5163  5163 F DEBUG   : 	at java.lang.Thread.run(Thread.java:1012)'
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x0  0000000000000000  x1  0000000000001426  x2  0000000000000006  x3  0000007abf86ded0
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x4  646277641f736766  x5  646277641f736766  x6  646277641f736766  x7  7f7f7f7f7f7f7f7f
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x8  00000000000000f0  x9  0000007dd98aa090  x10 0000000000000001  x11 0000007dd98fd058
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x12 000000006ad53591  x13 000000007fffffff  x14 0000000000013698  x15 0000005a0e6b2274
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x16 0000007dd996ad08  x17 0000007dd993ee90  x18 0000007abf0fa000  x19 000000000000140e
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x20 0000000000001426  x21 00000000ffffffff  x22 0000007abf86e000  x23 0000007abf86e040
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x24 0000007abf86e0f0  x25 0000000000000009  x26 0000007ac8cb4f03  x27 0000007ac8cb151b
+10-19 02:39:38.309  5163  5163 F DEBUG   :     x28 0000007ac8cab5f4  x29 0000007abf86df50
+10-19 02:39:38.309  5163  5163 F DEBUG   :     lr  0000007dd98ee9b8  sp  0000007abf86deb0  pc  0000007dd98ee9e4  pst 0000000000000000
+10-19 02:39:38.309  5163  5163 F DEBUG   : 46 total frames
+10-19 02:39:38.309  5163  5163 F DEBUG   : backtrace:
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #00 pc 00000000000669e4  /apex/com.android.runtime/lib64/bionic/libc.so (abort+164) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #01 pc 00000000000a0210  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libc++_shared.so (offset 0x1e4000) (BuildId: 6783a7f3a0d9c67c55a74cadc441ed55aaa493da)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #02 pc 000000000009eeb0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libc++_shared.so (offset 0x1e4000) (BuildId: 6783a7f3a0d9c67c55a74cadc441ed55aaa493da)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #03 pc 000000000009f374  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libc++_shared.so (offset 0x1e4000) (BuildId: 6783a7f3a0d9c67c55a74cadc441ed55aaa493da)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #04 pc 000000000009f314  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libc++_shared.so (offset 0x1e4000) (std::terminate()+56) (BuildId: 6783a7f3a0d9c67c55a74cadc441ed55aaa493da)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #05 pc 00000000002cb184  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #06 pc 000000000057cddc  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #07 pc 0000000000331da0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::JsErrorHandler::handleErrorWithCppPipeline(facebook::jsi::Runtime&, facebook::jsi::JSError&, bool, bool)+7440) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #08 pc 000000000032fd68  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::JsErrorHandler::handleError(facebook::jsi::Runtime&, facebook::jsi::JSError&, bool, bool)+396) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #09 pc 00000000002da3a4  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #10 pc 00000000000d38d0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #11 pc 00000000000d360c  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #12 pc 0000000000195160  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #13 pc 00000000001a1e18  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #14 pc 00000000001a17ac  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #15 pc 00000000001d47ec  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #16 pc 00000000000c71b8  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #17 pc 00000000000cef18  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #18 pc 00000000000c6fa4  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libhermesvm.so (offset 0x3c0000) (BuildId: 00e949168d13521ae13d8e29b447dbcb39b757ef)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #19 pc 00000000002d5cd8  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #20 pc 00000000005091a0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::Task::execute(facebook::jsi::Runtime&, bool)+312) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #21 pc 0000000000506bf4  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::RuntimeScheduler_Modern::executeTask(facebook::jsi::Runtime&, facebook::react::Task&, bool)+60) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #22 pc 00000000005074b0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::RuntimeScheduler_Modern::runEventLoopTick(facebook::jsi::Runtime&, facebook::react::Task&)+124) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #23 pc 00000000005071c0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (facebook::react::RuntimeScheduler_Modern::runEventLoop(facebook::jsi::Runtime&)+88) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #24 pc 00000000002d393c  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #25 pc 000000000054deb4  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libreactnative.so (offset 0x788000) (BuildId: 7e70f59e9db250d0eef89a38203b167ad57375a7)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #26 pc 0000000000017dd0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libfbjni.so (offset 0x320000) (facebook::jni::detail::MethodWrapper<void (facebook::jni::JNativeRunnable::*)(), &(facebook::jni::JNativeRunnable::run()), facebook::jni::JNativeRunnable, void>::dispatch(facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::jni::JNativeRunnable, facebook::jni::JRunnable>::JavaPart, facebook::jni::JRunnable, void>::_javaobject*>)+72) (BuildId: e438f6554af1d86b210a05412e96c4251e570157)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #27 pc 0000000000017d10  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/base.apk!libfbjni.so (offset 0x320000) (facebook::jni::detail::FunctionWrapper<void (*)(facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::jni::JNativeRunnable, facebook::jni::JRunnable>::JavaPart, facebook::jni::JRunnable, void>::_javaobject*>), facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::jni::JNativeRunnable, facebook::jni::JRunnable>::JavaPart, facebook::jni::JRunnable, void>::_javaobject*, void>::call(_JNIEnv*, _jobject*, void (*)(facebook::jni::alias_ref<facebook::jni::detail::JTypeFor<facebook::jni::HybridClass<facebook::jni::JNativeRunnable, facebook::jni::JRunnable>::JavaPart, facebook::jni::JRunnable, void>::_javaobject*>))+60) (BuildId: e438f6554af1d86b210a05412e96c4251e570157)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #28 pc 0000000000377030  /apex/com.android.art/lib64/libart.so (art_quick_generic_jni_trampoline+144) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #29 pc 000000000056216c  /system/framework/arm64/boot-framework.oat (android.os.Handler.dispatchMessage+76) (BuildId: d78a45b435dbd99c4526a33e3674ae4ee6ada328)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #30 pc 000000000058acb0  /apex/com.android.art/lib64/libart.so (nterp_helper+4016) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #31 pc 00000000002a0896  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/oat/arm64/base.vdex (com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage+6)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #32 pc 000000000056533c  /system/framework/arm64/boot-framework.oat (android.os.Looper.loopOnce+1036) (BuildId: d78a45b435dbd99c4526a33e3674ae4ee6ada328)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #33 pc 0000000000564ea8  /system/framework/arm64/boot-framework.oat (android.os.Looper.loop+552) (BuildId: d78a45b435dbd99c4526a33e3674ae4ee6ada328)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #34 pc 0000000000589d98  /apex/com.android.art/lib64/libart.so (nterp_helper+152) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #35 pc 00000000002a0af0  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/oat/arm64/base.vdex (com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.startNewBackgroundThread$lambda$0+56)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #36 pc 0000000000589d98  /apex/com.android.art/lib64/libart.so (nterp_helper+152) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #37 pc 00000000002a0a70  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/oat/arm64/base.vdex (com.facebook.react.bridge.queue.MessageQueueThreadImpl$Companion.a+0)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #38 pc 0000000000589d98  /apex/com.android.art/lib64/libart.so (nterp_helper+152) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #39 pc 00000000000a68ec  /data/app/~~hafmBi5khTAaSlt2OuEzLQ==/com.myapp-Vq8-4dGgU9NKJ4___LZZ4w==/oat/arm64/base.vdex (h3.run+412)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #40 pc 0000000000160778  /system/framework/arm64/boot.oat (java.lang.Thread.run+72) (BuildId: 5f2ff7f6c842c7ab341edeabcf35b2bcaddb338c)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #41 pc 00000000003605a4  /apex/com.android.art/lib64/libart.so (art_quick_invoke_stub+612) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #42 pc 000000000034b8a4  /apex/com.android.art/lib64/libart.so (art::ArtMethod::Invoke(art::Thread*, unsigned int*, unsigned int, art::JValue*, char const*)+144) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #43 pc 00000000004f3e30  /apex/com.android.art/lib64/libart.so (art::Thread::CreateCallback(void*)+1888) (BuildId: b10f5696fea1b32039b162aef3850ed3)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #44 pc 00000000000cb6a8  /apex/com.android.runtime/lib64/bionic/libc.so (__pthread_start(void*)+208) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+10-19 02:39:38.309  5163  5163 F DEBUG   :       #45 pc 000000000006821c  /apex/com.android.runtime/lib64/bionic/libc.so (__start_thread+64) (BuildId: a87908b48b368e6282bcc9f34bcfc28c)
+08-27 02:42:35.376   160   160 I logd    : logdr: UID=10196 GID=10196 PID=5163 n tail=500 logMask=8 pid=5134 start=0ns deadline=0ns
+08-27 02:42:35.376   160   160 I logd    : logdr: UID=10196 GID=10196 PID=5163 n tail=500 logMask=1 pid=5134 start=0ns deadline=0ns
+10-19 02:39:38.325   541  5176 W ActivityTaskManager:   Force finishing activity com.myapp/.MainActivity
+10-19 02:39:38.326   205   205 E tombstoned: Tombstone written to: tombstone_01
+10-19 02:39:38.328   541  5177 I DropBoxManagerService: add tag=data_app_native_crash isTagEnabled=true flags=0x2
+08-27 02:42:35.397     1     1 I init    : Untracked pid 5163 exited with status 0
+08-27 02:42:35.397     1     1 I init    : Untracked pid 5163 did not have an associated service entry and will not be reaped
+08-27 02:42:35.401     1     1 I init    : Untracked pid 5165 exited with status 0
+08-27 02:42:35.401     1     1 I init    : Untracked pid 5165 did not have an associated service entry and will not be reaped
+10-19 02:39:38.334   541   622 I BootReceiver: Copying /data/tombstones/tombstone_01 to DropBox (SYSTEM_TOMBSTONE)
+10-19 02:39:38.334   541   622 I DropBoxManagerService: add tag=SYSTEM_TOMBSTONE isTagEnabled=true flags=0x6
+10-19 02:39:38.345   754   796 V WindowManagerShell: Transition requested: android.os.BinderProxy@2332efa TransitionRequestInfo { type = CLOSE, triggerTask = null, remoteTransition = null, displayChange = null }
+10-19 02:39:38.347   352   352 I Zygote  : Process 5134 exited due to signal 6 (Aborted)
+10-19 02:39:38.347   541  1779 I ActivityManager: Process com.myapp (pid 5134) has died: fg  TOP 
+08-27 02:42:35.415    68    68 W binder_debug: 8 callbacks suppressed
+08-27 02:42:35.415    68    68 I binder  : undelivered TRANSACTION_COMPLETE
+08-27 02:42:35.415    68    68 I binder  : undelivered transaction 254959, process died.
+10-19 02:39:38.348   541  2450 I WindowManager: WIN DEATH: Window{f0a92f4 u0 com.myapp/com.myapp.MainActivity}
+10-19 02:39:38.348   541  2450 W InputManager-JNI: Input channel object 'f0a92f4 com.myapp/com.myapp.MainActivity (client)' was disposed without first being removed with the input manager!
+10-19 02:39:38.349   541  1775 I ImeTracker: com.myapp:fe1e0da2: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_REMOVE_CLIENT
+10-19 02:39:38.349   541  1775 I ImeTracker: com.myapp:fe1e0da2: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-19 02:39:38.349   541   571 I libprocessgroup: Successfully killed process cgroup uid 10196 pid 5134 in 0ms
+10-19 02:39:38.350   541   560 D DisplayManagerService: Drop pending events for gone uid 10196
+10-19 02:39:38.354   754   882 D EGL_emulation: app_time_stats: avg=58.94ms min=0.81ms max=303.15ms count=16
+10-19 02:39:38.356  1528  2033 I AssistantForeground: (REDACTED) Get launcher package: %s
+10-19 02:39:38.364   541   622 I DropBoxManagerService: add tag=SYSTEM_TOMBSTONE_PROTO_WITH_HEADERS isTagEnabled=true flags=0x4
+10-19 02:39:38.365   390   390 I BpBinder: onLastStrongRef automatically unlinking death recipients: 
+10-19 02:39:38.386   541   563 W WindowManager: Failed to deliver inset control state change to w=Window{f0a92f4 u0 com.myapp/com.myapp.MainActivity EXITING}
+10-19 02:39:38.386   541   563 W WindowManager: android.os.DeadObjectException
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.IWindow$Stub$Proxy.insetsControlChanged(IWindow.java:479)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowState.notifyInsetsControlChanged(WindowState.java:3802)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController.lambda$notifyPendingInsetsControlChanged$3(InsetsStateController.java:343)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController.$r8$lambda$8yykPRG1GyNq_J17QvL9d5xANMc(InsetsStateController.java:0)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController$$ExternalSyntheticLambda2.run(R8$$SyntheticClass:0)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator.executeAfterPrepareSurfacesRunnables(WindowAnimator.java:294)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator.animate(WindowAnimator.java:202)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator.lambda$new$1(WindowAnimator.java:99)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator.$r8$lambda$aHNu1uhcqxihX5NZc4McDDQPAyw(WindowAnimator.java:0)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator$$ExternalSyntheticLambda1.doFrame(R8$$SyntheticClass:0)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1337)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.Choreographer$CallbackRecord.run(Choreographer.java:1348)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.Choreographer.doCallbacks(Choreographer.java:952)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.Choreographer.doFrame(Choreographer.java:878)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:1322)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.Handler.handleCallback(Handler.java:958)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.Looper.loop(Looper.java:294)
+10-19 02:39:38.386   541   563 W WindowManager: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-19 02:39:38.386   541   563 W WindowManager: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+10-19 02:39:38.402  1657  2441 E OpenGLRenderer: Unable to match the desired swap behavior.
+10-19 02:39:38.405   541  1561 W AppSearchIcing: icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+10-19 02:39:38.407  1525  1845 I AiAiEcho: Predicting[0]: 
+10-19 02:39:38.407  1525  1845 I AiAiEcho: EchoTargets: 
+10-19 02:39:38.407  1525  1845 I AiAiEcho: Filtered by AiAi flag check: 
+10-19 02:39:38.407  1525  1845 I AiAiEcho: Ranked targets strategy: SORT, count: 0, ranking metadata: 
+10-19 02:39:38.416  1525  1845 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+10-19 02:39:38.421  1045  1871 D OneSearchSuggestProvider: Created the binder channel successfully for end point service =com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService , mChannel=z1{delegate=s1{logId=9, target=directaddress:///AndroidComponentAddress%5BIntent%20%7B%20act=grpc.io.action.BIND%20cmp=com.google.android.googlequicksearchbox/com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService%20%7D%5D}} , mOneSearchConnection=X1.T@3209ec9
+10-19 02:39:38.423  1045  1689 E OpenGLRenderer: Unable to match the desired swap behavior.
+10-19 02:39:38.515  1657  1657 I A       : (REDACTED) Created gRPC endpoint for service %s
+10-19 02:39:38.610  1045  1045 D SearchTargetUtil:  query= size=15
+10-19 02:39:38.610  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=punjab vs chhattisgarh ranji trophy,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=punjab vs chhattisgarh ranji trophy searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: ccdf5f8d-58bb-48c4-a264-afcb4d8ae8d1
+10-19 02:39:38.610  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=rajinikanth jailer,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=rajinikanth jailer searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: f4e246e4-1b3a-484c-bc1e-c5ae368ba04a
+10-19 02:39:38.610  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=railways mobile phone speaker rules,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=railways mobile phone speaker rules searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: c0366fe9-0ac7-4973-857e-6403433f1d4c
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=fossil signature watches,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=fossil signature watches searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 58fc9598-ece1-4d23-a54e-40d656765c36
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=eternal sbi credit card,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=eternal sbi credit card searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: d6495923-0f6c-4fad-ba87-c5e4091c9b6a
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=dr rachna shroff oncologist,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=dr rachna shroff oncologist searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 714d5b3c-1cb3-4915-b365-216be2ffd7a1
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=orionid meteor shower,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=orionid meteor shower searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: d9a2e3f9-da07-48f6-a302-81ee1726e04a
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=a love other than yours kdrama,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=a love other than yours kdrama searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 63f71d85-3dd5-47bf-9b84-693162cb0c67
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=justice surya kant nlsiu convocation,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=justice surya kant nlsiu convocation searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 10cc3652-a939-4680-bb16-0f47ea7adc88
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=rnr donne biryani startup growth,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=rnr donne biryani startup growth searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 250dc442-c185-493c-9491-57b99fb9e005
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=leeds united manchester united,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=leeds united manchester united searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: fc5a5bcc-5854-409a-97bf-080fea640367
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=intel arc pro b70 32gb vga,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=intel arc pro b70 32gb vga searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 19616f87-ae5b-4a4d-ab80-91a9d6a95afc
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=bmsd grand finals,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=bmsd grand finals searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: f3404828-5484-4dca-8ca7-c664813140c5
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=mcc neet pg 2026 seat matrix,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=mcc neet pg 2026 seat matrix searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: 2db54449-4b07-4be8-878f-7041f49edec6
+10-19 02:39:38.611  1045  1045 D SearchTargetUtil: layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=samsung galaxy s27 ultra,group_id=web37317,response_id=a125f7aa-908c-4b75-97af-02802aaa0726,support_query_builder=false,} searchAction=samsung galaxy s27 ultra searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=true,suggestion_action_rpc=2,}ParentID: null targetID: e8781165-6e56-4ea3-9509-e155d53bb4ad
+10-19 02:39:38.644   754   796 V WindowManagerShell: onTransitionReady android.os.BinderProxy@2332efa: {id=6 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@24d1887} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x7775cab sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@7b6c3b4} m=CLOSE f=NONE leash=Surface(name=Task=7)/@0x350bf08 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{74c77cf token=android.os.Binder@634f02e})/@0xbc5f6a1 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:38.644   754   796 V WindowManagerShell: Playing animation for (#6)android.os.BinderProxy@2332efa@0
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.transition.DefaultMixedHandler@cf3b8f
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@bfc1e1c
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@12d8a25
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.recents.RecentsTransitionHandler@e1947fa
+10-19 02:39:38.645   754   796 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.pip.PipTransition@a0e01ab
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.splitscreen.StageCoordinator@1bb0008
+10-19 02:39:38.645   754   796 V WindowManagerShell:  try handler com.android.wm.shell.transition.RemoteTransitionHandler@4d1a3a1
+10-19 02:39:38.645   754   796 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=6 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@24d1887} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x7775cab sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@7b6c3b4} m=CLOSE f=NONE leash=Surface(name=Task=7)/@0x350bf08 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{74c77cf token=android.os.Binder@634f02e})/@0xbc5f6a1 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:38.645   754   796 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@51f9afd, appThread = android.app.IApplicationThread$Stub$Proxy@c5c43f2, debugName = LauncherToDream }}
+10-19 02:39:38.645   754   796 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@f28da43, appThread = android.app.IApplicationThread$Stub$Proxy@9b788c0, debugName = QuickstepLaunchHome }}
+10-19 02:39:38.645   754   796 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@f28da43, appThread = android.app.IApplicationThread$Stub$Proxy@9b788c0, debugName = QuickstepLaunchHome }}
+10-19 02:39:38.645   754   796 V WindowManagerShell:  Delegate animation for #6 to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@f28da43, appThread = android.app.IApplicationThread$Stub$Proxy@9b788c0, debugName = QuickstepLaunchHome }
+10-19 02:39:38.646   754   796 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@4d1a3a1
+10-19 02:39:38.652   541   559 V WindowManager: Sent Transition #6 createdAt=10-19 02:39:38.325 via request=TransitionRequestInfo { type = CLOSE, triggerTask = null, remoteTransition = null, displayChange = null }
+10-19 02:39:38.652   541   559 V WindowManager:     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+10-19 02:39:38.653   541   559 V WindowManager:     info={id=6 t=CLOSE f=0x10 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{6cd530 Task{bc93b3f #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP leash=Surface(name=Task=1)/@0x1194b60 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{WCT{RemoteToken{c73ee2 Task{4aebe01 #7 type=standard A=10196:com.myapp}}} m=CLOSE f=NONE leash=Surface(name=Task=7)/@0xc0770c4 sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{74c77cf token=android.os.Binder@634f02e})/@0x413464d sb=Rect(0, 0 - 1440, 3120) eb=Rect(0, 0 - 1440, 3120) d=0}]}
+10-19 02:39:38.669   541  2450 I ImeTracker: com.google.android.apps.nexuslauncher:ca14bb94: onRequestHide at ORIGIN_SERVER_HIDE_INPUT reason HIDE_UNSPECIFIED_WINDOW
+10-19 02:39:38.669   541  2450 I ImeTracker: com.google.android.apps.nexuslauncher:ca14bb94: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-19 02:39:38.684  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():3227 
+10-19 02:39:38.686  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2087 repeatCheckTimes = 0, unlocked = true
+10-19 02:39:38.686  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1877 onStartInput(EditorInfo{inputType=0x0(NULL) imeOptions=0x0 privateImeOptions=null actionName=UNSPECIFIED actionLabel=null actionId=0 initialSelStart=-1 initialSelEnd=-1 initialCapsMode=0x0 hintText=null label=null packageName=com.google.android.apps.nexuslauncher fieldId=0 fieldName=null extras=null}, false)
+10-19 02:39:38.686  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.shouldHideHeaderOnInitialState():4008 ShouldHideHeaderOnInitialState = false
+10-19 02:39:38.687  1471  1471 I GoogleInputMethodService: GoogleInputMethodService.updateDeviceLockedStatus():2087 repeatCheckTimes = 2, unlocked = true
+10-19 02:39:38.689   541   563 W WindowManager: Failed to deliver inset control state change to w=Window{f0a92f4 u0 com.myapp/com.myapp.MainActivity EXITING}
+10-19 02:39:38.689   541   563 W WindowManager: android.os.DeadObjectException
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.view.IWindow$Stub$Proxy.insetsControlChanged(IWindow.java:479)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowState.notifyInsetsControlChanged(WindowState.java:3802)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController.lambda$notifyPendingInsetsControlChanged$3(InsetsStateController.java:343)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController.$r8$lambda$8yykPRG1GyNq_J17QvL9d5xANMc(InsetsStateController.java:0)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.InsetsStateController$$ExternalSyntheticLambda2.run(R8$$SyntheticClass:0)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowAnimator.executeAfterPrepareSurfacesRunnables(WindowAnimator.java:294)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacementNoTrace(RootWindowContainer.java:811)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.RootWindowContainer.performSurfacePlacement(RootWindowContainer.java:756)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacementLoop(WindowSurfacePlacer.java:177)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:126)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer.performSurfacePlacement(WindowSurfacePlacer.java:115)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.wm.WindowSurfacePlacer$Traverser.run(WindowSurfacePlacer.java:57)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.Handler.handleCallback(Handler.java:958)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.Handler.dispatchMessage(Handler.java:99)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.Looper.loop(Looper.java:294)
+10-19 02:39:38.689   541   563 W WindowManager: 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-19 02:39:38.689   541   563 W WindowManager: 	at com.android.server.ServiceThread.run(ServiceThread.java:46)
+10-19 02:39:39.069   380   380 I android.hardware.power-service.example: Power isModeSupported: 6
+10-19 02:39:39.167   754   796 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#6)android.os.BinderProxy@2332efa@0
+10-19 02:39:39.168   541   559 V WindowManager: Finish Transition #6: created at 10-19 02:39:38.325 collect-started=0.023ms request-sent=0.046ms started=21.4ms ready=28.001ms sent=310.091ms finished=842.96ms
+10-19 02:39:39.190   541  1779 W WindowManager: Exception thrown during dispatchAppVisibility Window{f0a92f4 u0 com.myapp/com.myapp.MainActivity EXITING}
+10-19 02:39:39.190   541  1779 W WindowManager: android.os.DeadObjectException
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:546)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3271)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1221)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:409)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:6946)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.ActivityRecord.postApplyAnimation(ActivityRecord.java:5637)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5580)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1151)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:868)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:396)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:286)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:181)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1339)
+10-19 02:39:39.190   541  1779 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1275)
+10-19 02:39:39.190   541  1779 I Process : Sending signal. PID: 5134 SIG: 9
+10-19 02:39:39.198   541   562 W ActivityManager: setHasOverlayUi called on unknown pid: 5134
+10-19 02:39:39.201   754   796 V WindowManagerShell: Track 0 became idle
+10-19 02:39:39.201   754   796 V WindowManagerShell: All active transition animations finished
+10-19 02:39:39.201   754   796 W Looper  : Slow dispatch took 35ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@f74a352 m=0
+10-19 02:39:39.317   541  5185 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+10-19 02:39:39.318   541  5185 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+10-19 02:39:39.320   541  5185 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+10-19 02:39:39.332   390   390 E BpTransactionCompletedListener: Failed to transact (-32)
+10-19 02:39:39.361   541  5185 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+10-19 02:39:39.362   541  5185 W OpenGLRenderer: Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-19 02:39:39.364   754   882 D EGL_emulation: app_time_stats: avg=39.31ms min=1.52ms max=168.57ms count=15
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missed App frame:UNKNOWN: 76, 46432, 452813550, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missed SF frame:UNKNOWN: 76, 46432, 452813550, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missed App frame:UNKNOWN: 74, 46454, 0, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missed SF frame:UNKNOWN: 74, 46454, 0, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missing HWUI jank callback for vsyncId: 46454, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:39.461  1045  1045 W FrameTracker: Missed SF frame:UNKNOWN: 65, 46512, 356174477, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME>
+10-19 02:39:40.184   541  1602 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-19 02:39:40.394   754   882 D EGL_emulation: app_time_stats: avg=33.18ms min=1.53ms max=66.60ms count=24
+10-19 02:39:42.319   541   568 D OomAdjuster: Not killing cached processes
+10-19 02:39:42.319   541   568 W ProcessStats: Tracking association SourceState{75f76f com.google.android.gms.persistent/10129 BTop #4653} whose proc state 2 is better than process ProcessState{3501218 com.google.android.gms/10129 pkg=com.google.android.gms} proc state 8 (429 skipped)
+10-19 02:39:42.784   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode 1
+10-19 02:39:42.784   886  1147 D BtGatt.ScanManager: uid 10129 isForeground true scanMode -1
+10-19 02:39:44.202  1267  3355 I NearbyDiscovery: FastPair: isDestroyable: Scanner is alive. [CONTEXT service_id=265 ]
+10-19 02:39:44.202  1267  3355 I NearbyDiscovery: DiscoveryService: Skip stopSelf(), fast pair controller is not destroyable. [CONTEXT service_id=265 ]
+10-19 02:39:44.567   754   754 D StatusBarIconController: ignoring old pipeline callbacks, because the new mobile icons are enabled
+08-27 02:42:41.831   160   160 I logd    : logdr: UID=2000 GID=2000 PID=5186 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

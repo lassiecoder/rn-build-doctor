@@ -13,11 +13,15 @@ export interface JsException extends Span {
   component?: string;
   /** Logcat process id, when the log has one. */
   pid?: string;
+  /** Logcat thread id (threadtime format only). */
+  tid?: string;
   /**
    * Line indices for the excerpt when the log interleaves several processes (logcat): the exception
-   * line and the following lines from the same process only.
+   * line and the following lines from the same thread (or process, without thread ids) only.
    */
   lines?: number[];
+  /** The process was killed by a signal after the exception (bridgeless apps abort on the JS thread). */
+  termination?: { index: number; signal: string; thread?: string };
 }
 
 export interface AndroidFatal extends Span {
@@ -85,7 +89,7 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
   }
 
   for (let i = 0; i < lines.length; i++) {
-    const { tag, pid, message } = stripLogcatPrefix(lines[i]!);
+    const { tag, pid, tid, message } = stripLogcatPrefix(lines[i]!);
 
     // Bundle not loaded. With the New Architecture (bridgeless), a debug app without Metro shows a
     // red screen and logs this through handleHostException instead of crashing.
@@ -136,7 +140,8 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
         if (!seenJs.has(key)) {
           seenJs.add(key);
           result.detected = true;
-          const excerpt = pid ? sameProcessLines(lines, i, pid, EXCERPT_LINES) : undefined;
+          const excerpt = pid ? sameProcessLines(lines, i, pid, EXCERPT_LINES, tid) : undefined;
+          const termination = pid ? findTermination(lines, i, pid, tid) : undefined;
           const after = excerpt
             ? excerpt.slice(1)
             : Array.from({ length: 8 }, (_, k) => i + 1 + k).filter((k) => k < lines.length);
@@ -149,6 +154,8 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
             message: msg,
             channel,
             ...(pid && excerpt ? { pid, lines: excerpt } : {}),
+            ...(tid ? { tid } : {}),
+            ...(termination ? { termination } : {}),
             ...(frameIndex !== undefined
               ? { firstFrame: stripLogcatPrefix(lines[frameIndex]!).message.trim() }
               : {}),
@@ -200,14 +207,52 @@ const PACKAGER_UNREACHABLE =
 /** How far ahead to look for lines of the same process in an interleaved logcat. */
 const SAME_PROCESS_WINDOW = 400;
 
-/** The line at `start` plus following lines logged by the same process, up to `limit` lines. */
-function sameProcessLines(lines: string[], start: number, pid: string, limit: number): number[] {
+/**
+ * The line at `start` plus following lines logged by the same process, up to `limit` lines. With a
+ * thread id, only lines from that thread count, so other threads of the app (image decoders, native
+ * modules) don't crowd out the stack trace.
+ */
+function sameProcessLines(
+  lines: string[],
+  start: number,
+  pid: string,
+  limit: number,
+  tid?: string,
+): number[] {
   const picked = [start];
   for (let j = start + 1; j < lines.length && j <= start + SAME_PROCESS_WINDOW; j++) {
     if (picked.length >= limit) break;
-    if (stripLogcatPrefix(lines[j]!).pid === pid) picked.push(j);
+    const line = stripLogcatPrefix(lines[j]!);
+    if (line.pid === pid && (!tid || line.tid === tid)) picked.push(j);
   }
   return picked;
+}
+
+const FATAL_SIGNAL = /^Fatal signal \d+ \((SIG[A-Z]+)\).*?\bin tid (\d+) \(([^)]*)\)/;
+const JS_ABORT = /terminating due to uncaught exception .*JavascriptException/;
+
+/**
+ * Finds a fatal signal that killed the process after a JavaScript exception. The signal counts when
+ * it hit the exception's thread, or when the process first logged that an uncaught
+ * JavascriptException is terminating it (libc++abi).
+ */
+function findTermination(
+  lines: string[],
+  start: number,
+  pid: string,
+  tid: string | undefined,
+): JsException["termination"] {
+  let jsAbort = false;
+  for (let j = start + 1; j < lines.length && j <= start + SAME_PROCESS_WINDOW; j++) {
+    const line = stripLogcatPrefix(lines[j]!);
+    if (line.pid !== pid) continue;
+    if (JS_ABORT.test(line.message)) jsAbort = true;
+    const signal = FATAL_SIGNAL.exec(line.message.trim());
+    if (signal && (jsAbort || (tid !== undefined && signal[2] === tid))) {
+      return { index: j, signal: signal[1]!, ...(signal[3] ? { thread: signal[3] } : {}) };
+    }
+  }
+  return undefined;
 }
 
 const STACK_FRAME = /^\s*(?:at\s+\S|\S+@\S*:\d+:\d+)/;

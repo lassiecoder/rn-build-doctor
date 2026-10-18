@@ -67,14 +67,27 @@ export function flatten(doc: LogDocument, span: Span): string {
     .join(" ");
 }
 
-/** Removes logcat prefixes such as `10-14 20:00:00.000  1234  1234 E AndroidRuntime: `. */
-export function stripLogcatPrefix(line: string): { tag?: string; pid?: string; message: string } {
+/**
+ * Removes logcat prefixes such as `10-14 20:00:00.000  1234  1240 E AndroidRuntime: `. The thread id
+ * (`tid`) is only available in the threadtime format.
+ */
+export function stripLogcatPrefix(line: string): {
+  tag?: string;
+  pid?: string;
+  tid?: string;
+  message: string;
+} {
   const threadtime =
-    /^\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+\s+(\d+)\s+\d+\s+[VDIWEFA]\s+([^:]+?)\s*:\s?(.*)$/.exec(
+    /^\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+\s+(\d+)\s+(\d+)\s+[VDIWEFA]\s+([^:]+?)\s*:\s?(.*)$/.exec(
       line,
     );
   if (threadtime)
-    return { tag: threadtime[2]!.trim(), pid: threadtime[1]!, message: threadtime[3]! };
+    return {
+      tag: threadtime[3]!.trim(),
+      pid: threadtime[1]!,
+      tid: threadtime[2]!,
+      message: threadtime[4]!,
+    };
   const brief = /^[VDIWEFA]\/([^(:]+?)\s*(?:\(\s*(\d+)\))?:\s?(.*)$/.exec(line);
   if (brief)
     return { tag: brief[1]!.trim(), ...(brief[2] ? { pid: brief[2] } : {}), message: brief[3]! };

@@ -14,6 +14,7 @@ describe("logcat runtime parsing", () => {
     expect(stripLogcatPrefix("10-15 00:59:27.007  4653  4760 E ReactNativeJS: boom")).toEqual({
       tag: "ReactNativeJS",
       pid: "4653",
+      tid: "4760",
       message: "boom",
     });
     expect(stripLogcatPrefix("E/ReactNativeJS( 4653): boom")).toMatchObject({ pid: "4653" });
@@ -26,7 +27,57 @@ describe("logcat runtime parsing", () => {
     const pids = new Set(excerpt.split("\n").map((l) => stripLogcatPrefix(l).pid));
     expect([...pids]).toEqual(["4653"]);
     expect(excerpt).not.toContain("PackageWatchdog");
-    expect(js.evidence[0]!.detail).toContain("Only lines from process 4653");
+    expect(js.evidence[0]!.detail).toContain("Only lines from thread 4760 of process 4653");
+  });
+
+  it("shows only lines from the exception's thread when other threads of the app interleave", () => {
+    const report = analyze("real-logcat-bridgeless-js-abort.log");
+    const js = report.findings.find((f) => f.ruleId === "runtime.javascript-exception")!;
+    const excerpt = js.evidence[0]!.excerpt!;
+    const tids = new Set(excerpt.split("\n").map((l) => stripLogcatPrefix(l).tid));
+    expect([...tids]).toEqual(["5158"]);
+    expect(excerpt).toContain("handleHostException");
+    expect(excerpt).not.toContain("GIF decoder");
+    expect(js.evidence[0]!.detail).toContain("Only lines from thread 5158 of process 5134");
+  });
+
+  it("reports that an uncaught exception killed the process (bridgeless SIGABRT)", () => {
+    const report = analyze("real-logcat-bridgeless-js-abort.log");
+    const js = report.findings.find((f) => f.ruleId === "runtime.javascript-exception")!;
+    expect(js.explanation).toContain("the app crashed");
+    expect(js.explanation).toContain("SIGABRT");
+    const signal = js.evidence.find((e) => e.detail?.startsWith("The process was then killed"))!;
+    expect(signal.detail).toBe("The process was then killed by SIGABRT on thread mqt_v_js");
+    expect(signal.excerpt).toContain("Fatal signal 6 (SIGABRT)");
+  });
+
+  it("doesn't claim a crash when the JS error isn't followed by a fatal signal", () => {
+    const report = analyze("real-logcat-js-startup-crash.log");
+    const js = report.findings.find((f) => f.ruleId === "runtime.javascript-exception")!;
+    expect(js.explanation).not.toContain("crashed");
+    expect(js.evidence.some((e) => e.detail?.includes("killed by"))).toBe(false);
+  });
+
+  it("ignores a fatal signal on another thread or in another process", () => {
+    const doc = logFromText(
+      "x.log",
+      [
+        "10-15 00:00:01.000   100   101 E ReactNativeJS: Error: boom",
+        "10-15 00:00:01.100   100   107 F libc    : Fatal signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 0x0 in tid 107 (RenderThread), pid 100 (com.myapp)",
+        "10-15 00:00:01.200   200   201 F libc    : Fatal signal 6 (SIGABRT), code -1 (SI_QUEUE) in tid 201 (mqt_v_js), pid 200 (com.other)",
+      ].join("\n"),
+    );
+    expect(parseRuntime(doc).jsExceptions[0]!.termination).toBeUndefined();
+  });
+
+  it("tags the missing-configuration finding with expo only for Expo projects", () => {
+    const run = (project: string) =>
+      runAnalyze([logFixture("real-logcat-bridgeless-js-abort.log")], {
+        cwd: projectFixture(project),
+        env: EMPTY_ENV,
+      }).findings.find((f) => f.ruleId === "runtime.missing-configuration-suspected")!;
+    expect(run("rn-cli-clean").platforms).toEqual(["javascript"]);
+    expect(run("expo-clean").platforms).toEqual(["javascript", "expo"]);
   });
 
   it("reports follow-on errors as evidence of the first error, not as separate findings", () => {

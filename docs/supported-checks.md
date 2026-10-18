@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-40 rules: 13 project checks (`scan`) and 27 log rules (`analyze`).
+41 rules: 13 project checks (`scan`) and 28 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -323,6 +323,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://developer.android.com/build/manage-manifests><br><https://developer.android.com/about/versions/12/behavior-changes-12#exported> |
 | Regression fixtures | `tests/fixtures/logs/android-manifest-exported.log`<br>`tests/fixtures/logs/real-rn087-gradle-manifest-minsdk.log`                       |
 | Last verified       | 2026-10-14                                                                                                                               |
+
+### `android.native-min-sdk-below-library`
+
+**minSdkVersion is lower than a native (prefab) library was built for**
+
+| Field               | Value                                                                                                                                                                                             |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                           |
+| Applicable versions | Android Gradle Plugin with prefab native dependencies (React Native New Architecture, Expo modules)                                                                                               |
+| Trigger             | Log line '[CXX1214] ... User has minSdkVersion N but library was built for M [//package/module]', printed when a CMake configure task links a prefab native library built for a higher API level. |
+| Evidence            | The CXX1214 line, the two API levels, the library, and the declared minSdk.                                                                                                                       |
+| Sources             | <https://developer.android.com/ndk/guides/sdk-versions><br><https://developer.android.com/build/native-dependencies><br><https://docs.expo.dev/versions/latest/sdk/build-properties/>             |
+| Regression fixtures | `tests/fixtures/logs/real-rn087-gradle-cxx-minsdk.log`<br>`tests/fixtures/logs/real-expo58-gradle-cxx-minsdk.log`                                                                                 |
+| Last verified       | 2026-10-19                                                                                                                                                                                        |
 
 ### `android.js-bundle-task-failed`
 

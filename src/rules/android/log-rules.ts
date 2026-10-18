@@ -678,6 +678,76 @@ export const manifestMergerFailed: Rule = {
   },
 };
 
+export const nativeMinSdkBelowLibrary: Rule = {
+  meta: {
+    id: "android.native-min-sdk-below-library",
+    title: "minSdkVersion is lower than a native (prefab) library was built for",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "Log line '[CXX1214] ... User has minSdkVersion N but library was built for M [//package/module]', printed when a CMake configure task links a prefab native library built for a higher API level.",
+    evidence: "The CXX1214 line, the two API levels, the library, and the declared minSdk.",
+    versionScope:
+      "Android Gradle Plugin with prefab native dependencies (React Native New Architecture, Expo modules)",
+    references: [
+      "https://developer.android.com/ndk/guides/sdk-versions",
+      "https://developer.android.com/build/native-dependencies",
+      "https://docs.expo.dev/versions/latest/sdk/build-properties/",
+    ],
+    lastVerified: "2026-10-19",
+    fixtures: ["logs/real-rn087-gradle-cxx-minsdk.log", "logs/real-expo58-gradle-cxx-minsdk.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      for (const { index, match } of eachLine(
+        log,
+        /\[CXX1214\]\s+(\S+)\s+(\S+)\s*:\s*User has minSdkVersion (\d+) but library was built for (\d+) \[([^\]]+)\]/,
+      )) {
+        const [, cmakeLists, variant, appMin, libMin, library] = match;
+        // Prefab names libraries "//<package>/<module>", e.g. //ReactAndroid/hermestooling.
+        const prefab = /^\/\/([^/]+)\/(.+)$/.exec(library!);
+        const libraryName = prefab ? `${prefab[2]} from the prefab package ${prefab[1]}` : library!;
+        const consumer = /node_modules\/((?:@[^/]+\/)?[^/]+)\//.exec(cmakeLists!)?.[1];
+        const task = /configureCMake\w*\[[^\]]+\]/.exec(
+          log.doc.lines.slice(Math.max(0, index - 3), index + 1).join(" "),
+        )?.[0];
+        const evidence: Evidence[] = [
+          logEvidence(
+            log.doc,
+            { start: index, end: index },
+            `minSdkVersion ${appMin}; library built for ${libMin}; ${variant}`,
+          ),
+          ...versionEvidence(ctx, ["minSdk"]),
+        ];
+        const expo = ctx.project?.kind === "expo";
+        out.push(
+          finding(this.meta, {
+            title: `minSdkVersion ${appMin} is lower than ${library} was built for (${libMin})`,
+            severity: "error",
+            confidence: "high",
+            explanation:
+              `The native library ${libraryName} was built for Android API ${libMin}, but the app's minSdkVersion is ${appMin}. ` +
+              `The CMake configure step${task ? ` (${task})` : ""}${consumer ? ` in ${consumer}` : ""} refuses to link it, because native code built for a newer API level isn't guaranteed to load on older Android versions. ` +
+              "This is a configuration mismatch, not a compile error in your code.",
+            evidence,
+            nextSteps: [
+              expo
+                ? `Set \`android.minSdkVersion\` to at least ${libMin} in the expo-build-properties plugin options in your app config (or remove the override to use the SDK default), then run \`npx expo prebuild --clean\`.`
+                : `Raise minSdkVersion to at least ${libMin} in android/build.gradle (the \`minSdkVersion\` value in \`buildscript.ext\`). This drops support for Android versions below API ${libMin}.`,
+              "If the lower value was set on purpose, check the minimum Android version your React Native or Expo SDK version supports. A native library can't be made to run below the API level it was built for.",
+            ],
+            verification: expo
+              ? "`npx expo prebuild --clean` and then `cd android && ./gradlew assembleRelease` get past the configureCMake tasks."
+              : "`cd android && ./gradlew assembleRelease` gets past the configureCMake tasks.",
+          }),
+        );
+      }
+    }
+    return out;
+  },
+};
+
 export const jsBundleTaskFailed: Rule = {
   meta: {
     id: "android.js-bundle-task-failed",
@@ -983,6 +1053,7 @@ export const androidLogRules: Rule[] = [
   aarMetadataCheck,
   duplicateClass,
   manifestMergerFailed,
+  nativeMinSdkBelowLibrary,
   jsBundleTaskFailed,
   androidCompileError,
   jvmOptionUnrecognized,

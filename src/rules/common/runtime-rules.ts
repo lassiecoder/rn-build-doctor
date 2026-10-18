@@ -35,10 +35,15 @@ export function groupJsExceptions(exceptions: JsException[]): ExceptionGroup[] {
   return groups;
 }
 
-/** Evidence for an exception: only lines from the same process when the log is an interleaved logcat. */
+/**
+ * Evidence for an exception: only lines from the same thread (or process, when the log has no thread
+ * ids) when the log is an interleaved logcat.
+ */
 function exceptionEvidence(log: ParsedLog, ex: JsException, detail?: string): Evidence {
   if (ex.lines?.length) {
-    const note = `Only lines from process ${ex.pid} are shown`;
+    const note = ex.tid
+      ? `Only lines from thread ${ex.tid} of process ${ex.pid} are shown`
+      : `Only lines from process ${ex.pid} are shown`;
     return logEvidenceLines(log.doc, ex.lines, detail ? `${detail}; ${note}` : note);
   }
   return logEvidence(log.doc, ex, detail);
@@ -90,6 +95,15 @@ export const javascriptException: Rule = {
               `Follow-on error caused by the first one: ${f.type}: ${f.message.slice(0, 160)}`,
             ),
           ),
+          ...(ex.termination
+            ? [
+                logEvidenceLines(
+                  log.doc,
+                  [ex.termination.index],
+                  `The process was then killed by ${ex.termination.signal}${ex.termination.thread ? ` on thread ${ex.termination.thread}` : ""}`,
+                ),
+              ]
+            : []),
         ];
         out.push(
           finding(this.meta, {
@@ -98,6 +112,9 @@ export const javascriptException: Rule = {
             confidence: "high",
             explanation:
               `The app reported a JavaScript ${ex.type} (via ${ex.channel}). This finding confirms the exception, not its root cause.` +
+              (ex.termination
+                ? ` The exception wasn't caught, and the app crashed: the process was killed by ${ex.termination.signal}${ex.termination.thread ? ` on its JavaScript thread (${ex.termination.thread})` : ""}. The native crash that follows in the log is a consequence of this exception, not a separate native bug.`
+                : "") +
               (followOns.length
                 ? ` ${followOns.length} later error${followOns.length === 1 ? "" : "s"} (such as "${followOns[0]!.message.slice(0, 80)}") ${followOns.length === 1 ? "is a consequence" : "are consequences"} of this one: once the bundle fails to run, React Native can't register or start the app. ${followOns.length === 1 ? "It's" : "They're"} listed as evidence here instead of as separate findings.`
                 : "") +
@@ -167,6 +184,7 @@ export const missingConfigurationSuspected: Rule = {
             severity: "warning",
             confidence: "medium",
             explanation: `The exception message "${ex.message}" says a configuration value is absent at runtime. A common cause is a value that exists in development (.env, local shell) but not in the production or release build environment. This is a hypothesis based on the message. The build's environment wasn't inspected.`,
+            platforms: ctx.project?.kind === "expo" ? ["javascript", "expo"] : ["javascript"],
             evidence: [exceptionEvidence(log, ex, `Configuration term: ${match[1] ?? match[0]}`)],
             nextSteps:
               ctx.project?.kind === "react-native-cli"
