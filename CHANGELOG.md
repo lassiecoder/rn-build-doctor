@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.1.5 (2026-10-18)
+
+Documentation and package metadata only; no behavior changes.
+
+- README: new "Error messages it recognizes" section listing the exact error messages the rules match, so developers searching for an error can find the tool.
+- npm: a fuller package description and more keywords (EAS Build, Android Gradle Plugin, JDK, Kotlin, xcodebuild, pod install, logcat, crash reports, code signing, and more).
+
+## 0.1.4 (2026-10-15)
+
+Documentation only.
+
+- README: recipes for common failures, `set -o pipefail` in the CI example (without it the step takes `tee`'s exit code), `ANTHROPIC_API_KEY` and `--dry-run` for `explain`, and absolute GitHub links for files that aren't in the npm package.
+
 ## 0.1.3 (2026-10-15)
 
 Fixes from retesting 0.1.2 the same way, with live pipes from real builds and an emulator.
