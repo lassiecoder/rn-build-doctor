@@ -1,0 +1,45 @@
+env: load .env.local
+env: export EXPO_PUBLIC_API_URL
+Starting Metro Bundler
+
+Android Bundling failed 7059ms index.ts (611 modules)
+Unable to resolve "react-native-config" from "App.tsx"
+[0m [90m 1 |[39m [36mimport[39m { [33mStatusBar[39m } [36mfrom[39m [32m'expo-status-bar'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m [33mConfig[39m [36mfrom[39m [32m'react-native-config'[39m[33m;[39m
+ [90m   |[39m                     [31m[1m^[22m[39m
+ [90m 3 |[39m console[33m.[39mlog([33mConfig[39m)[33m;[39m
+ [90m 4 |[39m [36mimport[39m { [33mLoginScreen[39m } [36mfrom[39m [32m'./src/screens/LoginScreen'[39m[33m;[39m
+ [90m 5 |[39m[0m
+
+Import stack:
+
+ App.tsx
+ | import "react-native-config"
+
+ index.ts
+ | import "./App"
+
+ 
+ | import "./index.ts"
+
+
+Error: Unable to resolve module react-native-config from /Users/dev/MyApp/App.tsx: react-native-config could not be found within the project or in these directories:
+  node_modules
+[0m [90m 1 |[39m [36mimport[39m { [33mStatusBar[39m } [36mfrom[39m [32m'expo-status-bar'[39m[33m;[39m
+[31m[1m>[22m[39m[90m 2 |[39m [36mimport[39m [33mConfig[39m [36mfrom[39m [32m'react-native-config'[39m[33m;[39m
+ [90m   |[39m                     [31m[1m^[22m[39m
+ [90m 3 |[39m console[33m.[39mlog([33mConfig[39m)[33m;[39m
+ [90m 4 |[39m [36mimport[39m { [33mLoginScreen[39m } [36mfrom[39m [32m'./src/screens/LoginScreen'[39m[33m;[39m
+ [90m 5 |[39m[0m
+
+Import stack:
+
+ App.tsx
+ | import "react-native-config"
+
+ index.ts
+ | import "./App"
+
+ 
+ | import "./index.ts"
+

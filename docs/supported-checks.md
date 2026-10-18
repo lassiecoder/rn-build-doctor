@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-41 rules: 13 project checks (`scan`) and 28 log rules (`analyze`).
+42 rules: 13 project checks (`scan`) and 29 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -379,6 +379,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://docs.gradle.org/current/userguide/build_environment.html#sec:configuring_jvm_memory><br><https://openjdk.org/jeps/122>              |
 | Regression fixtures | `tests/fixtures/logs/real-gradle93-jvm-maxpermsize.log`<br>`tests/fixtures/projects/rn-cli-old-permgen`                                      |
 | Last verified       | 2026-10-15                                                                                                                                   |
+
+### `expo.config-plugin-not-resolved`
+
+**Expo couldn't resolve a config plugin**
+
+| Field               | Value                                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | expo                                                                                                                                       |
+| Applicable versions | Expo SDK 41+ (config plugins)                                                                                                              |
+| Trigger             | Expo CLI (prebuild, EAS Build, expo config) output 'PluginError: Failed to resolve plugin for module "X" relative to "..."'.               |
+| Evidence            | The PluginError line; the app.json plugin entry and the package.json and node_modules state when a project is available.                   |
+| Sources             | <https://docs.expo.dev/config-plugins/introduction/><br><https://docs.expo.dev/config-plugins/plugins/>                                    |
+| Regression fixtures | `tests/fixtures/logs/real-expo58-prebuild-plugin-not-installed.log`<br>`tests/fixtures/logs/real-expo58-prebuild-local-plugin-missing.log` |
+| Last verified       | 2026-10-19                                                                                                                                 |
 
 ### `javascript.unable-to-resolve-module`
 

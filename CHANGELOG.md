@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+Fixes from testing one failure at each stage (development, release build, crash after install) on a React Native CLI app (0.87) and an Expo SDK 58 app, with real logs.
+
+- New rule `android.native-min-sdk-below-library`: `[CXX1214] User has minSdkVersion 23 but library was built for 24`. On React Native 0.87 and Expo SDK 58, lowering minSdk fails in a CMake configure task, not in the manifest merger, and was reported as "No supported diagnosis". Expo projects get the expo-build-properties fix.
+- New rule `expo.config-plugin-not-resolved`: `PluginError: Failed to resolve plugin for module "X"` from prebuild or EAS Build was reported as "No failure detected". It now says whether the plugin package isn't declared, isn't installed, or is a local file that doesn't exist. `PluginError:` and `ConfigError:` lines also count as failures for the fallback rules.
+- `runtime.javascript-exception`: logcat excerpts show only the exception's thread, so lines from other threads (such as image decoders) no longer push out the JavaScript stack. When the process is then killed by a signal (bridgeless apps abort with SIGABRT on the JS thread), the finding says the app crashed and cites the signal line, instead of reporting a separate native crash.
+- `javascript.unable-to-resolve-module`: Expo CLI prints each resolver error twice (relative and absolute path). They're now one finding.
+- `runtime.missing-configuration-suspected`: tagged `expo` only for Expo projects.
+
 ## 0.1.5 (2026-10-18)
 
 Documentation and package metadata only; no behavior changes.

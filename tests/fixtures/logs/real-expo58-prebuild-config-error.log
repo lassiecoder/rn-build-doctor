@@ -1,0 +1,17 @@
+env: load .env.local
+env: export EXPO_PUBLIC_API_URL
+Error: Error reading Expo config at /Users/dev/MyApp/app.config.js:
+
+boom from app.config
+Error: Error reading Expo config at /Users/dev/MyApp/app.config.js:
+
+boom from app.config
+    at module.exports (/Users/dev/MyApp/app.config.js:2:9)
+    at resolveConfigExport (/Users/dev/MyApp/node_modules/@expo/config/build/evalConfig.js:50:18)
+    at evalConfig (/Users/dev/MyApp/node_modules/@expo/config/build/evalConfig.js:35:12)
+    at readConfigFile (/Users/dev/MyApp/node_modules/@expo/config/build/getConfig.js:52:43)
+    at getDynamicConfig (/Users/dev/MyApp/node_modules/@expo/config/build/getConfig.js:61:20)
+    at getConfig (/Users/dev/MyApp/node_modules/@expo/config/build/Config.js:258:125)
+    at prebuildAsync (/Users/dev/MyApp/node_modules/expo/node_modules/@expo/cli/build/src/prebuild/prebuildAsync.js:52:48)
+    at /Users/dev/MyApp/node_modules/expo/node_modules/@expo/cli/build/src/prebuild/index.js:70:16
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)

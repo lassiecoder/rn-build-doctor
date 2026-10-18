@@ -49,6 +49,8 @@ export const FAILURE_SIGNALS: RegExp[] = [
   /^e: /,
   /^npm ERR!/,
   /^(?:\[\w+\]\s*)?Error:\s/,
+  // Error classes Expo CLI prints when it can't read the app config (@expo/config-plugins, @expo/config).
+  /^(?:PluginError|ConfigError):\s/,
   /FATAL EXCEPTION/,
   /^Exception Type:/,
   /Build failed\b/i,

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { logFromText } from "../../src/collectors/build-logs.js";
+import { parseMetro } from "../../src/parsers/metro.js";
 import { parseRuntime } from "../../src/parsers/runtime.js";
 import { stripLogcatPrefix } from "../../src/parsers/types.js";
 import { runAnalyze } from "../../src/pipeline.js";
@@ -175,5 +176,62 @@ describe("wording for real-world variants", () => {
     const steps = f.nextSteps.join(" ");
     expect(steps).toContain("react-native-config");
     expect(steps).not.toContain("eas env:list");
+  });
+});
+
+describe("Expo config plugin resolution (log)", () => {
+  const run = (cwd: string) =>
+    runAnalyze([logFixture("real-expo58-prebuild-plugin-not-installed.log")], {
+      cwd,
+      env: EMPTY_ENV,
+    }).findings.filter((f) => f.ruleId === "expo.config-plugin-not-resolved");
+
+  it("reports the plugin once although Expo prints the error twice", () => {
+    expect(run(projectFixture("expo-clean"))).toHaveLength(1);
+  });
+
+  it("is certain when the plugin package isn't declared", () => {
+    const [f] = run(projectFixture("expo-clean"));
+    expect(f!.confidence).toBe("high");
+    expect(f!.evidence.map((e) => e.detail)).toContain(
+      "'expo-camera' is not in dependencies or devDependencies",
+    );
+  });
+
+  it("is less certain when the package is installed but its plugin didn't load", () => {
+    const [f] = run(projectFixture("expo-missing-plugin"));
+    expect(f!.confidence).toBe("medium");
+    expect(f!.explanation).toContain("app.plugin.js");
+    expect(f!.evidence.some((e) => e.file === "app.json")).toBe(true);
+  });
+
+  it("stays at medium confidence without a project", () => {
+    const [f] = run(NO_PROJECT);
+    expect(f!.confidence).toBe("medium");
+  });
+});
+
+describe("Metro resolver errors printed twice by Expo CLI", () => {
+  it("merges the relative and absolute forms and keeps Metro's reason", () => {
+    const report = runAnalyze([logFixture("real-expo58-metro-unresolved-package.log")], {
+      cwd: projectFixture("expo-clean"),
+      env: EMPTY_ENV,
+    });
+    expect(
+      report.findings.filter((f) => f.ruleId === "javascript.unable-to-resolve-module"),
+    ).toHaveLength(1);
+  });
+
+  it("keeps errors for the same module from different files apart", () => {
+    const doc = logFromText(
+      "x.log",
+      [
+        'Unable to resolve "lodash" from "src/a.tsx"',
+        'Unable to resolve "lodash" from "src/b.tsx"',
+        "Error: Unable to resolve module lodash from /p/src/a.tsx: lodash could not be found",
+      ].join("\n"),
+    );
+    const events = parseMetro(doc).events.filter((e) => e.kind === "unable-to-resolve");
+    expect(events.map((e) => e.from)).toEqual(["src/a.tsx", "src/b.tsx"]);
   });
 });

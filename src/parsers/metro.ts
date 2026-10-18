@@ -31,6 +31,20 @@ const BUNDLE_WRITTEN =
   /^(?:LOG:?\s*|info\s+)?(?:Done writing bundle output|App exported to\b|Exported:\s)/;
 const BUNDLING_FAILED = /^(?:.*\s)?(?:Android|iOS|Web)?\s*Bundling failed\b.*$/i;
 
+/**
+ * True when two reported paths can name the same file: equal, or one absolute path ending with the
+ * other, project-relative one (Expo CLI prints paths relative to the project root).
+ */
+function samePath(a: string | undefined, b: string | undefined): boolean {
+  if (!a || !b) return a === b;
+  const x = a.replace(/\\/g, "/");
+  const y = b.replace(/\\/g, "/");
+  if (x === y) return true;
+  const absolute = (p: string) => p.startsWith("/") || /^[A-Za-z]:\//.test(p);
+  if (absolute(x) === absolute(y)) return false;
+  return absolute(x) ? x.endsWith(`/${y}`) : y.endsWith(`/${x}`);
+}
+
 /** Number of following lines kept as context for a Metro error. */
 const CONTEXT = 6;
 
@@ -51,9 +65,17 @@ export function parseMetro(doc: LogDocument): MetroParseResult {
       const module = resolve[1]!;
       const from = resolve[2]?.trim();
       const key = `resolve:${module}:${from ?? ""}`;
-      if (!seen.has(key)) {
+      const reason = resolve[3]?.trim();
+      // Expo CLI prints each resolver error twice: `Unable to resolve "x" from "App.tsx"`, then
+      // Metro's `Unable to resolve module x from /abs/path/App.tsx: ...`. Merge them into one event.
+      const repeat = events.find(
+        (e): e is Extract<MetroEvent, { kind: "unable-to-resolve" }> =>
+          e.kind === "unable-to-resolve" && e.module === module && samePath(e.from, from),
+      );
+      if (repeat) {
+        if (reason && !repeat.reason) repeat.reason = reason;
+      } else if (!seen.has(key)) {
         seen.add(key);
-        const reason = resolve[3]?.trim();
         events.push({
           kind: "unable-to-resolve",
           start: i,

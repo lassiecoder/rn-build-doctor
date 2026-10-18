@@ -1,0 +1,14 @@
+env: load .env.local
+env: export EXPO_PUBLIC_API_URL
+PluginError: Failed to resolve plugin for module "./plugins/withMissing" relative to "/Users/dev/MyApp". Do you have node modules installed?
+PluginError: Failed to resolve plugin for module "./plugins/withMissing" relative to "/Users/dev/MyApp". Do you have node modules installed?
+    at resolvePluginForModule (/Users/dev/MyApp/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:121:11)
+    at resolveConfigPluginFunctionWithInfo (/Users/dev/MyApp/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:175:52)
+    at resolveConfigPluginFunction (/Users/dev/MyApp/node_modules/@expo/config-plugins/build/utils/plugin-resolver.js:171:24)
+    at withStaticPlugin (/Users/dev/MyApp/node_modules/@expo/config-plugins/build/plugins/withStaticPlugin.js:71:74)
+    at /Users/dev/MyApp/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:26:82
+    at Array.reduce (<anonymous>)
+    at withPlugins (/Users/dev/MyApp/node_modules/@expo/config-plugins/build/plugins/withPlugins.js:26:20)
+    at withConfigPlugins (/Users/dev/MyApp/node_modules/@expo/config/build/plugins/withConfigPlugins.js:27:51)
+    at fillAndReturnConfig (/Users/dev/MyApp/node_modules/@expo/config/build/Config.js:221:80)
+    at getConfig (/Users/dev/MyApp/node_modules/@expo/config/build/Config.js:270:12)
