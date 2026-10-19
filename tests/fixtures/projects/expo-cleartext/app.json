@@ -1,0 +1,8 @@
+{
+  "expo": {
+    "name": "MyExpoApp",
+    "slug": "my-expo-app",
+    "android": { "package": "com.myexpoapp" },
+    "plugins": [["expo-build-properties", { "android": { "minSdkVersion": 24 } }]]
+  }
+}

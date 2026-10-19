@@ -10,6 +10,14 @@ Fixes from testing one failure at each stage (development, release build, crash 
 - `javascript.unable-to-resolve-module`: Expo CLI prints each resolver error twice (relative and absolute path). They're now one finding.
 - `runtime.missing-configuration-suspected`: tagged `expo` only for Expo projects.
 
+Gaps found in recent React Native 0.87 / Expo SDK 58 reports, each reproduced on a real React Native 0.87 app before the rule was written:
+
+- `ios.compile-error`: on React Native 0.87+, `'RCTBridge.h' file not found` (any bare `RCT*.h` import) now says the import needs the `React/` namespace (`#import <React/RCTBridge.h>`) and names the package, instead of advising `pod install`, which doesn't help. The version comes from the project, or from the ReactNativeHeaders framework in the log (medium confidence). Older React Native versions keep the previous advice.
+- New rule `android.builtin-kotlin-conflict`: AGP 9 `Failed to apply plugin 'org.jetbrains.kotlin.android'` with `Cannot add extension with name 'kotlin'` or the new-DSL `ClassCastException` was reported as "No supported diagnosis". It now points to the `android.builtInKotlin=false` / `android.newDsl=false` opt-out the templates use, and shows what the project's gradle.properties sets.
+- New rule `android.ninja-path-too-long`: `ninja: error: ... Filename longer than 260 characters` on Windows, with the SDK CMake/ninja version from the log and the long-path, ninja 1.12+, and short-path fixes.
+- New rule `android.cleartext-http-blocked`: in a release build, a blocked `http://` request reaches JavaScript only as `TypeError: Network request failed`. When the project's release build blocks cleartext (manifest, React Native Gradle plugin placeholder, or Expo default) and the source has an `http://` URL, the finding names the URL and the setting. OkHttp's `CLEARTEXT communication ... not permitted` line is diagnosed directly.
+- `runtime.javascript-exception`: titles no longer end in a stray `]` when `console.error` prints an error object (`[TypeError: Network request failed]`). "Network request failed" gets network-specific next steps instead of "search your source for the message".
+
 ## 0.1.5 (2026-10-18)
 
 Documentation and package metadata only; no behavior changes.

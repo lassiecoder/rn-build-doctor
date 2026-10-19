@@ -1,0 +1,1 @@
+{ "name": "myexpoapp", "version": "1.0.0", "main": "expo-router/entry", "dependencies": { "expo": "~58.0.0", "expo-build-properties": "~58.0.0", "react": "19.2.3", "react-native": "0.88.0" } }

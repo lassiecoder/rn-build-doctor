@@ -1,0 +1,16 @@
+> Configure project :app
+
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/Users/dev/MyApp/android/app/build.gradle' line: 4
+
+* What went wrong:
+A problem occurred evaluating project ':app'.
+> Failed to apply plugin 'com.google.gms.google-services'.
+   > Cannot add extension with name 'googleServices', as there is an extension already registered with that name.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 6s

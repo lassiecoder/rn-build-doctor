@@ -1,4 +1,5 @@
 import { androidLogRules } from "../rules/android/log-rules.js";
+import { androidRuntimeRules } from "../rules/android/runtime-rules.js";
 import { postRules } from "../rules/common/fallback-rules.js";
 import { commonProjectRules } from "../rules/common/project-rules.js";
 import { runtimeRules } from "../rules/common/runtime-rules.js";
@@ -15,6 +16,7 @@ export const logRules: Rule[] = [
   ...metroRules,
   ...iosLogRules,
   ...runtimeRules,
+  ...androidRuntimeRules,
 ];
 export { postRules };
 

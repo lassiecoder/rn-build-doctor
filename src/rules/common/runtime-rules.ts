@@ -123,15 +123,27 @@ export const javascriptException: Rule = {
                 : ""),
             evidence,
             nextSteps: [
+              ...(/^Network request failed\b/.test(ex.message)
+                ? [
+                    "This message comes from React Native's networking layer and hides the cause: the server is unreachable from the device, DNS or TLS failed, or (Android release builds) the URL uses http://, which Android blocks by default. Check the URL the request uses and open it in the device's browser.",
+                    ...(ctx.project
+                      ? []
+                      : [
+                          "Run this tool from the project folder (or with --cwd) so it can check whether release builds block http:// URLs used in the app.",
+                        ]),
+                  ]
+                : []),
               ...(minified
                 ? [
                     "Symbolicate the stack trace with the source map from the same release build (see React Native 'Debugging release builds').",
                   ]
                 : ex.firstFrame
                   ? [`Start at the first stack frame: ${ex.firstFrame}.`]
-                  : [
-                      `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
-                    ]),
+                  : /^Network request failed\b/.test(ex.message)
+                    ? []
+                    : [
+                        `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
+                      ]),
               "If it happens only in release builds, reproduce with a local release build (`npx expo run:android --variant release` / `npx react-native run-android --mode release`, or the iOS equivalents).",
               "Compare the configuration and environment variables of the failing build with the working one.",
             ],

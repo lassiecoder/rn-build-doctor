@@ -1,0 +1,6 @@
+10-20 01:12:03.221  7311  7402 I ReactNativeJS: Running "MyApp"
+10-20 01:12:04.118  7311  7455 W System.err: java.net.UnknownServiceException: CLEARTEXT communication to api.example.com not permitted by network security policy
+10-20 01:12:04.118  7311  7455 W System.err: 	at okhttp3.internal.connection.RealConnection.connect(RealConnection.kt:189)
+10-20 01:12:04.118  7311  7455 W System.err: 	at okhttp3.internal.connection.ExchangeFinder.findConnection(ExchangeFinder.kt:226)
+10-20 01:12:04.118  7311  7455 W System.err: 	at okhttp3.internal.connection.ExchangeFinder.findHealthyConnection(ExchangeFinder.kt:106)
+10-20 01:12:04.118  7311  7455 W System.err: 	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:255)

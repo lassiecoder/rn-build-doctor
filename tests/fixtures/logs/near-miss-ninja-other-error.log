@@ -1,0 +1,17 @@
+> Task :app:buildCMakeDebug[arm64-v8a] FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:buildCMakeDebug[arm64-v8a]'.
+> com.android.ide.common.process.ProcessException: ninja: Entering directory `C:\dev\app\android\app\.cxx\Debug\5x4f1n2k\arm64-v8a'
+
+  C++ build system [build] failed while executing:
+      "C:\\Users\\User\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe" -C "C:\\dev\\app\\android\\app\\.cxx\\Debug\\5x4f1n2k\\arm64-v8a" appmodules
+    from C:\dev\app\android\app
+  ninja: error: loading 'build.ninja': The system cannot find the file specified.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 41s

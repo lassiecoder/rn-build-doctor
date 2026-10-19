@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-42 rules: 13 project checks (`scan`) and 29 log rules (`analyze`).
+45 rules: 13 project checks (`scan`) and 32 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -380,6 +380,34 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Regression fixtures | `tests/fixtures/logs/real-gradle93-jvm-maxpermsize.log`<br>`tests/fixtures/projects/rn-cli-old-permgen`                                      |
 | Last verified       | 2026-10-15                                                                                                                                   |
 
+### `android.builtin-kotlin-conflict`
+
+**The Kotlin Android plugin conflicts with AGP 9 built-in Kotlin**
+
+| Field               | Value                                                                                                                                                                                                                                                                                                   |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                                                                                                                                 |
+| Applicable versions | Android Gradle Plugin 9.x (React Native 0.87+, Expo SDK 58+)                                                                                                                                                                                                                                            |
+| Trigger             | A Gradle 'What went wrong' section with "Failed to apply plugin 'org.jetbrains.kotlin.android'" (or 'kotlin-android') followed by "Cannot add extension with name 'kotlin'", "…no longer required for Kotlin support since AGP 9.0", or a ClassCastException to com.android.build.gradle.BaseExtension. |
+| Evidence            | The failure section, the Gradle project that applies the plugin, and the android.builtInKotlin / android.newDsl values in android/gradle.properties.                                                                                                                                                    |
+| Sources             | <https://developer.android.com/build/migrate-to-built-in-kotlin><br><https://github.com/react-native-community/template/blob/0.87-stable/template/android/gradle.properties><br><https://github.com/expo/expo/blob/sdk-58/templates/expo-template-bare-minimum/android/gradle.properties>               |
+| Regression fixtures | `tests/fixtures/logs/real-rn087-gradle-builtin-kotlin.log`<br>`tests/fixtures/logs/real-rn087-gradle-newdsl-kotlin.log`                                                                                                                                                                                 |
+| Last verified       | 2026-10-20                                                                                                                                                                                                                                                                                              |
+
+### `android.ninja-path-too-long`
+
+**Native build path is longer than Windows allows**
+
+| Field               | Value                                                                                                                                                                                                                                                     |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                                                                                   |
+| Applicable versions | Windows; ninja older than 1.12.0 (bundled with Android SDK CMake 3.22.1)                                                                                                                                                                                  |
+| Trigger             | A ninja error ending in 'Filename longer than 260 characters' (native CMake build of React Native New Architecture code on Windows).                                                                                                                      |
+| Evidence            | The ninja error, the failing CMake task, and the ninja executable path (which shows the SDK CMake version).                                                                                                                                               |
+| Sources             | <https://github.com/ninja-build/ninja/releases/tag/v1.12.0><br><https://github.com/ninja-build/ninja/issues/1900><br><https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation><br><https://github.com/expo/expo/issues/36274> |
+| Regression fixtures | `tests/fixtures/logs/android-windows-ninja-long-path.log`                                                                                                                                                                                                 |
+| Last verified       | 2026-10-20                                                                                                                                                                                                                                                |
+
 ### `expo.config-plugin-not-resolved`
 
 **Expo couldn't resolve a config plugin**
@@ -468,15 +496,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Native iOS compilation error**
 
-| Field               | Value                                                                                                                      |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | ios                                                                                                                        |
-| Applicable versions | Xcode 14+                                                                                                                  |
-| Trigger             | Clang/Swift diagnostics '<file>:<line>:<col>: error: <message>' in an Xcode build log.                                     |
-| Evidence            | The first compiler errors with file and position.                                                                          |
-| Sources             | <https://reactnative.dev/docs/integration-with-existing-apps><br><https://guides.cocoapods.org/using/using-cocoapods.html> |
-| Regression fixtures | `tests/fixtures/logs/ios-header-not-found.log`                                                                             |
-| Last verified       | 2026-10-14                                                                                                                 |
+| Field               | Value                                                                                                                                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                                                                                  |
+| Applicable versions | Xcode 14+; header namespacing in React Native 0.87+ (prebuilt header XCFrameworks)                                                                                                                                   |
+| Trigger             | Clang/Swift diagnostics '<file>:<line>:<col>: error: <message>' in an Xcode build log.                                                                                                                               |
+| Evidence            | The first compiler errors with file and position. For a React Native header ('RCT*.h') not found on React Native 0.87+, the React Native version (from the project, or the ReactNativeHeaders framework in the log). |
+| Sources             | <https://reactnative.dev/docs/integration-with-existing-apps><br><https://guides.cocoapods.org/using/using-cocoapods.html><br><https://reactnative.dev/blog/2026/08/11/react-native-0.87#headers-breaking-changes>   |
+| Regression fixtures | `tests/fixtures/logs/ios-header-not-found.log`<br>`tests/fixtures/logs/real-rn087-ios-unnamespaced-header.log`                                                                                                       |
+| Last verified       | 2026-10-20                                                                                                                                                                                                           |
 
 ### `ios.linker-error`
 
@@ -575,6 +603,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://developer.apple.com/documentation/xcode/diagnosing-issues-using-crash-reports-and-device-logs><br><https://developer.apple.com/documentation/bundleresources/information-property-list> |
 | Regression fixtures | `tests/fixtures/logs/ios-crash-rctfatal.crash`<br>`tests/fixtures/logs/ios-privacy-usage.log`                                                                                                    |
 | Last verified       | 2026-10-14                                                                                                                                                                                       |
+
+### `android.cleartext-http-blocked`
+
+**Release build blocks plain HTTP requests**
+
+| Field               | Value                                                                                                                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | android                                                                                                                                                                                                                                                                                                                                          |
+| Applicable versions | Android apps targeting API 28+ (React Native 0.73+ template, Expo)                                                                                                                                                                                                                                                                               |
+| Trigger             | Logcat with OkHttp's 'CLEARTEXT communication … not permitted by network security policy', or a JavaScript 'Network request failed' in an Android logcat when the project's release configuration blocks cleartext traffic and the app source contains an http:// URL.                                                                           |
+| Evidence            | The log line, the manifest or Expo setting that blocks cleartext in release builds, and the http:// URLs found in the app source (file and line).                                                                                                                                                                                                |
+| Sources             | <https://developer.android.com/guide/topics/manifest/application-element><br><https://developer.android.com/privacy-and-security/security-config><br><https://github.com/square/okhttp/blob/parent-4.12.0/okhttp/src/main/kotlin/okhttp3/internal/connection/RealConnection.kt><br><https://docs.expo.dev/versions/latest/sdk/build-properties/> |
+| Regression fixtures | `tests/fixtures/logs/real-rn087-logcat-cleartext-blocked.log`<br>`tests/fixtures/logs/android-okhttp-cleartext.log`                                                                                                                                                                                                                              |
+| Last verified       | 2026-10-20                                                                                                                                                                                                                                                                                                                                       |
 
 ### `common.no-supported-diagnosis`
 

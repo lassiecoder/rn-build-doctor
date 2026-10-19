@@ -1,0 +1,1 @@
+{ "name": "myapp", "version": "0.0.1", "dependencies": { "react": "19.2.3", "react-native": "0.87.0" } }

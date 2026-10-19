@@ -135,7 +135,9 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
         JS_ERROR.exec(payload) ?? (channel !== "Metro console" ? JS_ERROR.exec(message) : null);
       if (js) {
         const type = js[1]!;
-        const msg = js[2]!.replace(/,\s*stack:\s*$/, "").trim();
+        let msg = js[2]!.replace(/,\s*stack:\s*$/, "").trim();
+        // console.error prints error objects in brackets: 'label:', [TypeError: message]
+        if (js.input[js.index - 1] === "[" && msg.endsWith("]")) msg = msg.slice(0, -1).trimEnd();
         const key = `${type}:${msg}`;
         if (!seenJs.has(key)) {
           seenJs.add(key);

@@ -66,3 +66,59 @@ export const PERMGEN_REMOVED = {
   removedInJava: 8,
   options: ["MaxPermSize", "PermSize"],
 };
+
+/**
+ * AGP 9 applies Kotlin itself ("built-in Kotlin") and uses a new DSL. The org.jetbrains.kotlin.android
+ * plugin is incompatible with both, and the opt-out flags go away in AGP 10. The React Native 0.87
+ * template and the Expo SDK 58 template both set the two opt-out flags. Observed with AGP 9.2.1 and
+ * Gradle 9.4.1 on 2026-10-20: removing builtInKotlin=false gives "Cannot add extension with name
+ * 'kotlin'", removing only newDsl=false gives a ClassCastException to BaseExtension.
+ */
+export const AGP_BUILT_IN_KOTLIN = {
+  source: "https://developer.android.com/build/migrate-to-built-in-kotlin",
+  templateSources: [
+    "https://github.com/react-native-community/template/blob/0.87-stable/template/android/gradle.properties",
+    "https://github.com/expo/expo/blob/sdk-58/templates/expo-template-bare-minimum/android/gradle.properties",
+  ],
+  lastVerified: "2026-10-20",
+  introducedInAgpMajor: 9,
+  optOutRemovedInAgpMajor: 10,
+  optOutFlags: ["android.builtInKotlin=false", "android.newDsl=false"],
+};
+
+/**
+ * Cleartext (http://) traffic is blocked by default for apps targeting API 28+. The React Native
+ * Gradle plugin sets the `usesCleartextTraffic` manifest placeholder to true for debug and false for
+ * release (AgpConfiguratorUtils.kt, checked in React Native 0.87.0). The Expo template allows it only
+ * in src/debug/AndroidManifest.xml. OkHttp, which React Native's networking uses, reports the block as
+ * "CLEARTEXT communication to <host> not permitted by network security policy", but React Native
+ * passes only "Network request failed" to JavaScript (observed in a React Native 0.87.0 release
+ * build on an Android 14 emulator on 2026-10-20; the same build succeeded once cleartext was allowed).
+ */
+export const CLEARTEXT_DEFAULTS = {
+  sources: [
+    "https://developer.android.com/guide/topics/manifest/application-element",
+    "https://developer.android.com/privacy-and-security/security-config",
+    "https://github.com/square/okhttp/blob/parent-4.12.0/okhttp/src/main/kotlin/okhttp3/internal/connection/RealConnection.kt",
+    "https://docs.expo.dev/versions/latest/sdk/build-properties/",
+  ],
+  lastVerified: "2026-10-20",
+  blockedByDefaultFromTargetSdk: 28,
+};
+
+/**
+ * Ninja before 1.12.0 can't open paths longer than 260 characters on Windows, which New Architecture
+ * C++ builds exceed in deep project folders. The Android SDK's CMake 3.22.1 package bundles ninja
+ * 1.10.2 (checked locally on 2026-10-20). Ninja 1.12 also needs Windows long paths enabled.
+ */
+export const NINJA_LONG_PATHS = {
+  sources: [
+    "https://github.com/ninja-build/ninja/releases/tag/v1.12.0",
+    "https://github.com/ninja-build/ninja/issues/1900",
+    "https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation",
+    "https://github.com/expo/expo/issues/36274",
+  ],
+  lastVerified: "2026-10-20",
+  fixedInNinja: "1.12.0",
+  sdkCmakeNinja: { "3.22.1": "1.10.2" } as Record<string, string>,
+};

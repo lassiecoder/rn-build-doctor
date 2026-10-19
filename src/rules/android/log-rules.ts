@@ -5,11 +5,13 @@ import { findIndex, flatten, logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 import { readProjectFile } from "../../collectors/project-files.js";
 import {
+  AGP_BUILT_IN_KOTLIN,
   AGP_JDK_REQUIREMENT,
   GRADLE_MIN_FOR_JAVA,
   PERMGEN_REMOVED,
   compareVersions,
   javaFromClassFileMajor,
+  NINJA_LONG_PATHS,
 } from "./compat.js";
 
 const VERIFIED = "2026-10-14";
@@ -1043,6 +1045,193 @@ export const jvmOptionUnrecognized: Rule = {
   },
 };
 
+/** Reads `key=value` from android/gradle.properties text, ignoring comments. */
+function gradleProperty(text: string, key: string): { value: string; line: number } | undefined {
+  const lines = text.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const match = new RegExp(`^\\s*${key.replace(/\./g, "\\.")}\\s*=\\s*(\\S*)\\s*$`).exec(
+      lines[i]!,
+    );
+    if (match) return { value: match[1]!, line: i + 1 };
+  }
+  return undefined;
+}
+
+export const builtInKotlinConflict: Rule = {
+  meta: {
+    id: "android.builtin-kotlin-conflict",
+    title: "The Kotlin Android plugin conflicts with AGP 9 built-in Kotlin",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "A Gradle 'What went wrong' section with \"Failed to apply plugin 'org.jetbrains.kotlin.android'\" (or 'kotlin-android') followed by \"Cannot add extension with name 'kotlin'\", \"…no longer required for Kotlin support since AGP 9.0\", or a ClassCastException to com.android.build.gradle.BaseExtension.",
+    evidence:
+      "The failure section, the Gradle project that applies the plugin, and the android.builtInKotlin / android.newDsl values in android/gradle.properties.",
+    versionScope: "Android Gradle Plugin 9.x (React Native 0.87+, Expo SDK 58+)",
+    references: [AGP_BUILT_IN_KOTLIN.source, ...AGP_BUILT_IN_KOTLIN.templateSources],
+    lastVerified: AGP_BUILT_IN_KOTLIN.lastVerified,
+    fixtures: [
+      "logs/real-rn087-gradle-builtin-kotlin.log",
+      "logs/real-rn087-gradle-newdsl-kotlin.log",
+    ],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      for (const failure of log.gradle.failures) {
+        const text = failure.details.join("\n");
+        if (
+          !/Failed to apply plugin '(?:org\.jetbrains\.kotlin\.android|kotlin-android)'/.test(text)
+        )
+          continue;
+        const extensionClash =
+          /Cannot add extension with name 'kotlin'|no longer required for Kotlin support since AGP 9/.test(
+            text,
+          );
+        const newDsl = /cannot be cast to class com\.android\.build\.gradle\.BaseExtension/.test(
+          text,
+        );
+        if (!extensionClash && !newDsl) continue;
+
+        const gradleProject = /evaluating (?:root )?project '([^']+)'/.exec(text)?.[1];
+        const isApp = gradleProject === ":app";
+        const evidence: Evidence[] = [logEvidence(log.doc, failure)];
+        const props = ctx.project?.hasAndroid
+          ? readProjectFile(ctx.project.root, "android/gradle.properties")
+          : undefined;
+        const flags: string[] = [];
+        const unset: string[] = [];
+        if (props?.ok) {
+          for (const key of ["android.builtInKotlin", "android.newDsl"]) {
+            const prop = gradleProperty(props.text, key);
+            if (prop) flags.push(`${key}=${prop.value}`);
+            else unset.push(key);
+            evidence.push({
+              source: "project",
+              file: "android/gradle.properties",
+              ...(prop ? { line: prop.line } : {}),
+              detail: prop ? `${key}=${prop.value}` : `${key} is not set (AGP 9 defaults to true)`,
+            });
+          }
+        }
+        evidence.push(...versionEvidence(ctx, ["react-native", "android gradle plugin"]));
+
+        const expo = ctx.project?.kind === "expo";
+        const missing = newDsl ? "android.newDsl=false" : "android.builtInKotlin=false";
+        const where = gradleProject ? `the Gradle project '${gradleProject}'` : "a Gradle project";
+        out.push(
+          finding(this.meta, {
+            title: newDsl
+              ? `The Kotlin Android plugin can't run with AGP 9's new DSL${gradleProject ? ` (${gradleProject})` : ""}`
+              : `The Kotlin Android plugin clashes with AGP 9 built-in Kotlin${gradleProject ? ` (${gradleProject})` : ""}`,
+            severity: "error",
+            confidence: "high",
+            explanation:
+              (newDsl
+                ? `Android Gradle Plugin 9 enables a new DSL by default, and the org.jetbrains.kotlin.android plugin applied by ${where} isn't compatible with it, so applying the plugin fails with a ClassCastException.`
+                : `Android Gradle Plugin 9 compiles Kotlin itself ("built-in Kotlin") and registers the 'kotlin' extension. ${where[0]!.toUpperCase()}${where.slice(1)} also applies org.jetbrains.kotlin.android, which tries to register the same extension.`) +
+              ` The React Native 0.87 and Expo SDK 58 templates opt out with ${AGP_BUILT_IN_KOTLIN.optOutFlags.join(" and ")} in android/gradle.properties` +
+              (props?.ok
+                ? `; this project's gradle.properties ${[
+                    ...(flags.length ? [`has ${flags.join(" and ")}`] : []),
+                    ...(unset.length
+                      ? [`doesn't set ${unset.join(unset.length === 2 ? " or " : "")}`]
+                      : []),
+                  ].join(" and ")}.`
+                : `, so this usually means ${missing} is missing.`),
+            evidence,
+            nextSteps: [
+              `Add ${AGP_BUILT_IN_KOTLIN.optOutFlags.map((f) => `\`${f}\``).join(" and ")} to android/gradle.properties, as the template does, then run \`cd android && ./gradlew --stop\` and build again.`,
+              ...(expo
+                ? [
+                    "In an Expo project, android/ is generated: `npx expo prebuild --clean` restores the template's gradle.properties. If the flags disappear again, a config plugin is rewriting gradle.properties.",
+                  ]
+                : []),
+              isApp || !gradleProject
+                ? 'To migrate instead of opting out, follow the AGP built-in Kotlin migration guide: remove `apply plugin: "org.jetbrains.kotlin.android"` from android/app/build.gradle. Libraries that still apply the plugin need the opt-out until they\'re updated.'
+                : `The plugin is applied by ${gradleProject}, a dependency. Update that package to a version that supports AGP 9 built-in Kotlin; keep the opt-out flags until it does.`,
+              `The opt-out goes away in AGP ${AGP_BUILT_IN_KOTLIN.optOutRemovedInAgpMajor}. To see which libraries still need updates, search node_modules/*/android/build.gradle for "kotlin-android" or "org.jetbrains.kotlin.android".`,
+            ],
+            verification:
+              "`cd android && ./gradlew help` configures every project without the error.",
+          }),
+        );
+      }
+    }
+    return out;
+  },
+};
+
+export const ninjaPathTooLong: Rule = {
+  meta: {
+    id: "android.ninja-path-too-long",
+    title: "Native build path is longer than Windows allows",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "A ninja error ending in 'Filename longer than 260 characters' (native CMake build of React Native New Architecture code on Windows).",
+    evidence:
+      "The ninja error, the failing CMake task, and the ninja executable path (which shows the SDK CMake version).",
+    versionScope: `Windows; ninja older than ${NINJA_LONG_PATHS.fixedInNinja} (bundled with Android SDK CMake 3.22.1)`,
+    references: NINJA_LONG_PATHS.sources,
+    lastVerified: NINJA_LONG_PATHS.lastVerified,
+    fixtures: ["logs/android-windows-ninja-long-path.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const [hit] = eachLine(log, /ninja: error: .*Filename longer than 260 characters/);
+      if (!hit) continue;
+      const failure = log.gradle.failures.find(
+        (f) => f.start <= hit.index && hit.index <= f.end + 1,
+      );
+      const task = failure?.task;
+      const ninjaPath = eachLine(
+        log,
+        /[\\/]cmake[\\/]+(\d+\.\d+\.\d+)[\\/]+bin[\\/]+ninja(?:\.exe)?/i,
+      )[0];
+      const cmake = ninjaPath?.match[1];
+      const bundled = cmake ? NINJA_LONG_PATHS.sdkCmakeNinja[cmake] : undefined;
+      const evidence: Evidence[] = [
+        failure
+          ? logEvidence(log.doc, failure)
+          : logEvidence(log.doc, { start: hit.index, end: hit.index }),
+      ];
+      if (ninjaPath && cmake)
+        evidence.push({
+          source: "log",
+          file: log.doc.path,
+          line: ninjaPath.index + 1,
+          detail: `ninja from Android SDK CMake ${cmake}${bundled ? ` (bundles ninja ${bundled})` : ""}`,
+        });
+      const expo = ctx.project?.kind === "expo";
+      out.push(
+        finding(this.meta, {
+          title: "Native build failed: a file path is longer than 260 characters (Windows)",
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `ninja couldn't access a file${task ? ` during ${task}` : ""} because its full path is longer than the 260-character Windows limit. ` +
+            "React Native New Architecture builds generate deeply nested object files (codegen output for each native library under android/app/.cxx), so a project in a deep folder or a package with a long name crosses the limit. " +
+            `Ninja supports longer paths from ${NINJA_LONG_PATHS.fixedInNinja}${bundled ? `, but this build uses ninja ${bundled} from SDK CMake ${cmake}` : ", and the ninja bundled with Android SDK CMake 3.22.1 is 1.10.2"}.`,
+          evidence,
+          nextSteps: [
+            "Move the project to a short path (for example C:\\dev\\app) and rebuild. This is the quickest check that path length is the cause.",
+            "Enable Windows long path support (LongPathsEnabled in the registry, see the Microsoft link) and restart. Newer ninja versions only help when this is on.",
+            `Use ninja ${NINJA_LONG_PATHS.fixedInNinja} or later: ${expo ? "set `android.cmakeVersion` in the expo-build-properties plugin to a newer CMake installed through the SDK Manager (reported to work with 3.31.6 in expo/expo#51861), or " : ""}replace ninja.exe in <Android SDK>\\cmake\\<version>\\bin with ninja ${NINJA_LONG_PATHS.fixedInNinja}+ from the ninja releases page (reported in expo/expo#36274).`,
+            "Delete android/app/.cxx and android/app/build before rebuilding so CMake regenerates its build files.",
+          ],
+          verification: `${task ? `\`${task}\`` : "The CMake build task"} completes without the ninja error.`,
+          limitations: [
+            "Windows only. The fix depends on the machine's long path setting and ninja version, which this tool can't inspect from a log.",
+          ],
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const androidLogRules: Rule[] = [
   dependencyResolution,
   agpRequiresNewerJdk,
@@ -1057,4 +1246,6 @@ export const androidLogRules: Rule[] = [
   jsBundleTaskFailed,
   androidCompileError,
   jvmOptionUnrecognized,
+  builtInKotlinConflict,
+  ninjaPathTooLong,
 ];

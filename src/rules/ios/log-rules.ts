@@ -1,5 +1,9 @@
-import { finding, type Rule } from "../../engine/rule.js";
+import semver from "semver";
+import { finding, type Rule, type RuleContext, type RuleMeta } from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
+import type { XcodeError } from "../../parsers/xcode.js";
+import { compareVersions } from "../android/compat.js";
+import { RN_NAMESPACED_HEADERS } from "./compat.js";
 import { logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
@@ -239,6 +243,21 @@ function isSigningMessage(message: string): boolean {
   return SIGNING_PATTERNS.some(([p]) => p.test(message));
 }
 
+/** React Native version from the project: installed, or the lowest version the declared range allows. */
+function reactNativeVersion(ctx: RuleContext): string | undefined {
+  const versions = ctx.project?.versions;
+  if (!versions) return undefined;
+  if (versions["react-native"]) return versions["react-native"];
+  const declared = versions["react-native (declared)"];
+  if (!declared || !semver.validRange(declared)) return undefined;
+  return semver.minVersion(declared)?.version;
+}
+
+/** Package that owns a source file under node_modules (`@scope/name` or `name`). */
+function packageOfFile(file: string): string | undefined {
+  return /node_modules\/((?:@[^/]+\/)?[^/]+)\//.exec(file)?.[1];
+}
+
 export const nativeCompileError: Rule = {
   meta: {
     id: "ios.compile-error",
@@ -247,14 +266,17 @@ export const nativeCompileError: Rule = {
     scope: "log",
     trigger:
       "Clang/Swift diagnostics '<file>:<line>:<col>: error: <message>' in an Xcode build log.",
-    evidence: "The first compiler errors with file and position.",
-    versionScope: "Xcode 14+",
+    evidence:
+      "The first compiler errors with file and position. For a React Native header ('RCT*.h') not found on React Native 0.87+, the React Native version (from the project, or the ReactNativeHeaders framework in the log).",
+    versionScope:
+      "Xcode 14+; header namespacing in React Native 0.87+ (prebuilt header XCFrameworks)",
     references: [
       "https://reactnative.dev/docs/integration-with-existing-apps",
       "https://guides.cocoapods.org/using/using-cocoapods.html",
+      RN_NAMESPACED_HEADERS.source,
     ],
-    lastVerified: VERIFIED,
-    fixtures: ["logs/ios-header-not-found.log"],
+    lastVerified: RN_NAMESPACED_HEADERS.lastVerified,
+    fixtures: ["logs/ios-header-not-found.log", "logs/real-rn087-ios-unnamespaced-header.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -265,6 +287,23 @@ export const nativeCompileError: Rule = {
       const first = errors[0]!;
       const header = /'([^']+\.h)' file not found/.exec(first.message);
       const module = /(?:no such module|module) '([^']+)'(?: not found)?/i.exec(first.message);
+
+      // React Native 0.87 resolves its headers only with their namespace (<React/RCTBridge.h>).
+      const bareRnHeader = header && /^RCT\w*\.h$/.test(header[1]!) ? header[1]! : undefined;
+      if (bareRnHeader) {
+        const rn = reactNativeVersion(ctx);
+        const rnNamespaced = rn
+          ? compareVersions(rn, RN_NAMESPACED_HEADERS.minReactNative) >= 0
+          : undefined;
+        const headersFramework = log.doc.lines.findIndex((l) => /ReactNativeHeaders/.test(l));
+        if (rnNamespaced === true || (rnNamespaced === undefined && headersFramework >= 0)) {
+          out.push(
+            namespacedHeaderFinding(this.meta, log, errors, bareRnHeader, rn, headersFramework),
+          );
+          continue;
+        }
+      }
+
       const evidence: Evidence[] = errors
         .slice(0, 5)
         .map((e) => logEvidence(log.doc, e, `${e.file}:${e.position}`));
@@ -288,6 +327,11 @@ export const nativeCompileError: Rule = {
                   "Reinstall pods: `cd ios && pod install` (Expo: `npx expo prebuild` or `npx pod-install`).",
                   "Build the .xcworkspace, not the .xcodeproj.",
                   "Check that the JavaScript package that provides the native module is installed and compatible with your React Native version.",
+                  ...(bareRnHeader && !reactNativeVersion(ctx)
+                    ? [
+                        `If the project uses React Native ${RN_NAMESPACED_HEADERS.minReactNative.replace(/\.0$/, "")} or later, React Native headers must be imported with their namespace: \`#import <React/${bareRnHeader}>\`. Run this tool with --cwd pointing at the project so it can check the version.`,
+                      ]
+                    : []),
                 ]
               : [
                   `Open ${first.file} at ${first.position} and fix the reported error.`,
@@ -300,6 +344,55 @@ export const nativeCompileError: Rule = {
     return out;
   },
 };
+
+function namespacedHeaderFinding(
+  meta: RuleMeta,
+  log: ParsedLog,
+  errors: XcodeError[],
+  header: string,
+  rn: string | undefined,
+  headersFrameworkIndex: number,
+): DraftFinding {
+  const notFound = errors.filter((e) => /'RCT\w*\.h' file not found/.test(e.message));
+  // xcodebuild repeats each error per architecture; keep one entry per file and position.
+  const unique = [...new Map(notFound.map((e) => [`${e.file}:${e.position}`, e])).values()];
+  const packages = [
+    ...new Set(unique.map((e) => packageOfFile(e.file!)).filter(Boolean)),
+  ] as string[];
+  const headers = [...new Set(unique.map((e) => /'(RCT\w*\.h)'/.exec(e.message)![1]!))];
+  const evidence: Evidence[] = unique
+    .slice(0, 5)
+    .map((e) => logEvidence(log.doc, { start: e.start, end: e.start }, `${e.file}:${e.position}`));
+  if (rn) evidence.push({ source: "project", detail: `react-native: ${rn}` });
+  else
+    evidence.push({
+      source: "log",
+      file: log.doc.path,
+      line: headersFrameworkIndex + 1,
+      detail:
+        "The build uses ReactNativeHeaders (React Native 0.87+ header-only XCFramework); the project wasn't available to confirm the version",
+    });
+  const owner = packages.length ? packages.join(", ") : undefined;
+  const v = RN_NAMESPACED_HEADERS.minReactNative.replace(/\.0$/, "");
+  return finding(meta, {
+    title: `React Native ${v} header imported without its namespace: '${header}'${owner ? ` in ${owner}` : ""}`,
+    severity: "error",
+    confidence: rn ? "high" : "medium",
+    explanation:
+      `Since React Native ${v}, React Native's iOS headers ship in header-only XCFrameworks and resolve only with their namespace. ` +
+      `${unique.length === 1 ? "A file" : `${unique.length} files`}${owner ? ` in ${owner}` : ""} import${unique.length === 1 ? "s" : ""} ${headers.map((h) => `'${h}'`).join(", ")} without the 'React/' prefix (as "${header}" or <${header}>), so the compiler can't find ${headers.length === 1 ? "it" : "them"}. ` +
+      "Reinstalling pods doesn't change this; the import itself has to change.",
+    evidence,
+    nextSteps: [
+      `Change the import to the namespaced form: \`#import <React/${header}>\`${unique[0] ? ` (first at ${unique[0].file}:${unique[0].position})` : ""}.`,
+      owner
+        ? `${owner} is a dependency: update it to a release that supports React Native ${v}. Until one exists, patch the imports with patch-package so the change survives reinstalls.`
+        : "If the file belongs to a dependency, update it to a release that supports this React Native version, or patch it with patch-package.",
+      `Search the same package for other bare imports (\`#import "RCT\` and \`#import <RCT\`); the build stops at the first files it compiles.`,
+    ],
+    verification: "`pod install` and the Xcode build compile the affected files.",
+  });
+}
 
 export const linkerError: Rule = {
   meta: {

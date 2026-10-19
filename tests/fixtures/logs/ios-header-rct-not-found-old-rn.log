@@ -1,0 +1,15 @@
+Build settings from command line:
+    SDKROOT = iphonesimulator
+
+CompileC /Users/dev/Library/Developer/Xcode/DerivedData/MyApp-abc/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/react-native-legacy-module.build/Objects-normal/arm64/LegacyModule.o /Users/dev/MyApp/node_modules/react-native-legacy-module/ios/LegacyModule.m normal arm64 objective-c com.apple.compilers.llvm.clang.1_0.compiler (in target 'react-native-legacy-module' from project 'Pods')
+    cd /Users/dev/MyApp/ios/Pods
+/Users/dev/MyApp/node_modules/react-native-legacy-module/ios/LegacyModule.m:1:9: error: 'RCTBridgeModule.h' file not found
+#import "RCTBridgeModule.h"
+        ^~~~~~~~~~~~~~~~~~~
+1 error generated.
+
+** BUILD FAILED **
+
+The following build commands failed:
+	CompileC /Users/dev/Library/Developer/Xcode/DerivedData/MyApp-abc/Build/Intermediates.noindex/Pods.build/Debug-iphonesimulator/react-native-legacy-module.build/Objects-normal/arm64/LegacyModule.o /Users/dev/MyApp/node_modules/react-native-legacy-module/ios/LegacyModule.m normal arm64 objective-c com.apple.compilers.llvm.clang.1_0.compiler (in target 'react-native-legacy-module' from project 'Pods')
+(1 failure)

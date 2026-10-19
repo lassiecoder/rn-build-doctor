@@ -49,6 +49,10 @@ describe("labeled regression cases", () => {
         const text = JSON.stringify(target);
         for (const needle of c.mustMention) expect(text).toContain(needle);
       }
+      if (c.mustNotMention?.length) {
+        const text = JSON.stringify(report.findings);
+        for (const needle of c.mustNotMention) expect(text).not.toContain(needle);
+      }
     });
   }
 
