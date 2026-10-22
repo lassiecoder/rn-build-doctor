@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+Gaps found in GitHub issues from the week after the Expo SDK 58 / React Native 0.88 releases. The two Android failures were reproduced on an AGP 9.2.1 / Gradle 9.4.1 build before the rules changed.
+
+- `android.aar-metadata-check`: when the module that fails the check is a library (`:amplitude_experiment-react-native-client is currently compiled against android-31`), the finding no longer says to raise the app's compileSdk, which doesn't help. It names the npm package behind the Gradle project, says when the app's compileSdk is already high enough, quotes the compileSdk lines from the library's android/build.gradle, and suggests upgrading or patching the library. Failures in `:app` keep the previous advice.
+- `android.dependency-resolution`: `Could not find org.greenrobot:eventbus:.` (an empty version) is reported as a dependency declared without a version, instead of "the version may not exist in a repository". The finding explains the AGP 9 change to `android.dependency.useConstraints`, names the package that declares the dependency, and gives the `android.dependency.useConstraints=true` workaround (verified to fix the reproduced build). The suggested `dependencies` command now uses the failing project instead of always `:app`.
+- New rule `ios.deployment-target-unsupported`: Xcode 27's `The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 13.0, but the range of supported deployment target versions is 15.0 to 27.0.x` was reported as "No supported diagnosis". It now names the pod (from the target name, for example `AsyncStorage` for `AsyncStorage-AsyncStorage_resources`), takes the supported range from the error itself, and gives the Podfile post_install workaround. The same message as a warning doesn't trigger it.
+
 ## 0.1.6 (2026-10-20)
 
 Fixes from testing one failure at each stage (development, release build, crash after install) on a React Native CLI app (0.87) and an Expo SDK 58 app, with real logs.

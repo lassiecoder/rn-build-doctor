@@ -562,7 +562,134 @@ export const bundlePhaseFailedRule: Rule = {
   },
 };
 
+// `…Pods.xcodeproj: error: The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to
+// 13.0, but the range of supported deployment target versions is 15.0 to 27.0.x. (in target 'X' from
+// project 'Pods')`. React Native CLI prints it as `error The iOS Simulator …`. Older Xcode versions
+// report the same message as a warning.
+const DEPLOYMENT_TARGET =
+  /(?:^|[\s:])(error|warning):?\s+The ([\w ]+?) deployment target '(\w+)' is set to (\d+(?:\.\d+)*), but the range of supported deployment target versions is (\d+(?:\.\d+)*) to (\d+(?:\.[\dx]+)*)\.?(?:\s*\(in target '([^']+)' from project '([^']+)'\))?/;
+
+/**
+ * CocoaPods names a resource bundle target `<pod>-<bundle>`, and bundles are usually named after
+ * the pod (`AsyncStorage-AsyncStorage_resources`, `React-Core-React-Core_privacy`).
+ */
+function podForTarget(target: string): string {
+  for (let i = target.indexOf("-"); i > 0; i = target.indexOf("-", i + 1)) {
+    const pod = target.slice(0, i);
+    if (target.slice(i + 1).startsWith(pod)) return pod;
+  }
+  return target;
+}
+
+export const deploymentTargetUnsupported: Rule = {
+  meta: {
+    id: "ios.deployment-target-unsupported",
+    title: "A target's deployment target is below what this Xcode supports",
+    platforms: ["ios"],
+    scope: "log",
+    trigger:
+      "An Xcode error \"The <platform> deployment target '<SETTING>' is set to X, but the range of supported deployment target versions is Y to Z\". The same message as a warning doesn't trigger the rule.",
+    evidence:
+      "The error lines with each target, its project (Pods or the app), the configured value, and the supported range Xcode printed. The Podfile platform when the project is available.",
+    versionScope: "Xcode 14+ (seen as an error with Xcode 27, where the minimum is iOS 15.0)",
+    references: [
+      "https://developer.apple.com/support/xcode/",
+      "https://guides.cocoapods.org/syntax/podspec.html#deployment_target",
+      "https://github.com/react-native-async-storage/async-storage/issues/1355",
+    ],
+    lastVerified: "2026-10-23",
+    fixtures: ["logs/xcode27-pod-deployment-target.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const hits: { index: number; match: RegExpExecArray }[] = [];
+      const seen = new Set<string>();
+      log.doc.lines.forEach((line, index) => {
+        const match = DEPLOYMENT_TARGET.exec(line);
+        if (!match || match[1] !== "error") return;
+        const key = `${match[7] ?? ""}|${match[8] ?? ""}|${match[4]}`;
+        if (seen.has(key)) return;
+        seen.add(key);
+        hits.push({ index, match });
+      });
+      if (!hits.length) continue;
+      const [, , platform, setting, , minimum, maximum] = hits[0]!.match;
+      const targets = hits.map((h) => ({
+        target: h.match[7],
+        project: h.match[8],
+        value: h.match[4]!,
+      }));
+      const pods = targets.filter((t) => t.project === "Pods");
+      const podNames = [...new Set(pods.map((t) => t.target && podForTarget(t.target)))].filter(
+        (p): p is string => Boolean(p),
+      );
+      const appTargets = targets.filter((t) => t.project && t.project !== "Pods");
+      const named = targets
+        .filter((t) => t.target)
+        .map((t) => `${t.target} (${t.value})`)
+        .slice(0, 6);
+      const evidence: Evidence[] = hits
+        .slice(0, 5)
+        .map((h) =>
+          logEvidence(
+            log.doc,
+            { start: h.index, end: h.index },
+            h.match[7]
+              ? `${h.match[7]} in ${h.match[8]}: ${h.match[3]} ${h.match[4]}, supported ${h.match[5]} to ${h.match[6]}`
+              : undefined,
+          ),
+        );
+      const podfile = ctx.project?.versions["ios deployment target (Podfile)"];
+      if (podfile)
+        evidence.push({ source: "project", detail: `Podfile platform :ios, ${podfile}` });
+      const expo = ctx.project?.kind === "expo";
+      out.push(
+        finding(this.meta, {
+          title:
+            podNames.length && pods.length === targets.length
+              ? `${podNames.length === 1 ? `Pod ${podNames[0]} has` : `${podNames.length} pods have`} a deployment target below ${minimum}, the minimum this Xcode supports`
+              : `${targets.length === 1 && targets[0]!.target ? targets[0]!.target : `${targets.length} targets`} ${targets.length === 1 ? "has" : "have"} a deployment target below ${minimum}, the minimum this Xcode supports`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `This Xcode supports ${platform} deployment targets from ${minimum} to ${maximum}, and refuses to build a target set below that: ${named.length ? named.join(", ") : `${setting} is ${targets[0]!.value}`}.` +
+            (pods.length
+              ? ` ${pods.length === targets.length ? (pods.length === 1 ? "This is a CocoaPods target" : "These are CocoaPods targets") : "Some are CocoaPods targets"}${podNames.length ? ` (${podNames.length === 1 ? "pod" : "pods"} ${podNames.join(", ")})` : ""}, ${pods.length === 1 ? "which takes its" : "which take their"} deployment target from the pod's podspec (s.platforms or s.ios.deployment_target), not from your app. Libraries that haven't raised it fail like this when a new Xcode drops old versions.`
+              : "") +
+            (appTargets.length
+              ? ` ${appTargets.map((t) => t.target).join(", ")} ${appTargets.length === 1 ? "belongs" : "belong"} to the app project, so the app's own ${setting} is too low.`
+              : ""),
+          evidence,
+          nextSteps: [
+            ...(pods.length
+              ? [
+                  `Upgrade the ${podNames.length === 1 ? "library that provides the pod" : "libraries that provide the pods"} ${podNames.slice(0, 4).join(", ")} to ${podNames.length === 1 ? "a release whose podspec targets" : "releases whose podspecs target"} ${minimum} or later. To find the npm package, search node_modules for the podspec: \`find node_modules -name "${podNames[0] ?? "*"}.podspec"\`.`,
+                  `Until then, raise the pods' setting in the Podfile's existing post_install block (next to react_native_post_install): \`installer.pods_project.targets.each { |t| t.build_configurations.each { |c| c.build_settings['${setting}'] = '${minimum}' if c.build_settings['${setting}'].to_f < ${minimum} } }\`, then run \`cd ios && pod install\`.`,
+                  ...(expo
+                    ? [
+                        "In an Expo project ios/ is generated, so edits to ios/Podfile are lost on `npx expo prebuild --clean`. Apply the post_install change with a config plugin (withPodfile).",
+                      ]
+                    : []),
+                ]
+              : []),
+            ...(appTargets.length || !pods.length
+              ? [
+                  `Raise ${setting} to ${minimum} or later for the app target, and \`platform :ios\` in ios/Podfile${expo ? " (Expo: ios.deploymentTarget in expo-build-properties)" : ""}.`,
+                ]
+              : []),
+            "Alternatively, build with the previous Xcode version until the libraries are updated.",
+          ],
+          verification: `The build no longer reports a deployment target below ${minimum}.`,
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const iosLogRules: Rule[] = [
+  deploymentTargetUnsupported,
   cocoapodsIncompatibleVersions,
   cocoapodsSpecNotFound,
   codeSigning,

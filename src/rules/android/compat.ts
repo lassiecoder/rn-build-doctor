@@ -122,3 +122,44 @@ export const NINJA_LONG_PATHS = {
   fixedInNinja: "1.12.0",
   sdkCmakeNinja: { "3.22.1": "1.10.2" } as Record<string, string>,
 };
+
+/**
+ * AGP 9.0 changed `android.dependency.useConstraints` from true to false: AGP no longer copies
+ * runtime-classpath versions into the compile classpath as constraints. A dependency declared
+ * without a version, whose version used to come only from another dependency's runtime scope, then
+ * fails with "Could not find group:artifact:." (empty version). Setting the property to true restores
+ * the AGP 8.13 behavior. Reproduced with AGP 9.2.1 and Gradle 9.4.1 on 2026-10-23: the failure, and
+ * that both the property and an explicit version fix it.
+ */
+export const AGP_DEPENDENCY_CONSTRAINTS = {
+  sources: [
+    "https://developer.android.com/build/releases/agp-9-0-0-release-notes",
+    "https://github.com/orbital-systems/react-native-esp-idf-provisioning/issues/144",
+  ],
+  lastVerified: "2026-10-23",
+  changedInAgpMajor: 9,
+  property: "android.dependency.useConstraints",
+};
+
+/**
+ * React Native autolinking names a library's Gradle project after its npm package: characters
+ * ~*!'() become "_", and a scope prefix "@scope/" becomes "scope_" (`nameCleansed` in
+ * ModelAutolinkingDependenciesJson.kt; checked in @react-native/gradle-plugin 0.86.2 and on main,
+ * 2026-10-23). So `@amplitude/experiment-react-native-client` builds as
+ * `:amplitude_experiment-react-native-client`.
+ */
+export const RN_GRADLE_PROJECT_NAMES = {
+  source:
+    "https://github.com/facebook/react-native/blob/main/packages/gradle-plugin/shared/src/main/kotlin/com/facebook/react/model/ModelAutolinkingDependenciesJson.kt",
+  lastVerified: "2026-10-23",
+};
+
+/** npm package names that autolinking could have turned into this Gradle project name. */
+export function packageCandidatesForGradleProject(project: string): string[] {
+  const name = project.replace(/^:/, "");
+  const candidates: string[] = [];
+  const scoped = /^([\w.-]+?)_(.+)$/.exec(name);
+  if (scoped) candidates.push(`@${scoped[1]}/${scoped[2]}`);
+  candidates.push(name);
+  return candidates;
+}

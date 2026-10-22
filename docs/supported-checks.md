@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-45 rules: 13 project checks (`scan`) and 32 log rules (`analyze`).
+46 rules: 13 project checks (`scan`) and 33 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -202,15 +202,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Gradle could not resolve Android dependencies**
 
-| Field               | Value                                                                                                                                           |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | android                                                                                                                                         |
-| Applicable versions | All Gradle versions                                                                                                                             |
-| Trigger             | A Gradle 'What went wrong' section containing 'Could not resolve all … for configuration' or 'Could not find/resolve <group:artifact:version>'. |
-| Evidence            | The failure section, the unresolved coordinates, and 'Required by' lines.                                                                       |
-| Sources             | <https://docs.gradle.org/current/userguide/dependency_resolution.html><br><https://github.com/facebook/react-native/issues/35210>               |
-| Regression fixtures | `tests/fixtures/logs/android-dependency-resolution.log`<br>`tests/fixtures/logs/android-dynamic-react-native.log`                               |
-| Last verified       | 2026-10-14                                                                                                                                      |
+| Field               | Value                                                                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | android                                                                                                                                                                                                                                                                                          |
+| Applicable versions | All Gradle versions; versionless dependencies on Android Gradle Plugin 9+ (useConstraints default changed)                                                                                                                                                                                       |
+| Trigger             | A Gradle 'What went wrong' section containing 'Could not resolve all … for configuration' or 'Could not find/resolve <group:artifact:version>'. A coordinate with an empty version ('group:artifact:.') is reported as a dependency declared without a version.                                  |
+| Evidence            | The failure section, the unresolved coordinates, 'Required by' lines (with the npm package behind an autolinked Gradle project), and android.dependency.useConstraints when a version is missing.                                                                                                |
+| Sources             | <https://docs.gradle.org/current/userguide/dependency_resolution.html><br><https://github.com/facebook/react-native/issues/35210><br><https://developer.android.com/build/releases/agp-9-0-0-release-notes><br><https://github.com/orbital-systems/react-native-esp-idf-provisioning/issues/144> |
+| Regression fixtures | `tests/fixtures/logs/android-dependency-resolution.log`<br>`tests/fixtures/logs/android-dynamic-react-native.log`<br>`tests/fixtures/logs/real-agp92-versionless-dependency.log`                                                                                                                 |
+| Last verified       | 2026-10-23                                                                                                                                                                                                                                                                                       |
 
 ### `android.agp-requires-newer-jdk`
 
@@ -286,15 +286,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **A dependency requires a newer compileSdk or Android Gradle Plugin**
 
-| Field               | Value                                                                                                                                                                   |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | android                                                                                                                                                                 |
-| Applicable versions | Android Gradle Plugin 4.2+ (AAR metadata checks)                                                                                                                        |
-| Trigger             | A Gradle failure (typically :app:check*AarMetadata) stating that a dependency requires compiling against API N or later, or requires Android Gradle Plugin X or higher. |
-| Evidence            | The AAR metadata failure section and each dependency/requirement pair.                                                                                                  |
-| Sources             | <https://developer.android.com/build/releases/gradle-plugin><br><https://docs.expo.dev/versions/latest/sdk/build-properties/>                                           |
-| Regression fixtures | `tests/fixtures/logs/android-aar-metadata.log`                                                                                                                          |
-| Last verified       | 2026-10-14                                                                                                                                                              |
+| Field               | Value                                                                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | android                                                                                                                                                                                                                                                                                          |
+| Applicable versions | Android Gradle Plugin 4.2+ (AAR metadata checks)                                                                                                                                                                                                                                                 |
+| Trigger             | A Gradle failure (typically :app:check*AarMetadata, or :<library>:check*AarMetadata) stating that a dependency requires compiling against API N or later, or requires Android Gradle Plugin X or higher.                                                                                         |
+| Evidence            | The AAR metadata failure section and each dependency/requirement pair. When the failing project is a library: its npm package and the compileSdk lines in its android/build.gradle.                                                                                                              |
+| Sources             | <https://developer.android.com/build/releases/gradle-plugin><br><https://docs.expo.dev/versions/latest/sdk/build-properties/><br><https://github.com/facebook/react-native/blob/main/packages/gradle-plugin/shared/src/main/kotlin/com/facebook/react/model/ModelAutolinkingDependenciesJson.kt> |
+| Regression fixtures | `tests/fixtures/logs/android-aar-metadata.log`<br>`tests/fixtures/logs/real-agp92-library-aar-metadata.log`                                                                                                                                                                                      |
+| Last verified       | 2026-10-23                                                                                                                                                                                                                                                                                       |
 
 ### `android.duplicate-class`
 
@@ -449,6 +449,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://metrobundler.dev/docs/troubleshooting><br><https://babeljs.io/docs/config-files> |
 | Regression fixtures | `tests/fixtures/logs/metro-syntax-error.log`                                              |
 | Last verified       | 2026-10-14                                                                                |
+
+### `ios.deployment-target-unsupported`
+
+**A target's deployment target is below what this Xcode supports**
+
+| Field               | Value                                                                                                                                                                                               |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                                                                 |
+| Applicable versions | Xcode 14+ (seen as an error with Xcode 27, where the minimum is iOS 15.0)                                                                                                                           |
+| Trigger             | An Xcode error "The <platform> deployment target '<SETTING>' is set to X, but the range of supported deployment target versions is Y to Z". The same message as a warning doesn't trigger the rule. |
+| Evidence            | The error lines with each target, its project (Pods or the app), the configured value, and the supported range Xcode printed. The Podfile platform when the project is available.                   |
+| Sources             | <https://developer.apple.com/support/xcode/><br><https://guides.cocoapods.org/syntax/podspec.html#deployment_target><br><https://github.com/react-native-async-storage/async-storage/issues/1355>   |
+| Regression fixtures | `tests/fixtures/logs/xcode27-pod-deployment-target.log`                                                                                                                                             |
+| Last verified       | 2026-10-23                                                                                                                                                                                          |
 
 ### `ios.cocoapods-incompatible-versions`
 

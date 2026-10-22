@@ -1,0 +1,2 @@
+/Users/dev/app/ios/Pods/Pods.xcodeproj: warning: The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 11.0, but the range of supported deployment target versions is 12.0 to 26.0.99. (in target 'RNLegacyPod' from project 'Pods')
+** BUILD SUCCEEDED **

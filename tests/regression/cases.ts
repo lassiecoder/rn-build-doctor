@@ -29,6 +29,60 @@ export const CASES: Case[] = [
     expect: ["android.dependency-resolution"],
     forbid: ["android.aar-metadata-check"],
     mustMention: ["com.github.example:image-cropper:4.6.2", "react-native-image-crop-picker"],
+    // Near miss for the versionless case: this artifact has a version, so it's a repository problem.
+    mustNotMention: ["declared without a version", "useConstraints"],
+  },
+  // Captured from a real AGP 9.2.1 / Gradle 9.4.1 build (2026-10-23) of a library that declares
+  // eventbus without a version and gets the version only through runtimeOnly, as in
+  // orbital-systems/react-native-esp-idf-provisioning#144. Paths anonymized.
+  {
+    name: "real AGP 9: dependency declared without a version",
+    kind: "log",
+    input: "real-agp92-versionless-dependency.log",
+    expect: ["android.dependency-resolution"],
+    mustMention: [
+      "org.greenrobot:eventbus: no version is declared",
+      "android.dependency.useConstraints=true",
+      ":acme_react-native-bus:dependencies",
+    ],
+    mustNotMention: ["confirm that the version exists"],
+  },
+  {
+    name: "real AGP 9: versionless dependency, with the project",
+    kind: "log",
+    input: "real-agp92-versionless-dependency.log",
+    cwd: "rn088-agp9-libraries",
+    expect: ["android.dependency-resolution"],
+    mustMention: ["@acme/react-native-bus", "Android Gradle Plugin 9.2.1"],
+    mustNotMention: ["isn't visible here"],
+  },
+  // Captured from the same AGP 9.2.1 build: a library module with compileSdk 31 depending on
+  // androidx.core 1.13.1, as in amplitude/experiment-react-native-client#72.
+  {
+    name: "real AGP 9: library compiled against an old API",
+    kind: "log",
+    input: "real-agp92-library-aar-metadata.log",
+    expect: ["android.aar-metadata-check"],
+    mustMention: [
+      "Library :acme_react-native-widget compiles against Android API 31, but its dependencies need 34",
+      ":acme_react-native-widget:checkReleaseAarMetadata",
+    ],
+    // Raising the app's compileSdk doesn't change a library's own compileSdk.
+    mustNotMention: ["expo-build-properties", "raise compileSdkVersion to 34"],
+  },
+  {
+    name: "real AGP 9: library compiled against an old API, with the project",
+    kind: "log",
+    input: "real-agp92-library-aar-metadata.log",
+    cwd: "rn088-agp9-libraries",
+    expect: ["android.aar-metadata-check"],
+    mustMention: [
+      "Library @acme/react-native-widget compiles",
+      "already uses compileSdk 37",
+      "AcmeWidget_compileSdkVersion",
+      "node_modules/@acme/react-native-widget/android/build.gradle",
+    ],
+    mustNotMention: ["expo-build-properties"],
   },
   {
     name: "dynamic react-native dependency",
@@ -77,7 +131,9 @@ export const CASES: Case[] = [
     input: "android-aar-metadata.log",
     expect: ["android.aar-metadata-check"],
     forbid: ["android.dependency-resolution"],
-    mustMention: ["36", "androidx.core:core:1.17.0"],
+    mustMention: ["36", "androidx.core:core:1.17.0", "raise compileSdkVersion to 36"],
+    // Near miss for the library case: the failing project is :app, so the app setting is the fix.
+    mustNotMention: ["which is a library", "patch-package"],
   },
   {
     name: "duplicate classes support vs androidx",
@@ -451,6 +507,29 @@ export const CASES: Case[] = [
     mustMention: ["couldn't reach Metro", "adb reverse tcp:8081 tcp:8081"],
   },
   // --- iOS
+  // The error line from react-native-async-storage/async-storage#1355 (Xcode 27, React Native 0.88),
+  // verbatim. AsyncStorage 3.1.1's podspec sets `s.platforms = { :ios => "13.0" }` and the resource
+  // bundle "AsyncStorage_resources" (checked in the published package on 2026-10-23).
+  {
+    name: "Xcode 27: pod deployment target below the supported range",
+    kind: "log",
+    input: "xcode27-pod-deployment-target.log",
+    expect: ["ios.deployment-target-unsupported"],
+    forbid: ["common.no-supported-diagnosis", "ios.compile-error"],
+    mustMention: [
+      "Pod AsyncStorage has a deployment target below 15.0",
+      "IPHONEOS_DEPLOYMENT_TARGET 13.0, supported 15.0 to 27.0.x",
+      "post_install",
+      "AsyncStorage.podspec",
+    ],
+  },
+  {
+    name: "deployment target out of range as a warning (near miss)",
+    kind: "log",
+    input: "near-miss-xcode-deployment-target-warning.log",
+    expect: [],
+    forbid: ["ios.deployment-target-unsupported"],
+  },
   {
     name: "pods incompatible + deployment target",
     kind: "log",

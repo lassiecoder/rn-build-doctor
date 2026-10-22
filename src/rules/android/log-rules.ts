@@ -1,17 +1,22 @@
+import { relative } from "node:path";
 import type { LogDocument } from "../../collectors/build-logs.js";
 import { finding, type Rule, type RuleContext } from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import { findIndex, flatten, logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 import { readProjectFile } from "../../collectors/project-files.js";
+import { findPackageDir } from "../../detection/project-type.js";
 import {
   AGP_BUILT_IN_KOTLIN,
+  AGP_DEPENDENCY_CONSTRAINTS,
   AGP_JDK_REQUIREMENT,
   GRADLE_MIN_FOR_JAVA,
   PERMGEN_REMOVED,
+  RN_GRADLE_PROJECT_NAMES,
   compareVersions,
   javaFromClassFileMajor,
   NINJA_LONG_PATHS,
+  packageCandidatesForGradleProject,
 } from "./compat.js";
 
 const VERIFIED = "2026-10-14";
@@ -30,6 +35,19 @@ function gradleVersionFromLog(doc: LogDocument): string | undefined {
       line.trim(),
     );
     if (match) return match[1];
+  }
+  return undefined;
+}
+
+/** The installed npm package behind an autolinked Gradle project (`:scope_name` → `@scope/name`). */
+function packageForGradleProject(
+  ctx: RuleContext,
+  gradleProject: string,
+): { name: string; dir: string } | undefined {
+  if (!ctx.project) return undefined;
+  for (const name of packageCandidatesForGradleProject(gradleProject)) {
+    const dir = findPackageDir(ctx.project.root, name);
+    if (dir) return { name, dir };
   }
   return undefined;
 }
@@ -56,15 +74,22 @@ export const dependencyResolution: Rule = {
     platforms: ["android"],
     scope: "log",
     trigger:
-      "A Gradle 'What went wrong' section containing 'Could not resolve all … for configuration' or 'Could not find/resolve <group:artifact:version>'.",
-    evidence: "The failure section, the unresolved coordinates, and 'Required by' lines.",
-    versionScope: "All Gradle versions",
+      "A Gradle 'What went wrong' section containing 'Could not resolve all … for configuration' or 'Could not find/resolve <group:artifact:version>'. A coordinate with an empty version ('group:artifact:.') is reported as a dependency declared without a version.",
+    evidence:
+      "The failure section, the unresolved coordinates, 'Required by' lines (with the npm package behind an autolinked Gradle project), and android.dependency.useConstraints when a version is missing.",
+    versionScope:
+      "All Gradle versions; versionless dependencies on Android Gradle Plugin 9+ (useConstraints default changed)",
     references: [
       "https://docs.gradle.org/current/userguide/dependency_resolution.html",
       "https://github.com/facebook/react-native/issues/35210",
+      ...AGP_DEPENDENCY_CONSTRAINTS.sources,
     ],
-    lastVerified: VERIFIED,
-    fixtures: ["logs/android-dependency-resolution.log", "logs/android-dynamic-react-native.log"],
+    lastVerified: AGP_DEPENDENCY_CONSTRAINTS.lastVerified,
+    fixtures: [
+      "logs/android-dependency-resolution.log",
+      "logs/android-dynamic-react-native.log",
+      "logs/real-agp92-versionless-dependency.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -98,8 +123,33 @@ export const dependencyResolution: Rule = {
         const coords = [...coordinates];
         const dynamic = coords.filter((c) => /:(?:\+|latest\.\w+|[^:]*\+)$/.test(c));
         const rnDynamic = dynamic.some((c) => c.startsWith("com.facebook.react:react-native:"));
+        // "Could not find org.greenrobot:eventbus:." — declared without a version.
+        const versionless = coords.filter((c) => c.endsWith(":")).map((c) => c.slice(0, -1));
+        const onlyVersionless = versionless.length === coords.length && coords.length > 0;
+        const agp = ctx.project?.versions["android gradle plugin"];
+        const agp9 = agp
+          ? Number.parseInt(agp, 10) >= AGP_DEPENDENCY_CONSTRAINTS.changedInAgpMajor
+          : undefined;
+        const requestingPackages = [
+          ...new Set(
+            requiredBy
+              .map((r) => /project '?:?([^'\s>]+)'?\s*$/.exec(r)?.[1])
+              .filter((p): p is string => p !== undefined && p !== "app")
+              .map((p) => packageForGradleProject(ctx, `:${p}`)?.name ?? `:${p}`),
+          ),
+        ];
 
         const hypotheses: string[] = [];
+        if (versionless.length) {
+          hypotheses.push(
+            `${versionless.join(", ")} ${versionless.length === 1 ? "is" : "are"} declared without a version (Gradle prints an empty version after the last ':'). Gradle has to get the version from somewhere else: a BOM (platform(...)), a dependency constraint, or another dependency that requests the same module. None of them reached this configuration.`,
+          );
+          if (agp9 !== false) {
+            hypotheses.push(
+              `${agp9 ? `This project uses Android Gradle Plugin ${agp}. ` : ""}Android Gradle Plugin ${AGP_DEPENDENCY_CONSTRAINTS.changedInAgpMajor} changed ${AGP_DEPENDENCY_CONSTRAINTS.property} to false, so a version that only another dependency's runtime scope provides no longer reaches the compile classpath. Builds that worked on AGP 8 fail this way${agp9 ? "" : " (the AGP version isn't visible here, so this applies only if the build uses AGP 9 or later)"}.`,
+            );
+          }
+        }
         if (network) {
           hypotheses.push(
             "The log shows network or repository errors while downloading, so connectivity, a proxy, or an unavailable repository may be responsible.",
@@ -115,9 +165,11 @@ export const dependencyResolution: Rule = {
             "A dynamic 'com.facebook.react:react-native:+' dependency matches the November 2022 incident where old React Native versions resolved the wrong artifact after React Native started publishing to Maven Central (facebook/react-native#35210).",
           );
         }
-        hypotheses.push(
-          `${hypotheses.length ? "Otherwise, the" : "The"} requested version may not exist in any configured repository, or the repository that hosts it may not be declared in android/build.gradle or settings.gradle.`,
-        );
+        if (!onlyVersionless) {
+          hypotheses.push(
+            `${hypotheses.length ? "Otherwise, the" : "The"} requested version may not exist in any configured repository, or the repository that hosts it may not be declared in android/build.gradle or settings.gradle.`,
+          );
+        }
 
         const evidence: Evidence[] = [logEvidence(log.doc, failure)];
         for (const c of coords.slice(0, 10))
@@ -127,15 +179,37 @@ export const dependencyResolution: Rule = {
         evidence.push(
           ...versionEvidence(ctx, ["react-native", "android gradle plugin", "gradle (wrapper)"]),
         );
+        const props =
+          versionless.length && ctx.project?.hasAndroid
+            ? readProjectFile(ctx.project.root, "android/gradle.properties")
+            : undefined;
+        const constraintsProp = props?.ok
+          ? gradleProperty(props.text, AGP_DEPENDENCY_CONSTRAINTS.property)
+          : undefined;
+        if (constraintsProp) {
+          evidence.push({
+            source: "project",
+            file: "android/gradle.properties",
+            line: constraintsProp.line,
+            detail: `${AGP_DEPENDENCY_CONSTRAINTS.property}=${constraintsProp.value}`,
+          });
+        }
+        const where = requestingPackages.length
+          ? requestingPackages.join(", ")
+          : "the project named under 'Required by'";
 
         out.push(
           finding(this.meta, {
-            title: coords.length
-              ? `Gradle could not resolve ${coords.length === 1 ? coords[0] : `${coords.length} dependencies`}`
-              : this.meta.title,
+            title: onlyVersionless
+              ? `Gradle could not resolve ${versionless.length === 1 ? versionless[0] : `${versionless.length} dependencies`}: no version is declared`
+              : coords.length
+                ? `Gradle could not resolve ${coords.length === 1 ? coords[0] : `${coords.length} dependencies`}`
+                : this.meta.title,
             severity: "error",
             confidence: "high",
-            explanation: `Gradle failed to resolve dependencies${configuration ? ` for configuration '${configuration}'` : ""}. The log confirms the failure, but not why resolution failed. Possible explanations, in the order the evidence supports them:\n- ${hypotheses.join("\n- ")}`,
+            explanation: onlyVersionless
+              ? `Gradle failed to resolve dependencies${configuration ? ` for configuration '${configuration}'` : ""} because they have no version:\n- ${hypotheses.join("\n- ")}`
+              : `Gradle failed to resolve dependencies${configuration ? ` for configuration '${configuration}'` : ""}. The log confirms the failure, but not why resolution failed. Possible explanations, in the order the evidence supports them:\n- ${hypotheses.join("\n- ")}`,
             evidence,
             nextSteps: [
               ...(network
@@ -148,8 +222,26 @@ export const dependencyResolution: Rule = {
                     "Upgrade to a React Native patch release that contains the fix for facebook/react-native#35210, or pin the react-native dependency to your installed version.",
                   ]
                 : []),
-              "For each unresolved coordinate, confirm that the version exists in one of the repositories listed under 'Searched in the following locations'.",
-              "Run `cd android && ./gradlew :app:dependencies --configuration " +
+              ...(versionless.length
+                ? [
+                    `Declare a version for ${versionless.join(", ")} where it's requested: in the build.gradle of ${where}. For a library in node_modules, upgrade it to a release that declares the version, or patch its android/build.gradle with patch-package.`,
+                    ...(agp9 !== false && constraintsProp?.value !== "true"
+                      ? [
+                          `If the build uses AGP ${AGP_DEPENDENCY_CONSTRAINTS.changedInAgpMajor} or later and the version used to come from another dependency (not from a BOM), a workaround until the library is fixed: add \`${AGP_DEPENDENCY_CONSTRAINTS.property}=true\` to android/gradle.properties, which restores the AGP 8.13 behavior.${ctx.project?.kind === "expo" ? " In an Expo project android/ is generated, so set it with a config plugin (withGradleProperties) rather than by hand." : ""}`,
+                        ]
+                      : []),
+                  ]
+                : []),
+              ...(onlyVersionless
+                ? []
+                : [
+                    "For each unresolved coordinate, confirm that the version exists in one of the repositories listed under 'Searched in the following locations'.",
+                  ]),
+              "Run `cd android && ./gradlew " +
+                (configuration?.includes(":")
+                  ? configuration.slice(0, configuration.lastIndexOf(":")) || ":app"
+                  : ":app") +
+                ":dependencies --configuration " +
                 (configuration?.split(":").pop() ?? "releaseRuntimeClasspath") +
                 "` to see which dependency requests the missing artifact.",
               ...(dynamic.length ? ["Replace dynamic versions ('+') with exact versions."] : []),
@@ -416,15 +508,17 @@ export const aarMetadataCheck: Rule = {
     platforms: ["android"],
     scope: "log",
     trigger:
-      "A Gradle failure (typically :app:check*AarMetadata) stating that a dependency requires compiling against API N or later, or requires Android Gradle Plugin X or higher.",
-    evidence: "The AAR metadata failure section and each dependency/requirement pair.",
+      "A Gradle failure (typically :app:check*AarMetadata, or :<library>:check*AarMetadata) stating that a dependency requires compiling against API N or later, or requires Android Gradle Plugin X or higher.",
+    evidence:
+      "The AAR metadata failure section and each dependency/requirement pair. When the failing project is a library: its npm package and the compileSdk lines in its android/build.gradle.",
     versionScope: "Android Gradle Plugin 4.2+ (AAR metadata checks)",
     references: [
       "https://developer.android.com/build/releases/gradle-plugin",
       "https://docs.expo.dev/versions/latest/sdk/build-properties/",
+      RN_GRADLE_PROJECT_NAMES.source,
     ],
-    lastVerified: VERIFIED,
-    fixtures: ["logs/android-aar-metadata.log"],
+    lastVerified: RN_GRADLE_PROJECT_NAMES.lastVerified,
+    fixtures: ["logs/android-aar-metadata.log", "logs/real-agp92-library-aar-metadata.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -444,6 +538,18 @@ export const aarMetadataCheck: Rule = {
         if (!sdk.length && !agp.length) continue;
         const requiredSdk = Math.max(0, ...sdk.map((m) => Number(m[2])));
         const currentSdk = sdk[0]?.[4];
+        // The check runs per Gradle project; ":app" is the app, anything else is a library.
+        const appSdk = sdk.filter((m) => m[3] === ":app");
+        const libraries = [...new Set(sdk.filter((m) => m[3] !== ":app").map((m) => m[3]!))];
+        const library = libraries[0];
+        const libSdk = sdk.filter((m) => m[3] === library);
+        const libRequired = Math.max(0, ...libSdk.map((m) => Number(m[2])));
+        const libCurrent = libSdk[0]?.[4];
+        const libPackage = library ? packageForGradleProject(ctx, library) : undefined;
+        const libLabel = libPackage?.name ?? library;
+        const appCompileSdk = ctx.project?.versions["compileSdk"];
+        const appAlreadyNewEnough =
+          appCompileSdk !== undefined && Number(appCompileSdk) >= libRequired;
         const requiredAgp = agp
           .map((m) => m[2]!)
           .sort(compareVersions)
@@ -473,23 +579,56 @@ export const aarMetadataCheck: Rule = {
             "expo",
           ]),
         );
+        if (libPackage && ctx.project) {
+          // Show how the library picks its compileSdk (often rootProject.ext with a fallback).
+          const base = relative(ctx.project.root, libPackage.dir).replace(/\\/g, "/");
+          for (const file of ["android/build.gradle", "android/gradle.properties"]) {
+            const read = readProjectFile(ctx.project.root, `${base}/${file}`);
+            if (!read.ok) continue;
+            read.text.split(/\r?\n/).forEach((line, i) => {
+              if (/compileSdk/i.test(line) && evidence.length < 20) {
+                evidence.push({
+                  source: "project",
+                  file: `${base}/${file}`,
+                  line: i + 1,
+                  detail: line.trim().slice(0, 200),
+                });
+              }
+            });
+          }
+        }
         const parts: string[] = [];
-        if (sdk.length)
+        if (appSdk.length || (sdk.length && !library))
           parts.push(`compile against Android API ${requiredSdk} (currently ${currentSdk})`);
         if (agp.length)
           parts.push(
             `use Android Gradle Plugin ${requiredAgp} or higher (currently ${currentAgp})`,
           );
+        const libraryOnly = library !== undefined && !parts.length;
+        const libraryExplanation = library
+          ? ` The check failed for ${library}${libPackage ? ` (the npm package ${libPackage.name})` : ""}, which is a library, not your app. A library builds against its own compileSdk, set in its android/build.gradle (here android-${libCurrent}). Many React Native libraries read it from a rootProject.ext key and fall back to a hard-coded value, so raising the app's compileSdk only helps if the library reads that key.${appAlreadyNewEnough ? ` This app already uses compileSdk ${appCompileSdk}, so changing the app's setting won't fix it.` : ""}${libraries.length > 1 ? ` Other libraries with the same problem: ${libraries.slice(1).join(", ")}.` : ""}`
+          : "";
         out.push(
           finding(this.meta, {
-            title: `Dependencies require the app to ${parts.join(" and ")}`,
+            title: libraryOnly
+              ? `Library ${libLabel} compiles against Android API ${libCurrent}, but its dependencies need ${libRequired}`
+              : `Dependencies require the app to ${parts.join(" and ")}${library ? `; library ${libLabel} also compiles against API ${libCurrent}` : ""}`,
             severity: "error",
             confidence: "high",
             explanation:
-              "The Android Gradle Plugin checks AAR metadata published by dependencies before building. At least one resolved dependency declares a minimum that this app doesn't meet. This often happens when a dependency, or a transitive one, upgrades to a version built for a newer Android API.",
+              "The Android Gradle Plugin checks AAR metadata published by dependencies before building. At least one resolved dependency declares a minimum that this " +
+              (libraryOnly ? "library" : "app") +
+              " doesn't meet. This often happens when a dependency, or a transitive one, upgrades to a version built for a newer Android API." +
+              libraryExplanation,
             evidence,
             nextSteps: [
-              ...(sdk.length
+              ...(library
+                ? [
+                    `Upgrade ${libLabel} to a release that builds against API ${libRequired} or later. Its changelog or open issues often mention the new React Native or Expo SDK version.`,
+                    `Check how ${libPackage ? `node_modules/${libPackage.name}/android/build.gradle` : "the library's android/build.gradle"} sets compileSdk. If it reads a rootProject.ext key, define that key in the ext block of android/build.gradle${ctx.project?.kind === "expo" ? " (in an Expo project android/ is generated, so use a config plugin)" : ""}. If the value is hard-coded, patch it to ${libRequired} or later with patch-package until the library is fixed.`,
+                  ]
+                : []),
+              ...(appSdk.length || (sdk.length && !library)
                 ? [
                     `React Native CLI: raise compileSdkVersion to ${requiredSdk} in android/build.gradle (ext block). Expo: set android.compileSdkVersion to ${requiredSdk} with the expo-build-properties config plugin.`,
                     `Check that your Android Gradle Plugin version supports API ${requiredSdk}; newer API levels may require a newer AGP.`,
@@ -500,10 +639,13 @@ export const aarMetadataCheck: Rule = {
                     `Upgrade the Android Gradle Plugin to ${requiredAgp} or later, together with a compatible Gradle wrapper.`,
                   ]
                 : []),
-              "Alternatively, pin the listed dependencies to the last version compatible with your current setup. Run `./gradlew :app:dependencies` to find which library pulls them in.",
+              ...(libraryOnly
+                ? []
+                : [
+                    "Alternatively, pin the listed dependencies to the last version compatible with your current setup. Run `./gradlew :app:dependencies` to find which library pulls them in.",
+                  ]),
             ],
-            verification:
-              "Re-run the failing task (for example `./gradlew :app:checkReleaseAarMetadata`).",
+            verification: `Re-run the failing task (for example \`./gradlew ${failure.task ?? ":app:checkReleaseAarMetadata"}\`).`,
           }),
         );
       }
