@@ -2,6 +2,8 @@
 
 Thanks for helping. The most valuable contributions are **real, anonymized failure logs** and **rules that diagnose them correctly**. False positives count as bugs.
 
+This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). By taking part, you agree to it.
+
 ## Setup
 
 ```sh
