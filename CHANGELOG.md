@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.7 (2026-10-23)
 
 Gaps found in GitHub issues from the week after the Expo SDK 58 / React Native 0.88 releases. The two Android failures were reproduced on an AGP 9.2.1 / Gradle 9.4.1 build before the rules changed.
 

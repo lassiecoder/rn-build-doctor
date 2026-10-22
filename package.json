@@ -1,6 +1,6 @@
 {
   "name": "rn-build-doctor",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Evidence-based diagnostics for React Native and Expo build, release, and startup failures. Explains Gradle, Xcode, CocoaPods, Metro, EAS Build, logcat, and iOS crash errors offline.",
   "license": "MIT",
   "repository": {
