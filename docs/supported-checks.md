@@ -454,15 +454,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Metro could not resolve an imported module**
 
-| Field               | Value                                                                                                                                                                                                                                |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Platforms           | javascript                                                                                                                                                                                                                           |
-| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                                                                                       |
-| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                                                                                     |
-| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                                                                              |
-| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                                                                                       |
-| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency`<br>`tests/fixtures/logs/real-rn086-metro-relative-import.log` |
-| Last verified       | 2026-10-14                                                                                                                                                                                                                           |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                    |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | javascript                                                                                                                                                                                                                                                                                                                                               |
+| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                                                                                                                                                                                                           |
+| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                                                                                                                                                                                                         |
+| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                                                                                                                                                                                                  |
+| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                                                                                                                                                                                                           |
+| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency`<br>`tests/fixtures/logs/real-rn086-metro-relative-import.log`<br>`tests/fixtures/logs/metro-package-export-target-missing.log`<br>`tests/fixtures/projects/rn088-package-exports` |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                                                               |
 
 ### `javascript.bundle-syntax-error`
 
@@ -601,8 +601,8 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Trigger             | A JavaScript error surfaced through a React Native runtime channel: logcat ReactNativeJS, JavascriptException, RCTFatal/'Unhandled JS Exception', Metro console ERROR, or uncaught errors. |
 | Evidence            | The exception line, the channel it came through, and the first stack frame when present.                                                                                                   |
 | Sources             | <https://reactnative.dev/docs/debugging-release-builds><br><https://docs.expo.dev/debugging/runtime-issues/>                                                                               |
-| Regression fixtures | `tests/fixtures/logs/runtime-android-js-exception.log`<br>`tests/fixtures/logs/real-logcat-js-startup-crash.log`                                                                           |
-| Last verified       | 2026-10-14                                                                                                                                                                                 |
+| Regression fixtures | `tests/fixtures/logs/runtime-android-js-exception.log`<br>`tests/fixtures/logs/real-logcat-js-startup-crash.log`<br>`tests/fixtures/logs/logcat-native-module-init-failed.log`             |
+| Last verified       | 2026-10-25                                                                                                                                                                                 |
 
 ### `runtime.missing-configuration-suspected`
 
@@ -622,15 +622,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Android app crashed with a fatal exception**
 
-| Field               | Value                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | android                                                                                                                   |
-| Applicable versions | Android (all versions)                                                                                                    |
-| Trigger             | Logcat 'FATAL EXCEPTION' block from AndroidRuntime.                                                                       |
-| Evidence            | The exception class, message, process, and 'Caused by' chain.                                                             |
-| Sources             | <https://developer.android.com/studio/debug/logcat><br><https://reactnative.dev/docs/signed-apk-android>                  |
-| Regression fixtures | `tests/fixtures/logs/runtime-android-unable-to-load-script.log`<br>`tests/fixtures/logs/runtime-android-js-exception.log` |
-| Last verified       | 2026-10-14                                                                                                                |
+| Field               | Value                                                                                                                                                                                         |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                       |
+| Applicable versions | Android (all versions)                                                                                                                                                                        |
+| Trigger             | Logcat 'FATAL EXCEPTION' block from AndroidRuntime.                                                                                                                                           |
+| Evidence            | The exception class, message, process, and 'Caused by' chain.                                                                                                                                 |
+| Sources             | <https://developer.android.com/studio/debug/logcat><br><https://reactnative.dev/docs/signed-apk-android>                                                                                      |
+| Regression fixtures | `tests/fixtures/logs/runtime-android-unable-to-load-script.log`<br>`tests/fixtures/logs/runtime-android-js-exception.log`<br>`tests/fixtures/logs/logcat-fatal-native-module-init-failed.log` |
+| Last verified       | 2026-10-25                                                                                                                                                                                    |
 
 ### `runtime.ios-crash`
 
