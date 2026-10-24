@@ -1,0 +1,2 @@
+Unable to resolve module @babel/runtime/helpers/interopRequireWildcard
+from apps/native/node_modules/expo-widgets/bundle/index.ts

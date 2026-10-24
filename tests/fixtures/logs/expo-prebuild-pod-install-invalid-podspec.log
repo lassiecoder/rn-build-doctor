@@ -1,0 +1,25 @@
+npx expo prebuild -p ios --clean
+✔ Cleared ios code
+✔ Created native directory
+✔ Updated package.json | no changes
+✔ Finished prebuild
+⚠️  Something went wrong running `pod install` in the `ios` directory.
+Command `pod install` failed.
+└─ Cause: Invalid `Podfile` file: [RNCoreFacades] Failed to read real podspec for facaded pod 'React-Core' at /Users/dev/MyApp/node_modules/react-native/React-Core.podspec: 
+[!] Invalid `React-Core.podspec` file: undefined method `split' for #<Array:0x00000007e5e3fb38>.
+
+ #  from /Users/dev/MyApp/node_modules/react-native/React-Core.podspec:134
+ #  -------------------------------------------
+ #  
+ >    add_dependency(s, "React-runtimeexecutor", :additional_framework_paths => ["platform/ios"])
+ #    add_dependency(s, "React-jsinspector", :framework_name => 'jsinspector_modern')
+ #  -------------------------------------------
+.
+
+ #  from /Users/dev/MyApp/ios/Podfile:53
+ #  -------------------------------------------
+ #  
+ >    use_react_native!(
+ #      :path => config[:reactNativePath],
+ #  -------------------------------------------
+

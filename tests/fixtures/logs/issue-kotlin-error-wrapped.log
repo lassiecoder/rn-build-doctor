@@ -1,0 +1,4 @@
+> Task :react-native-keyboard-controller:compileReleaseKotlin FAILED
+
+e: .../android/src/turbo/java/com/reactnativekeyboardcontroller/KeyboardControllerPackage.kt:63:7
+   Unresolved reference: ClippingScrollViewDecoratorViewManager

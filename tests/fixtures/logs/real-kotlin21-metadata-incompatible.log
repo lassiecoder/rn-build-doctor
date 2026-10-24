@@ -1,0 +1,35 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+
+> Task :compileKotlin FAILED
+e: Incompatible classes were found in dependencies. Remove them from the classpath or use '-Xskip-metadata-version-check' to suppress errors
+e: file:///Users/dev/app/lib/build/libs/acme-lib.jar!/META-INF/acme-lib.kotlin_module Module was compiled with an incompatible version of Kotlin. The binary version of its metadata is 2.3.0, expected version is 2.1.0.
+e: file:///Users/dev/app/app/src/main/kotlin/app/Main.kt:2:22 Class 'acme.Greeter' was compiled with an incompatible version of Kotlin. The actual metadata version is 2.3.0, but the compiler version 2.1.0 can read versions up to 2.2.0.
+The class is loaded from /Users/dev/app/lib/build/libs/acme-lib.jar!/acme/Greeter.class
+e: file:///Users/dev/app/app/src/main/kotlin/app/Main.kt:2:22 Class 'acme.Greeter' was compiled with an incompatible version of Kotlin. The actual metadata version is 2.3.0, but the compiler version 2.1.0 can read versions up to 2.2.0.
+The class is loaded from /Users/dev/app/lib/build/libs/acme-lib.jar!/acme/Greeter.class
+
+[Incubating] Problems report is available at: file:///Users/dev/app/app/build/reports/problems/problems-report.html
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 10.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/9.4.1/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 17s
+1 actionable task: 1 executed

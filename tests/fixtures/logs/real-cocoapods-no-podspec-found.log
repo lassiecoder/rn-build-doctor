@@ -1,0 +1,3 @@
+$ cd ios && pod install
+Analyzing dependencies
+[!] No podspec found for `AcmeMaps` in `../node_modules/acme-maps`

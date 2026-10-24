@@ -15,6 +15,9 @@ import {
   RN_GRADLE_PROJECT_NAMES,
   AGP_PROGUARD_ANDROID_TXT,
   compareVersions,
+  embeddedKotlinFor,
+  GRADLE_EMBEDDED_KOTLIN,
+  newestGradleEmbeddingAtMost,
   GRADLE_NULL_PROPERTY_NAME,
   javaFromClassFileMajor,
   NINJA_LONG_PATHS,
@@ -971,6 +974,7 @@ export const jsBundleTaskFailed: Rule = {
 // Kotlin 2: `e: file:///path/File.kt:12:5 message`; Kotlin 1: `e: /path/File.kt: (12, 5): message`.
 const KOTLIN_ERROR =
   /^e:\s+(?:file:\/\/)?(.+?\.kts?)(?::(\d+):(\d+)\s+|:\s+\((\d+),\s*(\d+)\):\s+)(.+)$/;
+const KOTLIN_METADATA = /was compiled with an incompatible version of Kotlin/;
 // javac: `/path/File.java:12: error: message`
 const JAVA_ERROR = /^(.+?\.java):(\d+):\s+error:\s+(.+)$/;
 
@@ -1016,6 +1020,7 @@ export const androidCompileError: Rule = {
       "logs/real-rn087-gradle-java-error.log",
       "logs/android-kotlin-library-error.log",
       "logs/android-kotlin-app-error.log",
+      "logs/issue-kotlin-error-wrapped.log",
     ],
   },
   run(ctx) {
@@ -1024,8 +1029,11 @@ export const androidCompileError: Rule = {
       if (!log.gradle.detected) continue;
       const errors: SourceError[] = [];
       const seen = new Set<string>();
-      log.doc.lines.forEach((raw, index) => {
-        const line = raw.trim();
+      log.doc.lines.forEach((raw, index, all) => {
+        let line = raw.trim();
+        // `e: …/File.kt:63:7` with the message wrapped onto the next line (pasted excerpts).
+        if (/^e:\s+\S+\.kts?:\d+:\d+$/.test(line) && all[index + 1]?.trim())
+          line = `${line} ${all[index + 1]!.trim()}`;
         const kt = KOTLIN_ERROR.exec(line);
         const java = kt ? undefined : JAVA_ERROR.exec(line);
         const error: SourceError | undefined = kt
@@ -1041,6 +1049,8 @@ export const androidCompileError: Rule = {
             ? { index, language: "Java", file: java[1]!, line: java[2]!, message: java[3]!.trim() }
             : undefined;
         if (!error) return;
+        // A Kotlin metadata version mismatch is diagnosed by android.kotlin-metadata-incompatible.
+        if (KOTLIN_METADATA.test(error.message)) return;
         const key = `${error.file}:${error.line}:${error.message}`;
         if (seen.has(key)) return;
         seen.add(key);
@@ -1050,12 +1060,24 @@ export const androidCompileError: Rule = {
       const first = errors[0]!;
       const name = first.file.split(/[\\/]/).pop()!;
       const position = `${first.line}${first.column ? `:${first.column}` : ""}`;
-      const pkg = nodeModulesPackage(first.file);
+      const task =
+        log.gradle.failures.find((f) => /compile\w*(?:Kotlin|JavaWithJavac)/.test(f.task ?? ""))
+          ?.task ??
+        log.doc.lines
+          .map(
+            (l) => /^> Task (:\S+:compile\w*(?:Kotlin|JavaWithJavac)) FAILED/.exec(l.trim())?.[1],
+          )
+          .find(Boolean);
+      // When the path is trimmed (`e: .../File.kt`), the failing task still names the library.
+      const taskProject = task?.split(":").filter(Boolean).slice(0, -1).join(":");
+      const pkg =
+        nodeModulesPackage(first.file) ??
+        (taskProject && taskProject !== "app"
+          ? (packageForGradleProject(ctx, `:${taskProject}`)?.name ??
+            (taskProject.includes("_") ? undefined : taskProject))
+          : undefined);
       const installed = pkg ? ctx.project?.installedVersion(pkg) : undefined;
       const rn = ctx.project?.versions["react-native"];
-      const task = log.gradle.failures.find((f) =>
-        /compile\w*(?:Kotlin|JavaWithJavac)/.test(f.task ?? ""),
-      )?.task;
       const evidence: Evidence[] = errors
         .slice(0, 5)
         .map((e) =>
@@ -1686,6 +1708,122 @@ export const compileSdkNotSpecified: Rule = {
   },
 };
 
+/** The language release before `version` ("2.3.0" → "2.2"), which can still read its binaries. */
+function previousMinor(version: string): string {
+  const [major = 0, minor = 0] = version.split(".").map(Number);
+  return minor > 0 ? `${major}.${minor - 1}` : `${major}.0`;
+}
+
+const CLASS_METADATA =
+  /Class '([^']+)' was compiled with an incompatible version of Kotlin\. The actual metadata version is ([\d.]+), but the compiler version ([\d.]+) can read versions up to ([\d.]+)/;
+const MODULE_METADATA =
+  /(\S+?\.(?:jar|kotlin_module)\S*) Module was compiled with an incompatible version of Kotlin\. The binary version of its metadata is ([\d.]+), expected version is ([\d.]+)/;
+
+export const kotlinMetadataIncompatible: Rule = {
+  meta: {
+    id: "android.kotlin-metadata-incompatible",
+    title: "A dependency was compiled with a newer Kotlin than this build uses",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "Kotlin compiler output \"Class 'X' was compiled with an incompatible version of Kotlin. The actual metadata version is A, but the compiler version B can read versions up to C\" (or the 'Module was compiled with an incompatible version of Kotlin' form).",
+    evidence:
+      "The compiler error, the jar the class was loaded from, the failing Kotlin compile task, and the Gradle version printed in the log (to look up the Kotlin version Gradle embeds).",
+    versionScope: "Kotlin 2.x compiler output; Gradle 9.x embedded Kotlin table",
+    references: GRADLE_EMBEDDED_KOTLIN.sources,
+    lastVerified: GRADLE_EMBEDDED_KOTLIN.lastVerified,
+    fixtures: [
+      "logs/real-kotlin21-metadata-incompatible.log",
+      "logs/expo-issue-kotlin-metadata-wrapped.log",
+    ],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const lines = log.doc.lines;
+      let hit:
+        | { index: number; cls?: string; actual: string; compiler: string; readsUpTo?: string }
+        | undefined;
+      for (let i = 0; i < lines.length && !hit; i++) {
+        // Some reports wrap the message over several lines.
+        const text = lines
+          .slice(i, i + 3)
+          .map((l) => l.trim())
+          .join(" ");
+        const c = KOTLIN_METADATA.test(lines[i]!) ? CLASS_METADATA.exec(text) : null;
+        if (c) hit = { index: i, cls: c[1]!, actual: c[2]!, compiler: c[3]!, readsUpTo: c[4]! };
+        else {
+          const m = MODULE_METADATA.exec(lines[i]!);
+          if (m) hit = { index: i, actual: m[2]!, compiler: m[3]! };
+        }
+      }
+      if (!hit) continue;
+      let loadedFrom: string | undefined;
+      for (let i = hit.index; i < Math.min(lines.length, hit.index + 6) && !loadedFrom; i++)
+        loadedFrom = /The class is loaded from (\S+?)(?:!\/\S*)?\s*$/.exec(lines[i]!)?.[1];
+      const failedTask =
+        [...lines.slice(0, hit.index + 40)]
+          .map((l) => /^> Task (:\S*compile\w*Kotlin\w*) FAILED/.exec(l.trim())?.[1])
+          .filter(Boolean)
+          .pop() ?? log.gradle.failures.find((f) => f.task && /Kotlin/.test(f.task))?.task;
+      const gradle = gradleVersionFromLog(log.doc);
+      const embedded = gradle ? embeddedKotlinFor(gradle) : undefined;
+      const fromGradle =
+        loadedFrom !== undefined &&
+        /[\\/](?:wrapper[\\/]dists[\\/]gradle-|gradle-[\d.]+[\\/]lib[\\/])/.test(loadedFrom);
+      const stdlib = hit.cls?.startsWith("kotlin.") ?? false;
+      const buildLogic =
+        failedTask !== undefined && /gradle-plugin|plugin:|buildSrc|build-logic/i.test(failedTask);
+      const readsUpTo = hit.readsUpTo;
+      const maxGradle = readsUpTo ? newestGradleEmbeddingAtMost(readsUpTo) : undefined;
+      const evidence: Evidence[] = [
+        logEvidence(log.doc, { start: hit.index, end: Math.min(lines.length - 1, hit.index + 2) }),
+      ];
+      if (loadedFrom)
+        evidence.push({
+          source: "log",
+          file: log.doc.path,
+          detail: `Class loaded from ${loadedFrom}`,
+        });
+      if (failedTask)
+        evidence.push({ source: "log", file: log.doc.path, detail: `Failing task: ${failedTask}` });
+      if (gradle)
+        evidence.push({
+          source: "log",
+          file: log.doc.path,
+          detail: `Gradle ${gradle}${embedded ? ` embeds Kotlin ${embedded}` : ""}`,
+        });
+      evidence.push(...versionEvidence(ctx, ["kotlin", "react-native", "expo"]));
+      const gradleCause = (fromGradle || (stdlib && buildLogic)) && maxGradle;
+      const nextSteps = gradleCause
+        ? [
+            `The newer Kotlin comes from Gradle itself${gradle && embedded ? ` (Gradle ${gradle} embeds Kotlin ${embedded})` : ""}, and ${failedTask ?? "the failing build logic"} is compiled with Kotlin ${hit.compiler}. Use the Gradle version your React Native or Expo template ships (set distributionUrl in android/gradle/wrapper/gradle-wrapper.properties); Gradle ${maxGradle.replace(/\.0$/, ".x")} is the newest whose embedded Kotlin a ${hit.compiler} compiler can read.`,
+            `Or upgrade the package that provides ${failedTask ? failedTask.split(":").filter(Boolean)[0] : "that build logic"} to a release compiled with a newer Kotlin. If a newer Android Gradle Plugin is what required the newer Gradle, keep both on the versions your React Native or Expo release documents.`,
+          ]
+        : [
+            `Raise the project's Kotlin version so the compiler can read metadata ${hit.actual}: Kotlin ${previousMinor(hit.actual)} or newer (a compiler reads at most one language release ahead). React Native CLI: kotlinVersion in the ext block of android/build.gradle. Expo: android.kotlinVersion in the expo-build-properties plugin.`,
+            `Or keep the current Kotlin and downgrade the dependency that brought ${hit.cls ? `'${hit.cls}'` : "the newer classes"}${loadedFrom ? ` (${loadedFrom.split(/[\\/]/).slice(-3).join("/")})` : ""} to a version built with Kotlin ${hit.compiler.split(".").slice(0, 2).join(".")} or ${readsUpTo ? readsUpTo.split(".").slice(0, 2).join(".") : "older"}.`,
+          ];
+      out.push(
+        finding(this.meta, {
+          title: `Kotlin ${hit.compiler} can't read ${hit.cls ? `'${hit.cls}'` : "a dependency"}, compiled with Kotlin ${hit.actual}`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `The Kotlin compiler in ${failedTask ?? "this build"} is version ${hit.compiler}${readsUpTo ? ` and reads metadata up to ${readsUpTo}` : ""}, but ${hit.cls ? `the class '${hit.cls}'` : "a dependency"} was compiled with Kotlin ${hit.actual}. A Kotlin compiler can read binaries from the next language release at most, so the versions have to be brought closer together.` +
+            (gradleCause
+              ? ` The class ${fromGradle ? "is loaded from the Gradle distribution" : "is part of the Kotlin standard library, used by build logic"}, so the newer Kotlin comes from the Gradle version, not from an app dependency.`
+              : ""),
+          evidence,
+          nextSteps,
+          verification: `\`cd android && ./gradlew ${failedTask ?? "assembleDebug"}\` compiles without the metadata error.`,
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const androidLogRules: Rule[] = [
   dependencyResolution,
   agpRequiresNewerJdk,
@@ -1704,4 +1842,5 @@ export const androidLogRules: Rule[] = [
   ninjaPathTooLong,
   proguardAndroidTxtUnsupported,
   compileSdkNotSpecified,
+  kotlinMetadataIncompatible,
 ];

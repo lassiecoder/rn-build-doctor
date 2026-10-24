@@ -1,0 +1,8 @@
+Using VM template "macos-tahoe-26.5-xcode-26.6" running macOS Tahoe 26.5.2
+- CocoaPods 1.16.2
+PATH=/Users/expo/workingdir/bin:...:/Users/expo/.gems/arm64/bin:...:/opt/homebrew/bin:...
+
+Start phase: INSTALL_PODS
+EXPO_USE_PRECOMPILED_MODULES=0 is set; not enabling precompiled modules use.
+Error: spawn pod ENOENT
+End phase: INSTALL_PODS

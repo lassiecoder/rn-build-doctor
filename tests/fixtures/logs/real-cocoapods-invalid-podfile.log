@@ -1,0 +1,16 @@
+$ cd ios && pod install
+
+[!] Invalid `Podfile` file: syntax errors found
+  1 | platform :ios, '15.1'
+  2 | target 'MyApp' do
+> 3 | ... 
+    |     ^ unexpected end-of-input, assuming it is closing the parent top level context
+> 4 | 
+    | ^ expected a block beginning with `do` to end with `end`
+.
+
+ #  from /Users/dev/MyApp/ios/Podfile:3
+ #  -------------------------------------------
+ #  target 'MyApp' do
+ >    pod 'AcmeBroken', :path => '../node_modules/acme-broken'
+ #  -------------------------------------------

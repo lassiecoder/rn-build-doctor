@@ -1,0 +1,4 @@
+Js error message: getPropertyAsObject: property 'console' is undefined, expected an Object
+Original js error message: Non-js exception: Compiling JS failed: Wrong bytecode version. Expected 99 but got 98, sourceURL: .../HermesSwiftPMRepro.app/main.jsbundle
+*** Terminating app due to uncaught exception 'RCTFatalException: NSException: Unhandled JS Exception: [runtime not ready]: Error: Non-js exception: Compiling JS failed: Wrong bytecode version. Expected 99 but got 98'
+libc++abi: terminating due to uncaught exception of type NSException

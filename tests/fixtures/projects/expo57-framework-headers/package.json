@@ -1,0 +1,10 @@
+{
+  "name": "expo57-framework-headers",
+  "version": "1.0.0",
+  "dependencies": {
+    "expo": "~57.0.8",
+    "expo-updates": "~57.0.6",
+    "react": "19.2.0",
+    "react-native": "0.86.2"
+  }
+}

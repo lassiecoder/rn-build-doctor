@@ -1,0 +1,10 @@
+{
+  "name": "rn088-ios-pods",
+  "version": "0.0.1",
+  "dependencies": {
+    "acme-maps": "1.29.0",
+    "acme-swift-kit": "2.4.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0"
+  }
+}

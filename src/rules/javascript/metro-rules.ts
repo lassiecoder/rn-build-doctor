@@ -164,6 +164,7 @@ export const unableToResolveModule: Rule = {
       "logs/real-rn086-metro-relative-import.log",
       "logs/metro-package-export-target-missing.log",
       "projects/rn088-package-exports",
+      "logs/expo-issue-metro-resolve-wrapped.log",
     ],
   },
   run(ctx) {

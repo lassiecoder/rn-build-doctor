@@ -60,7 +60,13 @@ export function parseMetro(doc: LogDocument): MetroParseResult {
     if (BUNDLE_WRITTEN.test(line.trim())) successIndex ??= i;
     const end = Math.min(lines.length - 1, i + CONTEXT);
 
-    const resolve = RESOLVE_EXPO.exec(line) ?? RESOLVE_METRO.exec(line) ?? RESOLVE_MAIN.exec(line);
+    // `Unable to resolve module x` with `from <file>` wrapped onto the next line (pasted excerpts).
+    const wrapped =
+      /Unable to resolve module\s+\S+\s*$/.test(line) && /^\s*from\s+\S/.test(lines[i + 1] ?? "")
+        ? `${line.trimEnd()} ${lines[i + 1]!.trim()}`
+        : line;
+    const resolve =
+      RESOLVE_EXPO.exec(wrapped) ?? RESOLVE_METRO.exec(wrapped) ?? RESOLVE_MAIN.exec(wrapped);
     if (resolve) {
       const module = resolve[1]!;
       const from = resolve[2]?.trim();

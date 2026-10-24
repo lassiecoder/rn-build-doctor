@@ -6,6 +6,7 @@ import { runtimeRules } from "../rules/common/runtime-rules.js";
 import { expoLogRules } from "../rules/expo/log-rules.js";
 import { expoProjectRules } from "../rules/expo/project-rules.js";
 import { iosLogRules } from "../rules/ios/log-rules.js";
+import { installRules } from "../rules/javascript/install-rules.js";
 import { metroRules } from "../rules/javascript/metro-rules.js";
 import type { PostRule, Rule, RuleMeta } from "./rule.js";
 
@@ -14,6 +15,7 @@ export const logRules: Rule[] = [
   ...androidLogRules,
   ...expoLogRules,
   ...metroRules,
+  ...installRules,
   ...iosLogRules,
   ...runtimeRules,
   ...androidRuntimeRules,

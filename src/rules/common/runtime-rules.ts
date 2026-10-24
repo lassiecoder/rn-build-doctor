@@ -1,10 +1,15 @@
 import { finding, type Rule } from "../../engine/rule.js";
+import { REFLECTIVE_CONSTRUCTOR } from "../android/runtime-rules.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import type { JsException } from "../../parsers/runtime.js";
 import { logEvidence, logEvidenceLines, stripLogcatPrefix } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
 const VERIFIED = "2026-10-14";
+const HERMES_BYTECODE = /Wrong bytecode version\. Expected (\d+) but got (\d+)/;
+/** UIKit stopping an iOS 27 SDK app without a scene life cycle (ios.uiscene-lifecycle-required). */
+const NO_SCENE_LIFECYCLE =
+  /UIScene life cycle is required for apps built with this SDK|_UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption/;
 const MAX_PER_LOG = 3;
 
 /**
@@ -142,6 +147,8 @@ export const javascriptException: Rule = {
         0,
         MAX_PER_LOG,
       )) {
+        // Diagnosed by runtime.hermes-bytecode-mismatch.
+        if (HERMES_BYTECODE.test(ex.message)) continue;
         const nativeCause = NATIVE_MODULE_MISSING.test(ex.message)
           ? earlierNativeError(log, ex.start, ex.pid)
           : undefined;
@@ -334,6 +341,8 @@ export const androidFatalException: Rule = {
     for (const log of ctx.logs) {
       for (const fatal of log.runtime.androidFatals.slice(0, MAX_PER_LOG)) {
         const all = [fatal.message, ...fatal.causes].join(" ");
+        // Diagnosed by android.r8-removed-constructor.
+        if ([fatal.message, ...fatal.causes].some((c) => REFLECTIVE_CONSTRUCTOR.test(c))) continue;
         const evidence: Evidence[] = [
           logEvidence(
             log.doc,
@@ -464,7 +473,9 @@ export const iosCrash: Rule = {
           }),
         );
       }
-      for (const crash of log.runtime.iosCrashes.slice(0, MAX_PER_LOG)) {
+      // Diagnosed by ios.uiscene-lifecycle-required.
+      const noScene = log.doc.lines.some((l) => NO_SCENE_LIFECYCLE.test(l));
+      for (const crash of log.runtime.iosCrashes.slice(0, noScene ? 0 : MAX_PER_LOG)) {
         const rctFatal = crash.frames.some((f) =>
           /RCTFatal|RCTExceptionsManager|facebook::react::.*JSError/.test(f),
         );
@@ -600,10 +611,69 @@ export const jsBundleNotLoaded: Rule = {
   },
 };
 
+export const hermesBytecodeMismatch: Rule = {
+  meta: {
+    id: "runtime.hermes-bytecode-mismatch",
+    title: "The JavaScript bundle was compiled by a different Hermes version",
+    platforms: ["javascript"],
+    scope: "log",
+    trigger:
+      "Hermes 'Compiling JS failed: Wrong bytecode version. Expected N but got M' at app start.",
+    evidence:
+      "The error line with both bytecode versions, and with the project, the React Native version and whether expo-updates is installed.",
+    versionScope: "Hermes (React Native 0.70+), including over-the-air updates",
+    references: [
+      "https://github.com/react/react-native/issues/57917",
+      "https://reactnative.dev/docs/hermes",
+      "https://docs.expo.dev/eas-update/runtime-versions/",
+    ],
+    lastVerified: "2026-10-25",
+    fixtures: ["logs/rn-issue-hermes-bytecode-mismatch.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const index = log.doc.lines.findIndex((l) => HERMES_BYTECODE.test(l));
+      if (index < 0) continue;
+      const [, expected, got] = HERMES_BYTECODE.exec(log.doc.lines[index]!)!;
+      const ota = ctx.project?.installedVersion("expo-updates");
+      const rn = ctx.project?.versions["react-native"];
+      const evidence: Evidence[] = [logEvidence(log.doc, { start: index, end: index })];
+      if (rn) evidence.push({ source: "project", detail: `react-native: ${rn}` });
+      if (ota) evidence.push({ source: "project", detail: `expo-updates: installed ${ota}` });
+      out.push(
+        finding(this.meta, {
+          title: `Hermes can't run the bundle: compiled as bytecode ${got}, the app expects ${expected}`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `The app's Hermes runtime reads bytecode version ${expected}, but the JavaScript bundle was compiled to version ${got}, so it fails before any JavaScript runs. The bundle and the app come from different Hermes versions: for example a bundle compiled by another React Native version's hermesc, a stale prebuilt bundle, or an over-the-air update built for a different app binary.` +
+            (Number(got) < Number(expected)
+              ? " The bundle is older than the runtime."
+              : " The bundle is newer than the runtime."),
+          evidence,
+          nextSteps: [
+            "Rebuild the app and its bundle together from a clean state (delete ios/build or android/app/build), so both use the hermesc that ships with the installed React Native.",
+            ...(ota
+              ? [
+                  "If the crash started after an update was downloaded, the update was built for a different native build: check the runtimeVersion policy so updates only reach binaries built from the same React Native version, and roll back the update.",
+                ]
+              : []),
+            "If you build with a custom toolchain (Swift Package Manager, a CI cache, a vendored hermesc), check which hermesc compiled the bundle (the Hermes release and HBC bytecode version it prints) against the Hermes runtime the app links (react/react-native#57917).",
+          ],
+          verification: "The app starts and runs the bundle without the bytecode error.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const runtimeRules: Rule[] = [
   jsBundleNotLoaded,
   javascriptException,
   missingConfigurationSuspected,
   androidFatalException,
   iosCrash,
+  hermesBytecodeMismatch,
 ];

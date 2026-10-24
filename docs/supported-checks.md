@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-48 rules: 13 project checks (`scan`) and 35 log rules (`analyze`).
+59 rules: 13 project checks (`scan`) and 46 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -356,15 +356,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Kotlin or Java compilation failed**
 
-| Field               | Value                                                                                                                                                                                                                              |
-| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | android                                                                                                                                                                                                                            |
-| Applicable versions | Kotlin 1.x and 2.x compiler output; javac (all versions)                                                                                                                                                                           |
-| Trigger             | A Gradle log with Kotlin compiler errors ('e: <file>:<line>:<col> <message>', Kotlin 1 and 2 formats) or javac errors ('<file>.java:<line>: error: <message>').                                                                    |
-| Evidence            | The first compiler errors with file and position, the owning npm package when the file is in node_modules, and the installed versions.                                                                                             |
-| Sources             | <https://kotlinlang.org/docs/gradle-compiler-options.html><br><https://reactnative.dev/docs/upgrading>                                                                                                                             |
-| Regression fixtures | `tests/fixtures/logs/real-rn087-gradle-kotlin-error.log`<br>`tests/fixtures/logs/real-rn087-gradle-java-error.log`<br>`tests/fixtures/logs/android-kotlin-library-error.log`<br>`tests/fixtures/logs/android-kotlin-app-error.log` |
-| Last verified       | 2026-10-15                                                                                                                                                                                                                         |
+| Field               | Value                                                                                                                                                                                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | android                                                                                                                                                                                                                                                                                    |
+| Applicable versions | Kotlin 1.x and 2.x compiler output; javac (all versions)                                                                                                                                                                                                                                   |
+| Trigger             | A Gradle log with Kotlin compiler errors ('e: <file>:<line>:<col> <message>', Kotlin 1 and 2 formats) or javac errors ('<file>.java:<line>: error: <message>').                                                                                                                            |
+| Evidence            | The first compiler errors with file and position, the owning npm package when the file is in node_modules, and the installed versions.                                                                                                                                                     |
+| Sources             | <https://kotlinlang.org/docs/gradle-compiler-options.html><br><https://reactnative.dev/docs/upgrading>                                                                                                                                                                                     |
+| Regression fixtures | `tests/fixtures/logs/real-rn087-gradle-kotlin-error.log`<br>`tests/fixtures/logs/real-rn087-gradle-java-error.log`<br>`tests/fixtures/logs/android-kotlin-library-error.log`<br>`tests/fixtures/logs/android-kotlin-app-error.log`<br>`tests/fixtures/logs/issue-kotlin-error-wrapped.log` |
+| Last verified       | 2026-10-15                                                                                                                                                                                                                                                                                 |
 
 ### `android.jvm-option-unrecognized`
 
@@ -436,6 +436,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Regression fixtures | `tests/fixtures/logs/real-gradle94-null-property-name.log`<br>`tests/fixtures/logs/real-agp92-compile-sdk-not-specified.log`                                                                                                                                                                                    |
 | Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                      |
 
+### `android.kotlin-metadata-incompatible`
+
+**A dependency was compiled with a newer Kotlin than this build uses**
+
+| Field               | Value                                                                                                                                                                                                                                                      |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                                                                                    |
+| Applicable versions | Kotlin 2.x compiler output; Gradle 9.x embedded Kotlin table                                                                                                                                                                                               |
+| Trigger             | Kotlin compiler output "Class 'X' was compiled with an incompatible version of Kotlin. The actual metadata version is A, but the compiler version B can read versions up to C" (or the 'Module was compiled with an incompatible version of Kotlin' form). |
+| Evidence            | The compiler error, the jar the class was loaded from, the failing Kotlin compile task, and the Gradle version printed in the log (to look up the Kotlin version Gradle embeds).                                                                           |
+| Sources             | <https://docs.gradle.org/current/userguide/compatibility.html><br><https://kotlinlang.org/docs/kotlin-evolution-principles.html><br><https://github.com/expo/expo/issues/49550>                                                                            |
+| Regression fixtures | `tests/fixtures/logs/real-kotlin21-metadata-incompatible.log`<br>`tests/fixtures/logs/expo-issue-kotlin-metadata-wrapped.log`                                                                                                                              |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                 |
+
 ### `expo.config-plugin-not-resolved`
 
 **Expo couldn't resolve a config plugin**
@@ -454,15 +468,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Metro could not resolve an imported module**
 
-| Field               | Value                                                                                                                                                                                                                                                                                                                                                    |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | javascript                                                                                                                                                                                                                                                                                                                                               |
-| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                                                                                                                                                                                                           |
-| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                                                                                                                                                                                                         |
-| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                                                                                                                                                                                                  |
-| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                                                                                                                                                                                                           |
-| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency`<br>`tests/fixtures/logs/real-rn086-metro-relative-import.log`<br>`tests/fixtures/logs/metro-package-export-target-missing.log`<br>`tests/fixtures/projects/rn088-package-exports` |
-| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                                                               |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | javascript                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Applicable versions | Metro (all versions), Expo CLI                                                                                                                                                                                                                                                                                                                                                                                         |
+| Trigger             | Metro or Expo CLI output 'Unable to resolve module X from Y' / 'Unable to resolve "X" from "Y"'.                                                                                                                                                                                                                                                                                                                       |
+| Evidence            | The resolver error with the module and importing file; package.json and node_modules state when a project is available.                                                                                                                                                                                                                                                                                                |
+| Sources             | <https://metrobundler.dev/docs/resolution><br><https://docs.expo.dev/troubleshooting/clear-cache-macos-linux/>                                                                                                                                                                                                                                                                                                         |
+| Regression fixtures | `tests/fixtures/logs/metro-unable-to-resolve.log`<br>`tests/fixtures/logs/android-bundle-unable-to-resolve.log`<br>`tests/fixtures/projects/rn-cli-missing-dependency`<br>`tests/fixtures/logs/real-rn086-metro-relative-import.log`<br>`tests/fixtures/logs/metro-package-export-target-missing.log`<br>`tests/fixtures/projects/rn088-package-exports`<br>`tests/fixtures/logs/expo-issue-metro-resolve-wrapped.log` |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                                                                                                                             |
 
 ### `javascript.bundle-syntax-error`
 
@@ -477,6 +491,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://metrobundler.dev/docs/troubleshooting><br><https://babeljs.io/docs/config-files> |
 | Regression fixtures | `tests/fixtures/logs/metro-syntax-error.log`                                              |
 | Last verified       | 2026-10-14                                                                                |
+
+### `javascript.lockfile-out-of-sync`
+
+**The lockfile doesn't match package.json**
+
+| Field               | Value                                                                                                                                                                                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | javascript                                                                                                                                                                                                                                                                                                               |
+| Applicable versions | npm 7+, Yarn 1, pnpm 8+, Bun 1.2+ (messages checked with npm 11.6, Yarn 1.22, pnpm 10.24, Bun 1.4)                                                                                                                                                                                                                       |
+| Trigger             | A frozen-lockfile install failure: npm ci's 'can only install packages when your package.json and package-lock.json … are in sync', Yarn 1's 'Your lockfile needs to be updated, but yarn was run with `--frozen-lockfile`', pnpm's ERR_PNPM_OUTDATED_LOCKFILE, or Bun's 'lockfile had changes, but lockfile is frozen'. |
+| Evidence            | The failure line and the packages the package manager lists as missing or changed; with the project, the lockfiles present and, for package-lock.json, the dependencies declared in package.json but missing from the lockfile.                                                                                          |
+| Sources             | <https://docs.npmjs.com/cli/commands/npm-ci><br><https://classic.yarnpkg.com/en/docs/cli/install#toc-yarn-install-frozen-lockfile><br><https://pnpm.io/cli/install#--frozen-lockfile><br><https://bun.sh/docs/cli/install>                                                                                               |
+| Regression fixtures | `tests/fixtures/logs/real-npm11-ci-out-of-sync.log`<br>`tests/fixtures/logs/real-yarn1-frozen-lockfile.log`<br>`tests/fixtures/logs/real-pnpm10-outdated-lockfile.log`<br>`tests/fixtures/logs/real-bun14-frozen-lockfile.log`                                                                                           |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                               |
 
 ### `ios.deployment-target-unsupported`
 
@@ -520,6 +548,104 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Regression fixtures | `tests/fixtures/logs/ios-cocoapods-spec-not-found.log`                                                                       |
 | Last verified       | 2026-10-14                                                                                                                   |
 
+### `ios.cocoapods-invalid-spec`
+
+**CocoaPods couldn't load a Podfile or podspec**
+
+| Field               | Value                                                                                                                                                                                                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | ios                                                                                                                                                                                                                                                                                                                      |
+| Applicable versions | CocoaPods 1.x (messages checked with CocoaPods 1.16.2)                                                                                                                                                                                                                                                                   |
+| Trigger             | pod install output (directly or through Expo prebuild/EAS) with 'No podspec found for `X` in `path`', 'Invalid `X.podspec` file: …', 'Invalid `Podfile` file: …', or 'The `X` pod failed to validate due to N errors'.                                                                                                   |
+| Evidence            | The CocoaPods error, the file and line from its ' # from <file>:<line>' trace, and with the project, whether the pod path exists and which podspecs it contains.                                                                                                                                                         |
+| Sources             | <https://guides.cocoapods.org/using/pod-install-vs-update.html><br><https://guides.cocoapods.org/using/troubleshooting.html><br><https://guides.cocoapods.org/syntax/podspec.html><br><https://guides.cocoapods.org/syntax/podfile.html>                                                                                 |
+| Regression fixtures | `tests/fixtures/logs/real-cocoapods-no-podspec-found.log`<br>`tests/fixtures/logs/real-cocoapods-invalid-podspec.log`<br>`tests/fixtures/logs/real-cocoapods-invalid-podfile.log`<br>`tests/fixtures/logs/real-cocoapods-pod-failed-validate.log`<br>`tests/fixtures/logs/expo-prebuild-pod-install-invalid-podspec.log` |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                               |
+
+### `ios.cocoapods-not-found`
+
+**The pod command isn't available**
+
+| Field               | Value                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                             |
+| Applicable versions | CocoaPods 1.x; Expo CLI and EAS Build                                                                           |
+| Trigger             | 'spawn pod ENOENT' (Node, Expo CLI, EAS Build) or a shell 'command not found: pod' / 'pod: command not found'.  |
+| Evidence            | The error line, and whether the log shows EAS Build phases.                                                     |
+| Sources             | <https://guides.cocoapods.org/using/getting-started.html><br><https://github.com/expo/eas-cli/issues/4111>      |
+| Regression fixtures | `tests/fixtures/logs/real-node-spawn-pod-enoent.log`<br>`tests/fixtures/logs/eas-install-pods-spawn-enoent.log` |
+| Last verified       | 2026-10-25                                                                                                      |
+
+### `ios.xcode27-simulator-app-not-found`
+
+**The CLI can't find the Simulator app (Xcode 27 DeviceHub)**
+
+| Field               | Value                                                                                                                                     |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                       |
+| Applicable versions | Xcode 27+; Expo CLI before SDK 56, EAS CLI before 24.4.2                                                                                  |
+| Trigger             | "Can't determine id of Simulator app; the Simulator is most likely not installed on this machine" from Expo CLI or EAS CLI.               |
+| Evidence            | The error line, and with the project, the installed @expo/cli version.                                                                    |
+| Sources             | <https://github.com/expo/expo/pull/46757><br><https://github.com/expo/eas-cli/issues/4403><br><https://github.com/expo/expo/issues/52063> |
+| Regression fixtures | `tests/fixtures/logs/eas-issue-xcode27-simulator-app.log`<br>`tests/fixtures/logs/expo-issue-xcode27-simulator-app.log`                   |
+| Last verified       | 2026-10-25                                                                                                                                |
+
+### `ios.xcode27-exit-code-0-failure`
+
+**Xcode 27 reports a successful command as failed**
+
+| Field               | Value                                                                                                                   |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                     |
+| Applicable versions | Xcode 27; expo-modules-jsi before 58.0.4                                                                                |
+| Trigger             | Xcode output 'error: the following command failed with exit code 0 but produced no further output'.                     |
+| Evidence            | The error line, the script phase or package named nearby, and with the project, the installed expo-modules-jsi version. |
+| Sources             | <https://github.com/expo/expo/issues/50482><br><https://github.com/expo/expo/pull/50587>                                |
+| Regression fixtures | `tests/fixtures/logs/expo-issue-xcode27-jsi-exit-code-0.log`                                                            |
+| Last verified       | 2026-10-25                                                                                                              |
+
+### `ios.codegen-dependency-cycle`
+
+**Xcode found a dependency cycle between targets**
+
+| Field               | Value                                                                                                                                                              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | ios                                                                                                                                                                |
+| Applicable versions | React Native New Architecture (codegen); Xcode 14+                                                                                                                 |
+| Trigger             | Xcode 'Cycle in dependencies between targets 'A' and 'B'; building could produce unreliable results'.                                                              |
+| Evidence            | The cycle error and path, and with the project, the app's codegenConfig in package.json and whether its jsSrcsDir contains any spec files.                         |
+| Sources             | <https://github.com/react/react-native/issues/57760><br><https://github.com/react/react-native/pull/57759><br><https://github.com/react/react-native/issues/58621> |
+| Regression fixtures | `tests/fixtures/logs/rn-issue-codegen-dependency-cycle.log`<br>`tests/fixtures/projects/rn088-empty-codegen-config`                                                |
+| Last verified       | 2026-10-25                                                                                                                                                         |
+
+### `ios.dyld-launch-failure`
+
+**The app was stopped at launch by the dynamic linker**
+
+| Field               | Value                                                                                                                                                                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                                                                                               |
+| Applicable versions | iOS (all versions)                                                                                                                                                                                                                |
+| Trigger             | dyld output in a crash report or device log: 'Library not loaded: <path>' or 'Symbol not found: <symbol>' (Termination Reason Namespace DYLD).                                                                                    |
+| Evidence            | The dyld lines (library or symbol, Referenced from, Expected in), and for Expo, the installed expo version.                                                                                                                       |
+| Sources             | <https://developer.apple.com/documentation/xcode/addressing-missing-framework-crashes><br><https://github.com/expo/expo/issues/51454><br><https://github.com/expo/expo/pull/51463><br><https://github.com/expo/expo/issues/50236> |
+| Regression fixtures | `tests/fixtures/logs/expo-issue-dyld-symbol-missing.log`<br>`tests/fixtures/logs/ios-dyld-library-not-loaded.log`                                                                                                                 |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                        |
+
+### `ios.uiscene-lifecycle-required`
+
+**iOS 27 SDK apps must adopt the UIScene life cycle**
+
+| Field               | Value                                                                                                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                                  |
+| Applicable versions | Xcode 27 / iOS 27 SDK; React Native before 0.88, Expo before SDK 58                                                                                                  |
+| Trigger             | 'UIScene life cycle is required for apps built with this SDK', or a crash in _UIApplicationEvaluateRuntimeIssueForNoSceneLifecycleAdoption.                          |
+| Evidence            | The UIKit message or crash frame, and with the project, the React Native or Expo SDK version and whether Info.plist declares a scene manifest.                       |
+| Sources             | <https://reactnative.dev/blog/2026/10/19/react-native-0.88><br><https://expo.dev/changelog/sdk-58><br><https://github.com/expo/fyi/blob/main/ios-scene-lifecycle.md> |
+| Regression fixtures | `tests/fixtures/logs/expo-issue-ios27-uiscene-required.log`<br>`tests/fixtures/logs/issue-ios27-uiscene-crash-report.log`                                            |
+| Last verified       | 2026-10-25                                                                                                                                                           |
+
 ### `ios.code-signing`
 
 **iOS code signing failed**
@@ -538,15 +664,15 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 
 **Native iOS compilation error**
 
-| Field               | Value                                                                                                                                                                                                                |
-| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Platforms           | ios                                                                                                                                                                                                                  |
-| Applicable versions | Xcode 14+; header namespacing in React Native 0.87+ (prebuilt header XCFrameworks)                                                                                                                                   |
-| Trigger             | Clang/Swift diagnostics '<file>:<line>:<col>: error: <message>' in an Xcode build log.                                                                                                                               |
-| Evidence            | The first compiler errors with file and position. For a React Native header ('RCT*.h') not found on React Native 0.87+, the React Native version (from the project, or the ReactNativeHeaders framework in the log). |
-| Sources             | <https://reactnative.dev/docs/integration-with-existing-apps><br><https://guides.cocoapods.org/using/using-cocoapods.html><br><https://reactnative.dev/blog/2026/08/11/react-native-0.87#headers-breaking-changes>   |
-| Regression fixtures | `tests/fixtures/logs/ios-header-not-found.log`<br>`tests/fixtures/logs/real-rn087-ios-unnamespaced-header.log`                                                                                                       |
-| Last verified       | 2026-10-20                                                                                                                                                                                                           |
+| Field               | Value                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | ios                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Applicable versions | Xcode 14+; header namespacing in React Native 0.87+; expo-modules-autolinking 56.x/57.x framework headers; Expo SDK 56-58 minimum Xcode                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Trigger             | Clang/Swift diagnostics '<file>:<line>:<col>: error: <message>' in an Xcode build log (or in a pasted excerpt naming an Apple source file), or a bare 'error: …' with Xcode's '(in target 'X' from project 'Pods')' suffix.                                                                                                                                                                                                                                                                                                                     |
+| Evidence            | The first compiler errors with file and position, and the dependency (npm package or pod) that owns the file with its installed version. For a React Native header ('RCT*.h') not found on React Native 0.87+, the React Native version. For a 'React/…' header in Expo SDK 56/57, the installed expo-modules-autolinking version and ios.useFrameworks. The Xcode version printed in the log, compared with the Expo SDK's minimum.                                                                                                            |
+| Sources             | <https://reactnative.dev/docs/integration-with-existing-apps><br><https://guides.cocoapods.org/using/using-cocoapods.html><br><https://reactnative.dev/blog/2026/08/11/react-native-0.87#headers-breaking-changes><br><https://github.com/expo/expo/issues/48781><br><https://github.com/expo/expo/issues/48664><br><https://github.com/expo/expo/pull/48869><br><https://github.com/expo/expo/pull/48665><br><https://docs.expo.dev/versions/latest/><br><https://github.com/expo/expo/issues/48802>                                           |
+| Regression fixtures | `tests/fixtures/logs/ios-header-not-found.log`<br>`tests/fixtures/logs/real-rn087-ios-unnamespaced-header.log`<br>`tests/fixtures/logs/real-xcode26-pod-swift-compile-error.log`<br>`tests/fixtures/logs/expo-issue-react-header-framework-wrapped.log`<br>`tests/fixtures/logs/expo-issue-react-header-fatal-wrapped.log`<br>`tests/fixtures/logs/expo-issue-jsi-xcode263.log`<br>`tests/fixtures/logs/expo-issue-swift-error-no-column.log`<br>`tests/fixtures/projects/expo57-framework-headers`<br>`tests/fixtures/projects/rn088-ios-pods` |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 
 ### `ios.linker-error`
 
@@ -646,6 +772,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Regression fixtures | `tests/fixtures/logs/ios-crash-rctfatal.crash`<br>`tests/fixtures/logs/ios-privacy-usage.log`                                                                                                    |
 | Last verified       | 2026-10-14                                                                                                                                                                                       |
 
+### `runtime.hermes-bytecode-mismatch`
+
+**The JavaScript bundle was compiled by a different Hermes version**
+
+| Field               | Value                                                                                                                                                 |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | javascript                                                                                                                                            |
+| Applicable versions | Hermes (React Native 0.70+), including over-the-air updates                                                                                           |
+| Trigger             | Hermes 'Compiling JS failed: Wrong bytecode version. Expected N but got M' at app start.                                                              |
+| Evidence            | The error line with both bytecode versions, and with the project, the React Native version and whether expo-updates is installed.                     |
+| Sources             | <https://github.com/react/react-native/issues/57917><br><https://reactnative.dev/docs/hermes><br><https://docs.expo.dev/eas-update/runtime-versions/> |
+| Regression fixtures | `tests/fixtures/logs/rn-issue-hermes-bytecode-mismatch.log`                                                                                           |
+| Last verified       | 2026-10-25                                                                                                                                            |
+
 ### `android.cleartext-http-blocked`
 
 **Release build blocks plain HTTP requests**
@@ -659,6 +799,20 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://developer.android.com/guide/topics/manifest/application-element><br><https://developer.android.com/privacy-and-security/security-config><br><https://github.com/square/okhttp/blob/parent-4.12.0/okhttp/src/main/kotlin/okhttp3/internal/connection/RealConnection.kt><br><https://docs.expo.dev/versions/latest/sdk/build-properties/> |
 | Regression fixtures | `tests/fixtures/logs/real-rn087-logcat-cleartext-blocked.log`<br>`tests/fixtures/logs/android-okhttp-cleartext.log`                                                                                                                                                                                                                              |
 | Last verified       | 2026-10-20                                                                                                                                                                                                                                                                                                                                       |
+
+### `android.r8-removed-constructor`
+
+**R8 removed a constructor that a library calls by reflection**
+
+| Field               | Value                                                                                                                                                                                                                                            |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Platforms           | android                                                                                                                                                                                                                                          |
+| Applicable versions | Android release builds with R8 (minifyEnabled / enableMinifyInReleaseBuilds); AGP 8+                                                                                                                                                             |
+| Trigger             | A logcat FATAL EXCEPTION whose message or 'Caused by' chain has 'NoSuchMethodException: X.<init>' or Room's 'Failed to create an instance of class X'.                                                                                           |
+| Evidence            | The fatal exception and cause lines, the class whose constructor is missing, and stack frames that show R8 processed the code (r8-map-id frames or obfuscated names).                                                                            |
+| Sources             | <https://developer.android.com/topic/performance/app-optimization/add-keep-rules><br><https://github.com/expo/expo/issues/52173><br><https://github.com/expo/expo/issues/52114><br><https://docs.expo.dev/versions/latest/sdk/build-properties/> |
+| Regression fixtures | `tests/fixtures/logs/real-logcat-r8-removed-constructor.log`<br>`tests/fixtures/logs/real-logcat-expo58-workmanager-r8.log`                                                                                                                      |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                       |
 
 ### `common.no-supported-diagnosis`
 

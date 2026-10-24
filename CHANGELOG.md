@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased
+
+Gaps from an audit of the build and setup failures in 1,982 issues opened between Jul 25 and Oct 25, 2026 in expo/expo, react/react-native, eas-cli and 27 popular libraries. Each issue body was run through 0.1.8: of the ~300 build-related issues, 11 got a specific diagnosis before this release and 32 after. Every new rule was reproduced locally (npm/Yarn/pnpm/Bun, CocoaPods 1.16.2, Kotlin 2.1.20, Xcode 26.6, AGP 9.2.1 with an API 34 emulator, dyld) or, where that wasn't possible (Xcode 27), checked against the published package contents and the issue's maintainer replies.
+
+- New rule `javascript.lockfile-out-of-sync`: frozen-lockfile failures of npm (`npm ci … are in sync`), Yarn 1, pnpm (`ERR_PNPM_OUTDATED_LOCKFILE`) and Bun, with the packages listed as missing and, with the project, the lockfiles present.
+- New rule `ios.cocoapods-invalid-spec`: `No podspec found for X in path` (and whether the folder has a podspec with another name), `Invalid X.podspec file` with the package and line from CocoaPods' trace (including Expo prebuild's wrapper), `Invalid Podfile file`, and podspec validation errors.
+- New rule `ios.cocoapods-not-found`: `spawn pod ENOENT` and `command not found: pod`, with EAS-specific steps when the log shows EAS Build phases.
+- New rule `android.kotlin-metadata-incompatible`: `Class 'X' was compiled with an incompatible version of Kotlin`. When the class comes from Gradle itself (Gradle 9.4+ embeds Kotlin 2.3), the finding names the newest Gradle that the build's Kotlin compiler can read, from the Gradle compatibility table.
+- New rule `android.r8-removed-constructor`: release crashes with `NoSuchMethodException: X.<init>` or Room's `Failed to create an instance of class X`, with keep rules (the WorkManager/Room rules from expo/expo#52173) and Expo's `extraProguardRules`. The generic fatal-exception finding no longer repeats it.
+- New rule `runtime.hermes-bytecode-mismatch`: `Compiling JS failed: Wrong bytecode version. Expected N but got M`.
+- New rules for Xcode 27: `ios.xcode27-simulator-app-not-found` (DeviceHub; @expo/cli 56+ and eas-cli 24.4.2+ support it), `ios.xcode27-exit-code-0-failure` (expo-modules-jsi 58.0.4+ fixes it; not released for SDK 57), `ios.uiscene-lifecycle-required` (React Native 0.88 / Expo SDK 58, or SDK 57's opt-in).
+- New rule `ios.codegen-dependency-cycle`: `Cycle in dependencies between targets`, and, with the project, an app `codegenConfig` whose jsSrcsDir has no spec files.
+- New rule `ios.dyld-launch-failure`: `Library not loaded` (framework not embedded) and `Symbol not found` at launch, including expo 58.0.8's `_swift_allocateMetadataPack` (fixed in 58.0.9).
+- `ios.compile-error`: names the dependency (npm package or pod target) a compile error belongs to, with its installed version. Says when the Xcode in the log is older than the Expo SDK's documented minimum (26.4 for SDK 56-58). For `'React/…' file not found` in Expo SDK 56/57 projects with expo-modules-autolinking before the fix (57.0.10; partly 56.0.22), names that bug and the fixed version. Reads excerpts without xcodebuild markers when they name Apple source files, errors split over two lines, and Swift errors without a column.
+- `android.compile-error`: names the library from the failing task (`:react-native-x:compileReleaseKotlin`) when the file path is trimmed, and reads `e: File.kt:1:2` with the message on the next line.
+- `javascript.unable-to-resolve-module`: reads `Unable to resolve module X` with `from Y` on the next line.
+
 ## 0.1.8 (2026-10-25)
 
 Gaps found in GitHub issues from Oct 20-25 (React Native 0.88 / Expo SDK 58). The two Android failures were reproduced on a Gradle 9.4.1 build (AGP 9.2.1, and AGP 8.12.0 to check the version scope) before the rules were written.

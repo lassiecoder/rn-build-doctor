@@ -1,0 +1,4 @@
+Termination Reason: Namespace DYLD, Code 4, Symbol missing
+Symbol not found: _swift_allocateMetadataPack
+Referenced from: <FFCDC0C1-6328-3042-BE16-E5AC42E8063A> .../repro.app/Frameworks/ExpoModulesCore.framework/ExpoModulesCore
+Expected in:     <597F0D71-D86A-3114-B434-288CB95F3177> .../repro.app/Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI

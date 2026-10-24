@@ -199,3 +199,71 @@ export const GRADLE_NULL_PROPERTY_NAME = {
   lastVerified: "2026-10-25",
   observedWithGradle: "9.4.1",
 };
+
+/**
+ * Kotlin version embedded in each Gradle release (Gradle compatibility matrix, "Embedded Kotlin
+ * version", checked on 2026-10-25 against the Gradle 9.8.2 docs). Build logic compiled by an older
+ * Kotlin compiler can't read classes from a newer embedded Kotlin: a compiler reads binaries of the
+ * next language release at most ("1.9 can understand most binaries from 2.0, but not 2.1"). The
+ * error was reproduced on 2026-10-25 with Kotlin 2.1.20 reading a class with 2.3.0 metadata.
+ */
+export const GRADLE_EMBEDDED_KOTLIN = {
+  sources: [
+    "https://docs.gradle.org/current/userguide/compatibility.html",
+    "https://kotlinlang.org/docs/kotlin-evolution-principles.html",
+    "https://github.com/expo/expo/issues/49550",
+  ],
+  lastVerified: "2026-10-25",
+  /** [minimum Gradle version, embedded Kotlin version], oldest first. */
+  table: [
+    ["9.0.0", "2.2.0"],
+    ["9.2.0", "2.2.20"],
+    ["9.3.0", "2.2.21"],
+    ["9.4.0", "2.3.0"],
+    ["9.5.0", "2.3.20"],
+    ["9.6.0", "2.3.21"],
+    ["9.7.0", "2.4.0"],
+    ["9.8.0", "2.4.10"],
+  ] as [string, string][],
+};
+
+/** The Kotlin version embedded in a Gradle version, when the table covers it. */
+export function embeddedKotlinFor(gradle: string): string | undefined {
+  let found: string | undefined;
+  for (const [min, kotlin] of GRADLE_EMBEDDED_KOTLIN.table)
+    if (compareVersions(gradle, min) >= 0) found = kotlin;
+  return found;
+}
+
+/** The newest Gradle version in the table whose embedded Kotlin is at most `maxKotlin` (x.y). */
+export function newestGradleEmbeddingAtMost(maxKotlin: string): string | undefined {
+  const [major, minor] = maxKotlin.split(".").map(Number);
+  let found: string | undefined;
+  for (const [min, kotlin] of GRADLE_EMBEDDED_KOTLIN.table) {
+    const [kMajor, kMinor] = kotlin.split(".").map(Number);
+    if (kMajor! < major! || (kMajor === major && kMinor! <= minor!)) found = min;
+  }
+  return found;
+}
+
+/**
+ * R8 keeps a class that's referenced but removes a constructor nothing calls directly, so a
+ * library that creates the class by reflection crashes in minified release builds
+ * (NoSuchMethodException: X.<init>, or Room's "Failed to create an instance of class X").
+ * Reproduced on 2026-10-25 with AGP 9.2.1 (R8, proguard-android-optimize.txt) on an API 34
+ * emulator; a `-keep class X { <init>(); }` rule fixed it. For WorkManager 2.9.1 / Room 2.5.0 in
+ * Expo SDK 58 the keep rules below fixed startup (expo/expo#52173).
+ */
+export const R8_REFLECTIVE_CONSTRUCTORS = {
+  sources: [
+    "https://developer.android.com/topic/performance/app-optimization/add-keep-rules",
+    "https://github.com/expo/expo/issues/52173",
+    "https://github.com/expo/expo/issues/52114",
+    "https://docs.expo.dev/versions/latest/sdk/build-properties/",
+  ],
+  lastVerified: "2026-10-25",
+  workManagerKeepRules: [
+    "-keep class * extends androidx.room.RoomDatabase { <init>(); }",
+    "-keep class * extends androidx.work.InputMerger { <init>(); }",
+  ],
+};

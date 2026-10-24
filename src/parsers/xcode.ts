@@ -41,6 +41,8 @@ const XCODE_DETECT =
   /(?:\bxcodebuild\b|\*\* (?:BUILD|ARCHIVE) (?:FAILED|SUCCEEDED) \*\*|^CompileC |^PhaseScriptExecution |^Ld |^CodeSign |\.xcworkspace|\.xcodeproj|Build Settings from command line)/;
 // `/path/File.m:12:5: error: message` (clang, swift, ld wrappers)
 const LOCATED_ERROR = /^(.+?):(\d+):(\d+):\s+(?:fatal\s+)?error:\s+(.+)$/;
+// Swift sometimes omits the column: `ConstantDefinition.swift:106: error: message`.
+const LINE_ONLY_ERROR = /^(.+?\.(?:swift|m|mm|h|hpp|cpp)):(\d+):\s+(?:fatal\s+)?error:\s+(.+)$/;
 // xcpretty/EAS drop the "error:" keyword: `❌  /path/File.m:12:5: 'X.h' file not found`
 const ICON_LOCATED = /^❌\s+(.+?):(\d+):(\d+):\s+(?:(?:fatal\s+)?error:\s+)?(.+)$/;
 // `error: message` or xcpretty/EAS `❌  error: message` / `❌  message`
@@ -63,7 +65,17 @@ export function parseXcode(doc: LogDocument): XcodeParseResult {
   const seen = new Set<string>();
   for (let i = 0; i < lines.length; i++) {
     const raw = lines[i]!;
-    const line = raw.trim();
+    let line = raw.trim();
+    // A location wrapped away from its message (`File.m:4:9:` / `error: …`, or `…: fatal error:` /
+    // `'X.h' file not found`), as in excerpts pasted into issues.
+    const next = lines[i + 1]?.trim() ?? "";
+    if (
+      next &&
+      (/^.+?:\d+:\d+:$/.test(line) && /^(?:fatal\s+)?error:/.test(next)
+        ? true
+        : /^.+?:\d+:\d+:\s+(?:fatal\s+)?error:$/.test(line))
+    )
+      line = `${line} ${next}`;
     if (!result.detected && XCODE_DETECT.test(line)) result.detected = true;
     if (/\*\* (?:BUILD|ARCHIVE) FAILED \*\*/.test(line)) {
       result.buildFailed = true;
@@ -80,21 +92,29 @@ export function parseXcode(doc: LogDocument): XcodeParseResult {
       }
       continue;
     }
-    const located = LOCATED_ERROR.exec(line.replace(/^❌\s+/, "")) ?? ICON_LOCATED.exec(line);
+    const unprefixed = line.replace(/^❌\s+/, "");
+    const full = LOCATED_ERROR.exec(unprefixed) ?? ICON_LOCATED.exec(line);
+    const lineOnly = full ? null : LINE_ONLY_ERROR.exec(unprefixed);
+    const located = full
+      ? { file: full[1]!, position: `${full[2]}:${full[3]}`, message: full[4]! }
+      : lineOnly
+        ? { file: lineOnly[1]!, position: lineOnly[2]!, message: lineOnly[3]! }
+        : undefined;
     const plain = located ? undefined : PLAIN_ERROR.exec(line);
     const icon = located || plain ? undefined : ICON_ERROR.exec(line);
     const linker = located || plain || icon ? undefined : LINKER.exec(line);
-    const match = located ?? plain ?? icon ?? linker;
-    if (!match) continue;
-    const message = (located ? located[4] : plain ? plain[1] : icon ? icon[1] : linker![0])!.trim();
-    const key = `${located?.[1] ?? ""}:${located?.[2] ?? ""}:${message}`;
+    if (!located && !plain && !icon && !linker) continue;
+    const message = (
+      located ? located.message : plain ? plain[1] : icon ? icon[1] : linker![0]
+    )!.trim();
+    const key = `${located?.file ?? ""}:${located?.position ?? ""}:${message}`;
     if (seen.has(key)) continue;
     seen.add(key);
     result.errors.push({
       start: i,
       end: Math.min(lines.length - 1, i + (linker ? 8 : 4)),
       message,
-      ...(located ? { file: located[1]!, position: `${located[2]}:${located[3]}` } : {}),
+      ...(located ? { file: located.file, position: located.position } : {}),
     });
   }
   return result;

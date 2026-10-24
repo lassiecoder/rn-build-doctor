@@ -1,0 +1,2 @@
+The `[CP-User] Build ExpoModulesJSI xcframework` script phase fails iOS archives under Xcode 27 with:
+error: the following command failed with exit code 0 but produced no further output

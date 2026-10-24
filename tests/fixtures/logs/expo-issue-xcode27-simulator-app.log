@@ -1,0 +1,2 @@
+CommandError: Can't determine id of Simulator app; the Simulator is most likely not installed on this machine
+CommandError: Simulator app did not open fast enough.

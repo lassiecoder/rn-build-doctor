@@ -1,0 +1,11 @@
+$ cd ios && pod install
+Analyzing dependencies
+[!] Failed to load 'AcmeBroken' podspec: 
+[!] Invalid `AcmeBroken.podspec` file: undefined method 'split' for nil.
+
+ #  from /Users/dev/MyApp/node_modules/acme-broken/AcmeBroken.podspec:12
+ #  -------------------------------------------
+ #    frameworks = ["UIKit"]
+ >    s.frameworks = ENV["ACME_FRAMEWORKS"].split(",")
+ #  end
+ #  -------------------------------------------

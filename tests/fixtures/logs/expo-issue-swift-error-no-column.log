@@ -1,0 +1,1 @@
+ConstantDefinition.swift:106: error: Conformance of 'Bool' to 'JavaScriptRepresentable' is unavailable

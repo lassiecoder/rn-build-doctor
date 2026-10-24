@@ -1,0 +1,8 @@
+  > Task :expo-gradle-plugin:expo-autolinking-settings-plugin:compileKotlin FAILED
+
+  e: .../expo-modules-autolinking/android/expo-gradle-plugin/expo-autolinking-settings-plugin/
+       src/main/kotlin/expo/modules/plugin/ExpoAutolinkingSettingsExtension.kt:25:26
+     Class 'kotlin.Lazy' was compiled with an incompatible version of Kotlin.
+     The actual metadata version is 2.3.0, but the compiler version 2.1.0
+     can read versions up to 2.2.0.
+

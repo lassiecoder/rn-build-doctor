@@ -1,0 +1,2 @@
+error: Cycle in dependencies between targets 'ReactCodegen' and '<SomePod>'; building could produce unreliable results.
+Cycle path: ReactCodegen → <SomePod> → ReactCodegen

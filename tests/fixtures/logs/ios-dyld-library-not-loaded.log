@@ -1,0 +1,3 @@
+dyld[43225]: Library not loaded: @rpath/ExpoModulesJSI.framework/ExpoModulesJSI
+  Referenced from: <04F52DDD-AA67-30E1-BD79-6C29165CD0B9> /private/var/containers/Bundle/Application/MyApp.app/MyApp
+  Reason: tried: '/private/var/containers/Bundle/Application/MyApp.app/Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI' (no such file), '/private/var/containers/Bundle/Application/MyApp.app/Frameworks/ExpoModulesJSI.framework/ExpoModulesJSI' (no such file)

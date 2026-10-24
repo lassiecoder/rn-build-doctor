@@ -1,0 +1,33 @@
+10-25 03:47:24.079  1012  1645 D EGL_emulation: app_time_stats: avg=236.02ms min=52.14ms max=988.04ms count=7
+10-25 03:47:24.087   542   746 D CompatibilityChangeReporter: Compat change id reported: 168419799; UID 10088; state: DISABLED
+10-25 03:47:24.087   542   746 D CompatibilityChangeReporter: Compat change id reported: 273564678; UID 10088; state: DISABLED
+10-25 03:47:24.092  1565  2212 I AssistantForeground: (REDACTED) Get launcher package: %s
+10-25 03:47:24.829  3339  3339 D AndroidRuntime: Shutting down VM
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: FATAL EXCEPTION: main
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: Process: com.example.r8repro, PID: 3339
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.r8repro/com.example.r8repro.MainActivity}: java.lang.RuntimeException: Failed to create an instance of a
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3782)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3922)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:103)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:139)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:96)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2443)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:205)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:294)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8177)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: Caused by: java.lang.RuntimeException: Failed to create an instance of a
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at com.example.r8repro.MainActivity.onCreate(r8-map-id-7198b78960f04d40f4a7ebc0017a290b88cb8fd585006c9cd81374d47789d8d9:5)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.Activity.performCreate(Activity.java:8595)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.Activity.performCreate(Activity.java:8573)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1456)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3764)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	... 12 more
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: Caused by: java.lang.NoSuchMethodException: a.<init> []
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at java.lang.Class.getConstructor0(Class.java:3325)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at java.lang.Class.getDeclaredConstructor(Class.java:3063)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	at com.example.r8repro.MainActivity.onCreate(r8-map-id-7198b78960f04d40f4a7ebc0017a290b88cb8fd585006c9cd81374d47789d8d9:3)
+10-25 03:47:24.830  3339  3339 E AndroidRuntime: 	... 16 more

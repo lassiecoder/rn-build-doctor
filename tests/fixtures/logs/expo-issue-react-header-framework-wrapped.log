@@ -1,0 +1,2 @@
+node_modules/expo-updates/ios/EXUpdates/ReactDelegateHandler/EXDeferredRCTRootView.m:4:9:
+error: 'React/RCTBridge.h' file not found (in target 'EXUpdates' from project 'Pods')

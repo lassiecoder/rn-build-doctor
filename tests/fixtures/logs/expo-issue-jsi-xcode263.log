@@ -1,0 +1,5 @@
+node_modules/expo-modules-jsi/apple/Sources/ExpoModulesJSI/Coding/JavaScriptCodable+Date.swift:53:50: error: type of expression is ambiguous without a type annotation
+  guard milliseconds.isFinite, abs(milliseconds) <= maxJavaScriptDateMilliseconds else {
+                               ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+** BUILD FAILED **
+    Xcode: 26.3/17C529

@@ -1,0 +1,3 @@
+$ eas build:dev --profile development --skip-build-if-not-found --skip-bundler
+Can't determine id of Simulator app; the Simulator is most likely not installed on this machine. Run 'sudo xcode-select -s /Applications/Xcode.app/Contents/Developer'
+    Error: build:dev command failed.

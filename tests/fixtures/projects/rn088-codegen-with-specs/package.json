@@ -1,0 +1,10 @@
+{
+  "name": "callingx",
+  "version": "1.0.0",
+  "dependencies": { "react": "19.3.0", "react-native": "0.88.0" },
+  "codegenConfig": {
+    "name": "CallingxSpec",
+    "type": "modules",
+    "jsSrcsDir": "src/specs"
+  }
+}
