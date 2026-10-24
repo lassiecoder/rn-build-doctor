@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.1.9 (2026-10-25)
 
 Gaps from an audit of the build and setup failures in 1,982 issues opened between Jul 25 and Oct 25, 2026 in expo/expo, react/react-native, eas-cli and 27 popular libraries. Each issue body was run through 0.1.8: of the ~300 build-related issues, 11 got a specific diagnosis before this release and 32 after. Every new rule was reproduced locally (npm/Yarn/pnpm/Bun, CocoaPods 1.16.2, Kotlin 2.1.20, Xcode 26.6, AGP 9.2.1 with an API 34 emulator, dyld) or, where that wasn't possible (Xcode 27), checked against the published package contents and the issue's maintainer replies.
 
