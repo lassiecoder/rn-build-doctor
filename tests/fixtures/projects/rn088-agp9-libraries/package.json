@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "dependencies": {
     "@acme/react-native-bus": "2.0.0",
+    "@acme/react-native-pdf-legacy": "5.2.0",
     "@acme/react-native-widget": "1.8.0",
+    "@acme/react-native-wifi": "4.13.6",
     "react": "19.3.0",
     "react-native": "0.88.0"
   }

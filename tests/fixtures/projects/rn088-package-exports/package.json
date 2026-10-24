@@ -1,0 +1,9 @@
+{
+  "name": "rn088-package-exports",
+  "version": "0.0.1",
+  "dependencies": {
+    "@acme/react-native-icons": "1.59.0",
+    "react": "19.3.0",
+    "react-native": "0.88.0"
+  }
+}

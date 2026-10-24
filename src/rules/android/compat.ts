@@ -163,3 +163,39 @@ export function packageCandidatesForGradleProject(project: string): string[] {
   candidates.push(name);
   return candidates;
 }
+
+/**
+ * AGP 9.0 rejects getDefaultProguardFile('proguard-android.txt'), because that file contains
+ * -dontoptimize; only proguard-android-optimize.txt is supported. The build fails while evaluating
+ * the module's build.gradle. Reproduced on 2026-10-25 with Gradle 9.4.1: AGP 9.2.1 fails, AGP 8.12.0
+ * accepts the same build file, proguard-android-optimize.txt fixes it, and
+ * android.r8.proguardAndroidTxt.disallowed=false also lets the build pass (AGP 9.2.1 warns that the
+ * option is deprecated).
+ */
+export const AGP_PROGUARD_ANDROID_TXT = {
+  sources: [
+    "https://developer.android.com/build/releases/agp-9-0-0-release-notes",
+    "https://github.com/126punith/react-native-pdf-jsi/issues/40",
+  ],
+  lastVerified: "2026-10-25",
+  rejectedFromAgpMajor: 9,
+  replacement: "proguard-android-optimize.txt",
+  optOutProperty: "android.r8.proguardAndroidTxt.disallowed=false",
+};
+
+/**
+ * A Groovy build script that passes a null name to a project property lookup, typically
+ * `safeExtGet(compileSdkVersion, 31)` with the name unquoted, fails with "Parameter specified as
+ * non-null is null: method …onGradlePropertyAccess, parameter propertyName". The script stops at
+ * that line, so compileSdk is never set and AGP then reports that the project "does not specify
+ * compileSdk". Reproduced on 2026-10-25 with Gradle 9.4.1 and both AGP 8.12.0 and 9.2.1, with and
+ * without the configuration cache; quoting the names fixes it. Older Gradle versions weren't tested.
+ */
+export const GRADLE_NULL_PROPERTY_NAME = {
+  sources: [
+    "https://github.com/JuanSeBestia/react-native-wifi-reborn/issues/456",
+    "https://github.com/JuanSeBestia/react-native-wifi-reborn/pull/453",
+  ],
+  lastVerified: "2026-10-25",
+  observedWithGradle: "9.4.1",
+};

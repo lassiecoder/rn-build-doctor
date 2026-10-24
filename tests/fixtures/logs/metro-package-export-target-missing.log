@@ -1,0 +1,21 @@
+Starting Metro Bundler
+
+Android Bundling failed 3120ms index.ts (702 modules)
+Unable to resolve "@acme/react-native-icons/icons/trash-2" from "src/DeleteButton.tsx"
+> 1 | import Trash2 from '@acme/react-native-icons/icons/trash-2';
+    |                     ^
+  2 |
+  3 | export function DeleteButton() {
+
+Import stack:
+
+ src/DeleteButton.tsx
+ | import "@acme/react-native-icons/icons/trash-2"
+
+ App.tsx
+ | import "./src/DeleteButton"
+
+Error: Unable to resolve module @acme/react-native-icons/icons/trash-2 from /Users/dev/MyApp/src/DeleteButton.tsx: @acme/react-native-icons/icons/trash-2 could not be found within the project or in these directories:
+  node_modules
+> 1 | import Trash2 from '@acme/react-native-icons/icons/trash-2';
+    |                     ^

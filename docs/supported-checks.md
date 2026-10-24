@@ -10,7 +10,7 @@ Every rule has a stable id, a documented trigger, the evidence it attaches, its 
 
 High confidence in a finding doesn't mean the suggested fix is safe for your project. Review each next step.
 
-46 rules: 13 project checks (`scan`) and 33 log rules (`analyze`).
+48 rules: 13 project checks (`scan`) and 35 log rules (`analyze`).
 
 ## Project checks (`scan`)
 
@@ -407,6 +407,34 @@ High confidence in a finding doesn't mean the suggested fix is safe for your pro
 | Sources             | <https://github.com/ninja-build/ninja/releases/tag/v1.12.0><br><https://github.com/ninja-build/ninja/issues/1900><br><https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation><br><https://github.com/expo/expo/issues/36274> |
 | Regression fixtures | `tests/fixtures/logs/android-windows-ninja-long-path.log`                                                                                                                                                                                                 |
 | Last verified       | 2026-10-20                                                                                                                                                                                                                                                |
+
+### `android.proguard-android-txt-unsupported`
+
+**AGP 9 no longer supports proguard-android.txt**
+
+| Field               | Value                                                                                                                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                     |
+| Applicable versions | Android Gradle Plugin 9+ (React Native 0.87+, Expo SDK 58+)                                                                                                                                 |
+| Trigger             | A Gradle 'What went wrong' section stating that `getDefaultProguardFile('proguard-android.txt')` is no longer supported (Android Gradle Plugin 9 while evaluating a module's build.gradle). |
+| Evidence            | The failure section, the build file and line from the '* Where:' section, and, when the project is available, the proguard-android.txt lines in that build file.                            |
+| Sources             | <https://developer.android.com/build/releases/agp-9-0-0-release-notes><br><https://github.com/126punith/react-native-pdf-jsi/issues/40>                                                     |
+| Regression fixtures | `tests/fixtures/logs/real-agp92-proguard-android-txt.log`                                                                                                                                   |
+| Last verified       | 2026-10-25                                                                                                                                                                                  |
+
+### `android.compile-sdk-not-specified`
+
+**A Gradle project doesn't set compileSdk**
+
+| Field               | Value                                                                                                                                                                                                                                                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Platforms           | android                                                                                                                                                                                                                                                                                                         |
+| Applicable versions | Android Gradle Plugin (all versions); the null property name failure was observed with Gradle 9.4.1                                                                                                                                                                                                             |
+| Trigger             | A Gradle failure stating that project ':x' 'does not specify compileSdk in build.gradle', and/or a failure evaluating a project with 'Parameter specified as non-null is null: method …onGradlePropertyAccess, parameter propertyName' (a property looked up with a null name).                                 |
+| Evidence            | The failure sections, the build file and line from the '* Where:' section, and, when the project is available, the compileSdk lines and unquoted property-name arguments in that build file.                                                                                                                    |
+| Sources             | <https://github.com/JuanSeBestia/react-native-wifi-reborn/issues/456><br><https://github.com/JuanSeBestia/react-native-wifi-reborn/pull/453><br><https://github.com/facebook/react-native/blob/main/packages/gradle-plugin/shared/src/main/kotlin/com/facebook/react/model/ModelAutolinkingDependenciesJson.kt> |
+| Regression fixtures | `tests/fixtures/logs/real-gradle94-null-property-name.log`<br>`tests/fixtures/logs/real-agp92-compile-sdk-not-specified.log`                                                                                                                                                                                    |
+| Last verified       | 2026-10-25                                                                                                                                                                                                                                                                                                      |
 
 ### `expo.config-plugin-not-resolved`
 

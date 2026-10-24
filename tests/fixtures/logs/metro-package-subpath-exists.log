@@ -1,0 +1,4 @@
+Android Bundling failed 3120ms index.ts (702 modules)
+Error: Unable to resolve module @acme/react-native-icons/icons/trash from /Users/dev/MyApp/src/DeleteButton.tsx: @acme/react-native-icons/icons/trash could not be found within the project or in these directories:
+  node_modules
+> 1 | import Trash from '@acme/react-native-icons/icons/trash';

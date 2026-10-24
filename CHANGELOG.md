@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+Gaps found in GitHub issues from Oct 20-25 (React Native 0.88 / Expo SDK 58). The two Android failures were reproduced on a Gradle 9.4.1 build (AGP 9.2.1, and AGP 8.12.0 to check the version scope) before the rules were written.
+
+- New rule `android.proguard-android-txt-unsupported`: AGP 9's ``getDefaultProguardFile('proguard-android.txt')` is no longer supported`` was reported as "No supported diagnosis". It now names the library (from the build file path in the log, or the project), quotes the line, and gives the `proguard-android-optimize.txt` patch and the `android.r8.proguardAndroidTxt.disallowed=false` opt-out (both verified to fix the reproduced build; AGP 8.12.0 accepts the old file).
+- New rule `android.compile-sdk-not-specified`: `does not specify compileSdk in build.gradle` was reported as "No supported diagnosis". When it comes with `Parameter specified as non-null is null: method ...onGradlePropertyAccess, parameter propertyName`, the finding explains that both errors have one cause, a property name passed unquoted (`safeExtGet(compileSdkVersion, 31)`), and lists the unquoted lines from the library's build.gradle. Quoting the names was verified to fix the reproduced build.
+- `javascript.unable-to-resolve-module`: for a package subpath (`some-package/icons/trash-2`), the finding no longer says the package can't be found. With the project, it checks the installed package's `exports`: when the exported path points to a file that isn't there, it says reinstalling or clearing the cache won't help, notes when a `.d.ts` explains why TypeScript accepts the import, and suggests the subpath that the declaration re-exports when that file exists.
+- `runtime.javascript-exception` and `runtime.android-fatal-exception`: `Cannot find native module 'X'` after a native error in the same process (for example `Cannot install Expo Modules v2: java.lang.NoClassDefFoundError: ... java/nio/file/Path`) now points to the native error instead of saying "the cause is in JavaScript". Without an earlier native error, the fatal finding lists the usual causes (rebuild after installing, Expo Go, a module that failed to initialize).
+
 ## 0.1.7 (2026-10-23)
 
 Gaps found in GitHub issues from the week after the Expo SDK 58 / React Native 0.88 releases. The two Android failures were reproduced on an AGP 9.2.1 / Gradle 9.4.1 build before the rules changed.

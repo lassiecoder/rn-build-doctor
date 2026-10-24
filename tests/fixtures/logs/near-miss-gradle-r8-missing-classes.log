@@ -1,0 +1,15 @@
+> Task :app:minifyReleaseWithR8 FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:minifyReleaseWithR8'.
+> A failure occurred while executing com.android.build.gradle.internal.tasks.R8Task$R8Runnable
+   > Compilation failed to complete, origin: /Users/dev/app/android/app/build/intermediates/module_and_class_jar/release/classes.jar
+     Missing classes detected while running R8. Please add the missing classes or apply additional keep rules that are generated in /Users/dev/app/android/app/build/outputs/mapping/release/missing_rules.txt.
+     Using getDefaultProguardFile('proguard-android-optimize.txt') with these rules may still require extra keep rules.
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 41s

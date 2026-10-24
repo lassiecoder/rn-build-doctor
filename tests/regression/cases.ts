@@ -21,6 +21,88 @@ export interface Case {
 }
 
 export const CASES: Case[] = [
+  // Captured from a real AGP 9.2.1 / Gradle 9.4.1 build (2026-10-25) of a library whose release
+  // build type uses getDefaultProguardFile('proguard-android.txt'), as in
+  // 126punith/react-native-pdf-jsi#40. Paths anonymized.
+  {
+    name: "real AGP 9: library uses proguard-android.txt",
+    kind: "log",
+    input: "real-agp92-proguard-android-txt.log",
+    expect: ["android.proguard-android-txt-unsupported"],
+    forbid: ["common.no-supported-diagnosis"],
+    mustMention: [
+      "Library @acme/react-native-pdf-legacy uses proguard-android.txt",
+      "proguard-android-optimize.txt",
+      "npx patch-package @acme/react-native-pdf-legacy",
+      "android.r8.proguardAndroidTxt.disallowed=false",
+      "(line 10)",
+    ],
+  },
+  {
+    name: "real AGP 9: library uses proguard-android.txt, with the project",
+    kind: "log",
+    input: "real-agp92-proguard-android-txt.log",
+    cwd: "rn088-agp9-libraries",
+    expect: ["android.proguard-android-txt-unsupported"],
+    mustMention: [
+      "node_modules/@acme/react-native-pdf-legacy/android/build.gradle",
+      "the npm package @acme/react-native-pdf-legacy",
+    ],
+  },
+  // Near miss: an R8 failure that only mentions the optimize file.
+  {
+    name: "near miss: R8 missing classes is not the proguard-android.txt rule",
+    kind: "log",
+    input: "near-miss-gradle-r8-missing-classes.log",
+    expect: [],
+    info: ["common.no-supported-diagnosis"],
+    forbid: ["android.proguard-android-txt-unsupported"],
+  },
+  // Captured from the same Gradle 9.4.1 setup (2026-10-25): a library calling
+  // safeExtGet(compileSdkVersion, 31) with unquoted names, as in
+  // JuanSeBestia/react-native-wifi-reborn#456. Both failures come from one cause.
+  {
+    name: "real Gradle 9: unquoted safeExtGet names (null property name)",
+    kind: "log",
+    input: "real-gradle94-null-property-name.log",
+    expect: ["android.compile-sdk-not-specified"],
+    forbid: ["common.no-supported-diagnosis"],
+    mustMention: [
+      "Library @acme/react-native-wifi looks up a Gradle property with a null name",
+      "Both errors have the same cause",
+      'safeExtGet(\\"compileSdkVersion\\", …)',
+      "npx patch-package @acme/react-native-wifi",
+    ],
+  },
+  {
+    name: "real Gradle 9: unquoted safeExtGet names, with the project",
+    kind: "log",
+    input: "real-gradle94-null-property-name.log",
+    cwd: "rn088-agp9-libraries",
+    expect: ["android.compile-sdk-not-specified"],
+    mustMention: [
+      "(unquoted compileSdkVersion, minSdkVersion, targetSdkVersion)",
+      "compileSdkVersion is passed to safeExtGet() unquoted",
+    ],
+  },
+  {
+    name: "real AGP 9: library doesn't set compileSdk",
+    kind: "log",
+    input: "real-agp92-compile-sdk-not-specified.log",
+    expect: ["android.compile-sdk-not-specified"],
+    mustMention: ["Library @acme/react-native-wifi doesn't set compileSdk", "rootProject.ext"],
+    // No null-name failure in this log, so the unquoted-name explanation doesn't apply.
+    mustNotMention: ["null name", "unquoted"],
+  },
+  // Near miss: a null parameter in a plugin, not a property lookup.
+  {
+    name: "near miss: null parameter in a Gradle plugin",
+    kind: "log",
+    input: "near-miss-gradle-other-null-parameter.log",
+    expect: [],
+    info: ["common.no-supported-diagnosis"],
+    forbid: ["android.compile-sdk-not-specified"],
+  },
   // --- Android / Gradle
   {
     name: "missing artifact",
@@ -657,6 +739,75 @@ export const CASES: Case[] = [
     expect: ["android.cleartext-http-blocked"],
     forbid: ["common.no-supported-diagnosis"],
     mustMention: ["api.example.com", '"confidence":"high"'],
+  },
+  // A package whose "exports" pattern covers an alias subpath that has a .d.ts but no runtime
+  // file, as in lucide-icons/lucide#5043.
+  {
+    name: "Metro: exported subpath has no runtime file",
+    kind: "log",
+    input: "metro-package-export-target-missing.log",
+    cwd: "rn088-package-exports",
+    expect: ["javascript.unable-to-resolve-module"],
+    mustMention: [
+      "maps './icons/*' for this import",
+      "dist/esm/icons/trash-2.mjs",
+      "won't help",
+      "dist/types/icons/trash-2.d.ts",
+      "from '@acme/react-native-icons/icons/trash'",
+    ],
+    mustNotMention: ["isn't declared in package.json", "Restart Metro with a clean cache"],
+  },
+  {
+    name: "Metro: subpath import without the project doesn't claim the package is missing",
+    kind: "log",
+    input: "metro-package-export-target-missing.log",
+    expect: ["javascript.unable-to-resolve-module"],
+    mustMention: ["the path 'icons/trash-2' inside package '@acme/react-native-icons'"],
+    mustNotMention: ["couldn't find package"],
+  },
+  // Near miss: the subpath exists in the package, so the cache advice still applies.
+  {
+    name: "near miss: Metro subpath that the package does ship",
+    kind: "log",
+    input: "metro-package-subpath-exists.log",
+    cwd: "rn088-package-exports",
+    expect: ["javascript.unable-to-resolve-module"],
+    mustMention: ["Restart Metro with a clean cache"],
+    mustNotMention: ["none of them exist", "doesn't list"],
+  },
+  // Logcat lines from expo/expo#52132 (API 24 device): Expo Modules fail to install, then
+  // JavaScript can't find a native module and the app aborts.
+  {
+    name: "logcat: native module missing because native setup failed first",
+    kind: "log",
+    input: "logcat-native-module-init-failed.log",
+    expect: ["runtime.javascript-exception"],
+    mustMention: [
+      "Native code failed earlier in the same process",
+      "Cannot install Expo Modules v2",
+      "java.nio.file.Path is part of the Java standard library",
+    ],
+    mustNotMention: ["Search your source for the message text"],
+  },
+  {
+    name: "logcat: fatal JavascriptException after a native setup failure",
+    kind: "log",
+    input: "logcat-fatal-native-module-init-failed.log",
+    expect: ["runtime.android-fatal-exception", "runtime.javascript-exception"],
+    mustMention: [
+      "Native module 'ExpoApplication' wasn't available because native code failed earlier",
+      "Native error logged before the crash",
+    ],
+    mustNotMention: ["The cause is in JavaScript"],
+  },
+  // Near miss: the native error comes from a different process, so it isn't linked.
+  {
+    name: "near miss: native error in another process isn't treated as the cause",
+    kind: "log",
+    input: "logcat-native-module-missing-other-process.log",
+    expect: ["runtime.android-fatal-exception", "runtime.javascript-exception"],
+    mustMention: ["JavaScript couldn't find native module 'ExpoCamera'", "Rebuild the native app"],
+    mustNotMention: ["failed earlier", "java.nio.file.Path is part of"],
   },
   {
     name: "JS TypeError via logcat",

@@ -1,0 +1,9 @@
+E/ExpoModulesCore: ❌ Cannot install Expo Modules v2: java.lang.NoClassDefFoundError: Failed resolution of: Ljava/nio/file/Path;
+E/ExpoModulesCore: Caused by: java.lang.ClassNotFoundException: Didn't find class "java.nio.file.Path" on path: DexPathList[...]
+E/ExpoModulesCore: 	at io.github.expo.modules.v2.types.TypeConverterRegistry.<clinit>(...)
+E/ExpoModulesCore: 	at io.github.expo.modules.v2.types.TypeDescriptor$Simple.getConverter(...)
+E/ExpoModulesCore: 	at io.github.expo.modules.v2.types.AnyType.getConverter(...)
+E/ExpoModulesCore: 	at io.github.expo.modules.v2.modules.ModuleBuilder.property(...)
+E/ExpoModulesCore: 	at expo.modules.application.ApplicationModule.define$ExpoModulesV2(...)
+E/ReactNativeJS: [runtime not ready]: Error: Cannot find native module 'ExpoApplication'
+F/libc: Fatal signal 6 (SIGABRT) ... (mqt_v_js)

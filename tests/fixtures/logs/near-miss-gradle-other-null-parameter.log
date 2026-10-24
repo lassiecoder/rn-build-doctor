@@ -1,0 +1,14 @@
+FAILURE: Build failed with an exception.
+
+* Where:
+Build file '/Users/dev/app/android/app/build.gradle' line: 3
+
+* What went wrong:
+A problem occurred evaluating project ':app'.
+> Failed to apply plugin 'com.acme.analytics'.
+   > Parameter specified as non-null is null: method com.acme.analytics.AnalyticsPlugin.apply, parameter project
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 2s

@@ -13,7 +13,9 @@ import {
   GRADLE_MIN_FOR_JAVA,
   PERMGEN_REMOVED,
   RN_GRADLE_PROJECT_NAMES,
+  AGP_PROGUARD_ANDROID_TXT,
   compareVersions,
+  GRADLE_NULL_PROPERTY_NAME,
   javaFromClassFileMajor,
   NINJA_LONG_PATHS,
   packageCandidatesForGradleProject,
@@ -1374,6 +1376,316 @@ export const ninjaPathTooLong: Rule = {
   },
 };
 
+/** The "Build file '<path>' line: N" printed in the "* Where:" section just above a failure. */
+function buildFileForFailure(
+  doc: LogDocument,
+  failure: { start: number },
+): { path: string; line: number } | undefined {
+  for (let i = failure.start - 1; i >= Math.max(0, failure.start - 6); i--) {
+    const match = /^\s*Build file '(.+)' line: (\d+)/.exec(doc.lines[i]!);
+    if (match) return { path: match[1]!, line: Number(match[2]) };
+  }
+  return undefined;
+}
+
+/**
+ * Reads a Gradle build file named in the log from the project: by its path under the project root,
+ * by its node_modules/… suffix, or through the npm package behind the Gradle project.
+ */
+function readBuildFile(
+  ctx: RuleContext,
+  logPath: string | undefined,
+  gradleProject: string | undefined,
+): { file: string; lines: string[] } | undefined {
+  if (!ctx.project) return undefined;
+  const root = ctx.project.root;
+  const candidates: string[] = [];
+  if (logPath) {
+    const normalized = logPath.replace(/\\/g, "/");
+    const rootSlash = `${root.replace(/\\/g, "/").replace(/\/$/, "")}/`;
+    if (normalized.startsWith(rootSlash)) candidates.push(normalized.slice(rootSlash.length));
+    const nodeModules = normalized.lastIndexOf("/node_modules/");
+    if (nodeModules >= 0) candidates.push(normalized.slice(nodeModules + 1));
+  }
+  const pkg = gradleProject ? packageForGradleProject(ctx, gradleProject) : undefined;
+  if (pkg) candidates.push(`${relative(root, pkg.dir).replace(/\\/g, "/")}/android/build.gradle`);
+  for (const file of candidates) {
+    const read = readProjectFile(root, file);
+    if (read.ok) return { file, lines: read.text.split(/\r?\n/) };
+  }
+  return undefined;
+}
+
+/** npm package name from a build file path such as …/node_modules/@scope/pkg/android/build.gradle. */
+function packageFromBuildPath(path: string | undefined): string | undefined {
+  return path
+    ? /[\\/]node_modules[\\/]((?:@[^\\/]+[\\/])?[^\\/]+)[\\/]android[\\/]/
+        .exec(path)?.[1]
+        ?.replace(/\\/g, "/")
+    : undefined;
+}
+
+const PROGUARD_ANDROID_TXT = /getDefaultProguardFile\(\s*['"]proguard-android\.txt['"]\s*\)/;
+
+export const proguardAndroidTxtUnsupported: Rule = {
+  meta: {
+    id: "android.proguard-android-txt-unsupported",
+    title: "AGP 9 no longer supports proguard-android.txt",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "A Gradle 'What went wrong' section stating that `getDefaultProguardFile('proguard-android.txt')` is no longer supported (Android Gradle Plugin 9 while evaluating a module's build.gradle).",
+    evidence:
+      "The failure section, the build file and line from the '* Where:' section, and, when the project is available, the proguard-android.txt lines in that build file.",
+    versionScope: `Android Gradle Plugin ${AGP_PROGUARD_ANDROID_TXT.rejectedFromAgpMajor}+ (React Native 0.87+, Expo SDK 58+)`,
+    references: AGP_PROGUARD_ANDROID_TXT.sources,
+    lastVerified: AGP_PROGUARD_ANDROID_TXT.lastVerified,
+    fixtures: ["logs/real-agp92-proguard-android-txt.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      for (const failure of log.gradle.failures) {
+        const text = flatten(log.doc, failure);
+        if (
+          !/getDefaultProguardFile\('proguard-android\.txt'\)`? is no longer supported/.test(text)
+        )
+          continue;
+        const gradleProject = /evaluating (?:root )?project '([^']+)'/.exec(text)?.[1];
+        const isApp = gradleProject === ":app";
+        const where = buildFileForFailure(log.doc, failure);
+        const pkg =
+          gradleProject && !isApp ? packageForGradleProject(ctx, gradleProject) : undefined;
+        const evidence: Evidence[] = [logEvidence(log.doc, failure)];
+        if (where)
+          evidence.push({
+            source: "log",
+            file: log.doc.path,
+            detail: `Build file ${where.path}, line ${where.line}`,
+          });
+        const build = readBuildFile(ctx, where?.path, gradleProject);
+        if (build)
+          build.lines.forEach((line, i) => {
+            if (PROGUARD_ANDROID_TXT.test(line))
+              evidence.push({
+                source: "project",
+                file: build.file,
+                line: i + 1,
+                excerpt: line.trim().slice(0, 200),
+              });
+          });
+        evidence.push(...versionEvidence(ctx, ["android gradle plugin", "react-native", "expo"]));
+
+        const pkgName = isApp ? undefined : (pkg?.name ?? packageFromBuildPath(where?.path));
+        const label = pkgName ?? gradleProject;
+        const file =
+          build?.file ??
+          (pkgName
+            ? `node_modules/${pkgName}/android/build.gradle`
+            : isApp
+              ? "android/app/build.gradle"
+              : "the module's build.gradle");
+        const line = where ? ` (line ${where.line})` : "";
+        const fixLine = `replace \`getDefaultProguardFile('proguard-android.txt')\` with \`getDefaultProguardFile('${AGP_PROGUARD_ANDROID_TXT.replacement}')\` in ${file}${line}`;
+        const nextSteps = isApp
+          ? [
+              `In your app, ${fixLine}.${ctx.project?.kind === "expo" ? " In an Expo project android/ is generated, so make the change with a config plugin, or check whether `npx expo prebuild --clean` regenerates the file without it." : ""}`,
+              "If release builds relied on -dontoptimize, add `-dontoptimize` to android/app/proguard-rules.pro for now and remove it once the release build works with optimization.",
+            ]
+          : [
+              `Upgrade ${label ?? "the library"} to a release that supports Android Gradle Plugin ${AGP_PROGUARD_ANDROID_TXT.rejectedFromAgpMajor}. Check its changelog or open issues for your React Native or Expo SDK version.`,
+              `Until then, ${fixLine}, then run \`npx patch-package ${pkgName ?? "<package>"}\` and add \`"postinstall": "patch-package"\` to package.json so the change survives reinstalls.`,
+            ];
+        nextSteps.push(
+          `Temporary opt-out: \`${AGP_PROGUARD_ANDROID_TXT.optOutProperty}\` in android/gradle.properties lets the build pass, but AGP ${AGP_PROGUARD_ANDROID_TXT.rejectedFromAgpMajor} warns that the option is deprecated.`,
+        );
+        out.push(
+          finding(this.meta, {
+            title: `${isApp ? "The app" : `Library ${label ?? "module"}`} uses proguard-android.txt, which AGP ${AGP_PROGUARD_ANDROID_TXT.rejectedFromAgpMajor} rejects`,
+            severity: "error",
+            confidence: "high",
+            explanation:
+              `Android Gradle Plugin ${AGP_PROGUARD_ANDROID_TXT.rejectedFromAgpMajor} only supports \`getDefaultProguardFile('${AGP_PROGUARD_ANDROID_TXT.replacement}')\`. The old proguard-android.txt contains -dontoptimize, so AGP stops while evaluating ${gradleProject ? `the Gradle project '${gradleProject}'` : "the module"}${pkgName ? ` (the npm package ${pkgName})` : ""} and nothing gets built.` +
+              (isApp
+                ? ""
+                : ` The line is in the library's own build.gradle, so the library needs a fix, not your app. A library's proguardFiles only apply when the library itself is minified, which React Native libraries rarely do, so switching the file name doesn't change how your app is shrunk.`),
+            evidence,
+            nextSteps,
+            verification: `\`cd android && ./gradlew ${gradleProject ? `${gradleProject}:help` : "help"}\` configures the project without the error.`,
+          }),
+        );
+      }
+    }
+    return out;
+  },
+};
+
+/** Arguments that are bare identifiers ending in Version or Sdk: `safeExtGet(compileSdkVersion, 31)`. */
+const UNQUOTED_PROPERTY_ARG = /\b(\w+)\(\s*([A-Za-z_]\w*(?:Version|Sdk))\s*,/;
+const NULL_PROPERTY_NAME =
+  /Parameter specified as non-null is null: method \S*onGradlePropertyAccess, parameter propertyName/;
+const NO_COMPILE_SDK = /project '([^']+)' does not specify `?compileSdk`? in build\.gradle/;
+
+export const compileSdkNotSpecified: Rule = {
+  meta: {
+    id: "android.compile-sdk-not-specified",
+    title: "A Gradle project doesn't set compileSdk",
+    platforms: ["android"],
+    scope: "log",
+    trigger:
+      "A Gradle failure stating that project ':x' 'does not specify compileSdk in build.gradle', and/or a failure evaluating a project with 'Parameter specified as non-null is null: method …onGradlePropertyAccess, parameter propertyName' (a property looked up with a null name).",
+    evidence:
+      "The failure sections, the build file and line from the '* Where:' section, and, when the project is available, the compileSdk lines and unquoted property-name arguments in that build file.",
+    versionScope: `Android Gradle Plugin (all versions); the null property name failure was observed with Gradle ${GRADLE_NULL_PROPERTY_NAME.observedWithGradle}`,
+    references: [...GRADLE_NULL_PROPERTY_NAME.sources, RN_GRADLE_PROJECT_NAMES.source],
+    lastVerified: GRADLE_NULL_PROPERTY_NAME.lastVerified,
+    fixtures: [
+      "logs/real-gradle94-null-property-name.log",
+      "logs/real-agp92-compile-sdk-not-specified.log",
+    ],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      // One finding per Gradle project: the null-name failure explains the compileSdk one.
+      const byProject = new Map<
+        string,
+        {
+          nullName?: (typeof log.gradle.failures)[number];
+          noSdk?: (typeof log.gradle.failures)[number];
+        }
+      >();
+      for (const failure of log.gradle.failures) {
+        const text = flatten(log.doc, failure);
+        const evaluated = /evaluating (?:root )?project '([^']+)'/.exec(text)?.[1];
+        if (evaluated && NULL_PROPERTY_NAME.test(text)) {
+          const entry = byProject.get(evaluated) ?? {};
+          entry.nullName ??= failure;
+          byProject.set(evaluated, entry);
+        }
+        const noSdk = NO_COMPILE_SDK.exec(text)?.[1];
+        if (noSdk) {
+          const entry = byProject.get(noSdk) ?? {};
+          entry.noSdk ??= failure;
+          byProject.set(noSdk, entry);
+        }
+      }
+      for (const [gradleProject, { nullName, noSdk }] of byProject) {
+        const isApp = gradleProject === ":app";
+        const pkg = isApp ? undefined : packageForGradleProject(ctx, gradleProject);
+        const where = nullName ? buildFileForFailure(log.doc, nullName) : undefined;
+        const noSdkPath = noSdk
+          ? /does not specify `?compileSdk`? in build\.gradle \(([^)]+)\)/.exec(
+              flatten(log.doc, noSdk),
+            )?.[1]
+          : undefined;
+        const pkgName = isApp
+          ? undefined
+          : (pkg?.name ?? packageFromBuildPath(where?.path ?? noSdkPath));
+        const label = pkgName ?? gradleProject;
+        const evidence: Evidence[] = [];
+        for (const f of [nullName, noSdk]) if (f) evidence.push(logEvidence(log.doc, f));
+        if (where)
+          evidence.push({
+            source: "log",
+            file: log.doc.path,
+            detail: `Build file ${where.path}, line ${where.line}`,
+          });
+        const build = readBuildFile(ctx, where?.path ?? noSdkPath, gradleProject);
+        const unquoted: { fn: string; name: string }[] = [];
+        if (build)
+          build.lines.forEach((line, i) => {
+            const arg = UNQUOTED_PROPERTY_ARG.exec(line);
+            if (nullName && arg && !/^\s*(?:def|\/\/)/.test(line)) {
+              unquoted.push({ fn: arg[1]!, name: arg[2]! });
+              evidence.push({
+                source: "project",
+                file: build.file,
+                line: i + 1,
+                excerpt: line.trim().slice(0, 200),
+                detail: `${arg[2]} is passed to ${arg[1]}() unquoted`,
+              });
+            } else if (/compileSdk/.test(line) && evidence.length < 20) {
+              evidence.push({
+                source: "project",
+                file: build.file,
+                line: i + 1,
+                excerpt: line.trim().slice(0, 200),
+              });
+            }
+          });
+        evidence.push(
+          ...versionEvidence(ctx, ["android gradle plugin", "compileSdk", "react-native", "expo"]),
+        );
+
+        const file =
+          build?.file ??
+          (pkgName ? `node_modules/${pkgName}/android/build.gradle` : "the module's build.gradle");
+        const patch = isApp
+          ? ""
+          : ` Then run \`npx patch-package ${pkgName ?? "<package>"}\` and add \`"postinstall": "patch-package"\` to package.json so the change survives reinstalls.`;
+        const upgrade = isApp
+          ? []
+          : [
+              `Upgrade ${label} to a release that supports your React Native and Android Gradle Plugin versions. Check its changelog, open issues and unreleased commits: the fix may be merged but not yet published.`,
+            ];
+        if (nullName) {
+          const names = [...new Set(unquoted.map((u) => u.name))];
+          const example = names[0] ?? "compileSdkVersion";
+          const helper = unquoted[0]?.fn ?? "safeExtGet";
+          out.push(
+            finding(this.meta, {
+              title: `${isApp ? "android/app/build.gradle" : `Library ${label}`} looks up a Gradle property with a null name${names.length ? ` (unquoted ${names.join(", ")})` : ""}`,
+              severity: "error",
+              confidence: names.length ? "high" : "medium",
+              explanation:
+                `Gradle stopped evaluating ${gradleProject}${where ? ` at line ${where.line} of its build file` : ""} because the script looked up a project property whose name is null. ` +
+                (names.length
+                  ? `The build file passes ${names.join(", ")} to a helper without quotes, so Groovy reads a variable whose value is null instead of the string "${example}". `
+                  : `The usual cause is a helper such as \`safeExtGet(compileSdkVersion, 31)\` with the property name unquoted, so Groovy passes a null variable instead of the string "compileSdkVersion". `) +
+                (noSdk
+                  ? "The script stops before compileSdk is set, which is why the Android Gradle Plugin then reports that the project doesn't specify compileSdk. Both errors have the same cause."
+                  : ""),
+              evidence,
+              nextSteps: [
+                ...upgrade,
+                `${upgrade.length ? "Until then, quote" : "Quote"} the property names in ${file}: \`${helper}("${example}", …)\` instead of \`(${example}, …)\`${names.length > 1 ? `, and the same for ${names.slice(1).join(", ")}` : ""}.${patch}`,
+              ],
+              verification: `\`cd android && ./gradlew ${gradleProject}:help\` configures the project without the error.`,
+              limitations: [
+                `Observed with Gradle ${GRADLE_NULL_PROPERTY_NAME.observedWithGradle}; older Gradle versions weren't tested, which may be why the same library built before an upgrade.`,
+              ],
+            }),
+          );
+          continue;
+        }
+        out.push(
+          finding(this.meta, {
+            title: `${isApp ? "The app" : `Library ${label}`} doesn't set compileSdk`,
+            severity: "error",
+            confidence: build ? "high" : "medium",
+            explanation:
+              `The Android Gradle Plugin needs a compileSdk for every Android project, and ${gradleProject}${pkgName ? ` (the npm package ${pkgName})` : ""} ended configuration without one.` +
+              (isApp
+                ? ""
+                : " React Native libraries often read compileSdk from a rootProject.ext key and set nothing when the key is missing, or set it only inside a condition.") +
+              (build
+                ? ""
+                : " The build file isn't available here, so this tool can't show how it sets compileSdk."),
+            evidence,
+            nextSteps: [
+              ...upgrade,
+              `Look at how ${file} sets compileSdk (the lines are shown as evidence when the project is available). If it reads a rootProject.ext key, define that key in the ext block of android/build.gradle${ctx.project?.kind === "expo" ? " (in an Expo project android/ is generated, so use a config plugin)" : ""}. Otherwise set \`compileSdk\` explicitly.${patch}`,
+            ],
+            verification: `\`cd android && ./gradlew ${gradleProject}:help\` configures the project without the error.`,
+          }),
+        );
+      }
+    }
+    return out;
+  },
+};
+
 export const androidLogRules: Rule[] = [
   dependencyResolution,
   agpRequiresNewerJdk,
@@ -1390,4 +1702,6 @@ export const androidLogRules: Rule[] = [
   jvmOptionUnrecognized,
   builtInKotlinConflict,
   ninjaPathTooLong,
+  proguardAndroidTxtUnsupported,
+  compileSdkNotSpecified,
 ];

@@ -1,7 +1,7 @@
 import { finding, type Rule } from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import type { JsException } from "../../parsers/runtime.js";
-import { logEvidence, logEvidenceLines } from "../../parsers/types.js";
+import { logEvidence, logEvidenceLines, stripLogcatPrefix } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
 const VERIFIED = "2026-10-14";
@@ -16,6 +16,70 @@ const FOLLOW_ON = [
   /\bGlobal was not installed\b/,
   /is not a registered callable module/,
 ];
+
+/** JavaScript errors saying a native module isn't available in this build. */
+const NATIVE_MODULE_MISSING =
+  /Cannot find native module '([^']+)'|TurboModuleRegistry\.getEnforcing\(\.\.\.\): '([^']+)' could not be found/;
+/** Native errors that stop native modules from being set up. */
+const NATIVE_INIT_ERROR =
+  /\b(?:NoClassDefFoundError|ClassNotFoundException|UnsatisfiedLinkError|NoSuchMethodError|ExceptionInInitializerError)\b|Cannot install Expo Modules/;
+const JS_TAGS = new Set(["ReactNativeJS", "AndroidRuntime"]);
+
+interface NativeCause {
+  /** Line indices: the native error and up to three "Caused by" lines from the same process. */
+  lines: number[];
+  message: string;
+  /** A missing class from the Java standard library (java.* / javax.*). */
+  javaClass?: string;
+}
+
+/**
+ * The first native initialization error logged before `before` by the same process (when both
+ * lines have a pid). It explains a later "Cannot find native module" error.
+ */
+export function earlierNativeError(
+  log: ParsedLog,
+  before: number,
+  pid: string | undefined,
+): NativeCause | undefined {
+  const lines = log.doc.lines;
+  for (let i = 0; i < Math.min(before, lines.length); i++) {
+    const entry = stripLogcatPrefix(lines[i]!);
+    if (entry.tag && JS_TAGS.has(entry.tag)) continue;
+    if (pid && entry.pid && entry.pid !== pid) continue;
+    if (!NATIVE_INIT_ERROR.test(entry.message)) continue;
+    const picked = [i];
+    for (let j = i + 1; j < Math.min(before, i + 12) && picked.length < 4; j++) {
+      const next = stripLogcatPrefix(lines[j]!);
+      if (pid && next.pid && next.pid !== pid) continue;
+      if (/^\s*Caused by:/.test(next.message)) picked.push(j);
+    }
+    const all = picked.map((k) => stripLogcatPrefix(lines[k]!).message).join(" ");
+    const javaClass =
+      /(?:NoClassDefFoundError|ClassNotFoundException)[^"]*?(?:L|")?((?:java|javax)[./][\w./$]+?)[;"]/.exec(
+        all,
+      )?.[1];
+    return {
+      lines: picked,
+      message: entry.message.trim().slice(0, 200),
+      ...(javaClass ? { javaClass: javaClass.replace(/\//g, ".") } : {}),
+    };
+  }
+  return undefined;
+}
+
+/** Next steps for a native error that left a native module unavailable. */
+function nativeCauseSteps(native: NativeCause): string[] {
+  return [
+    "Start from the earlier native error and its 'Caused by' lines (shown as evidence), not the JavaScript error.",
+    ...(native.javaClass
+      ? [
+          `The missing class ${native.javaClass} is part of the Java standard library, so this device's Android version probably doesn't provide it. Check the device's Android version (\`adb shell getprop ro.build.version.sdk\`) and run the same build on a newer one. If it fails only on older versions, the library that uses the class doesn't support them: raise minSdkVersion to drop them, or wait for a fix in that library.`,
+        ]
+      : []),
+    "Search the issues of the library named in the native stack trace for the error text.",
+  ];
+}
 
 interface ExceptionGroup {
   primary: JsException;
@@ -64,8 +128,12 @@ export const javascriptException: Rule = {
       "https://reactnative.dev/docs/debugging-release-builds",
       "https://docs.expo.dev/debugging/runtime-issues/",
     ],
-    lastVerified: VERIFIED,
-    fixtures: ["logs/runtime-android-js-exception.log", "logs/real-logcat-js-startup-crash.log"],
+    lastVerified: "2026-10-25",
+    fixtures: [
+      "logs/runtime-android-js-exception.log",
+      "logs/real-logcat-js-startup-crash.log",
+      "logs/logcat-native-module-init-failed.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -74,6 +142,9 @@ export const javascriptException: Rule = {
         0,
         MAX_PER_LOG,
       )) {
+        const nativeCause = NATIVE_MODULE_MISSING.test(ex.message)
+          ? earlierNativeError(log, ex.start, ex.pid)
+          : undefined;
         const minified =
           ex.firstFrame &&
           /index\.android\.bundle|main\.jsbundle|^\s*\w@\d+:\d+/.test(ex.firstFrame);
@@ -95,6 +166,15 @@ export const javascriptException: Rule = {
               `Follow-on error caused by the first one: ${f.type}: ${f.message.slice(0, 160)}`,
             ),
           ),
+          ...(nativeCause
+            ? [
+                logEvidenceLines(
+                  log.doc,
+                  nativeCause.lines,
+                  "Native error logged earlier by the same process",
+                ),
+              ]
+            : []),
           ...(ex.termination
             ? [
                 logEvidenceLines(
@@ -112,6 +192,9 @@ export const javascriptException: Rule = {
             confidence: "high",
             explanation:
               `The app reported a JavaScript ${ex.type} (via ${ex.channel}). This finding confirms the exception, not its root cause.` +
+              (nativeCause
+                ? ` Native code failed earlier in the same process ("${nativeCause.message}"), which is the likely reason the native module isn't available: fix that error first.`
+                : "") +
               (ex.termination
                 ? ` The exception wasn't caught, and the app crashed: the process was killed by ${ex.termination.signal}${ex.termination.thread ? ` on its JavaScript thread (${ex.termination.thread})` : ""}. The native crash that follows in the log is a consequence of this exception, not a separate native bug.`
                 : "") +
@@ -123,6 +206,7 @@ export const javascriptException: Rule = {
                 : ""),
             evidence,
             nextSteps: [
+              ...(nativeCause ? nativeCauseSteps(nativeCause) : []),
               ...(/^Network request failed\b/.test(ex.message)
                 ? [
                     "This message comes from React Native's networking layer and hides the cause: the server is unreachable from the device, DNS or TLS failed, or (Android release builds) the URL uses http://, which Android blocks by default. Check the URL the request uses and open it in the device's browser.",
@@ -139,7 +223,7 @@ export const javascriptException: Rule = {
                   ]
                 : ex.firstFrame
                   ? [`Start at the first stack frame: ${ex.firstFrame}.`]
-                  : /^Network request failed\b/.test(ex.message)
+                  : /^Network request failed\b/.test(ex.message) || nativeCause
                     ? []
                     : [
                         `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
@@ -238,10 +322,11 @@ export const androidFatalException: Rule = {
       "https://developer.android.com/studio/debug/logcat",
       "https://reactnative.dev/docs/signed-apk-android",
     ],
-    lastVerified: VERIFIED,
+    lastVerified: "2026-10-25",
     fixtures: [
       "logs/runtime-android-unable-to-load-script.log",
       "logs/runtime-android-js-exception.log",
+      "logs/logcat-fatal-native-module-init-failed.log",
     ],
   },
   run(ctx) {
@@ -286,10 +371,40 @@ export const androidFatalException: Rule = {
             "Clean and rebuild native code (`cd android && ./gradlew clean`).",
           ];
         } else if (/JavascriptException/.test(fatal.exception)) {
-          title = `JavaScript error crashed the app: ${fatal.message.split(",")[0]?.slice(0, 100) ?? ""}`;
-          confidence = "high";
-          explanation =
-            "A JavaScript exception was thrown and React Native turned it into a fatal native crash. The cause is in JavaScript. See the JavaScript exception finding.";
+          const missing = NATIVE_MODULE_MISSING.exec(fatal.message);
+          const moduleName = missing?.[1] ?? missing?.[2];
+          const native = missing
+            ? earlierNativeError(
+                log,
+                fatal.start,
+                stripLogcatPrefix(log.doc.lines[fatal.start]!).pid,
+              )
+            : undefined;
+          if (native) {
+            title = `Native module '${moduleName}' wasn't available because native code failed earlier`;
+            confidence = "medium";
+            evidence.push(
+              logEvidenceLines(log.doc, native.lines, "Native error logged before the crash"),
+            );
+            explanation =
+              `The crash is a JavaScript error ("${fatal.message.split(",")[0]?.slice(0, 100) ?? ""}"), but it's a consequence. Earlier in the log, the same process failed in native code: "${native.message}". When native module setup fails, JavaScript can't find the module, and the failure only surfaces as a JavaScript error.` +
+              "";
+            nextSteps = nativeCauseSteps(native);
+          } else if (missing) {
+            title = `JavaScript couldn't find native module '${moduleName}'`;
+            confidence = "medium";
+            explanation = `JavaScript asked for the native module '${moduleName}', and this build doesn't provide it. Common causes: the package was installed after the native app was built, the app runs in Expo Go or another prebuilt client that doesn't include the module, or the module failed to initialize (no native error was found earlier in this log, but it may have been logged before the capture started).`;
+            nextSteps = [
+              "Rebuild the native app after installing the package (`npx expo run:android`, `npx react-native run-android`, or a new EAS build). Reloading JavaScript isn't enough.",
+              "If you use Expo Go, check that the module is included in it; otherwise use a development build.",
+              "Capture logcat from app launch (`adb logcat -c` before starting the app) to see whether native code logged an error first.",
+            ];
+          } else {
+            title = `JavaScript error crashed the app: ${fatal.message.split(",")[0]?.slice(0, 100) ?? ""}`;
+            confidence = "high";
+            explanation =
+              "A JavaScript exception was thrown and React Native turned it into a fatal native crash. The cause is in JavaScript. See the JavaScript exception finding.";
+          }
         }
         out.push(
           finding(this.meta, {
