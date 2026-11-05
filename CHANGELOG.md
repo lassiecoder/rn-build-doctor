@@ -1,5 +1,30 @@
 # Changelog
 
+## 0.1.10 (2026-11-05)
+
+From the open items in the 2026-10-28/29 thread research, and a sweep of the 169 issues opened in expo/expo, react/react-native and expo/eas-cli between Oct 28 and Nov 5, 2026. Each log was run through the tool before and after; version facts were checked against the projects' sources (foojay's README, React Native's stable branches, Expo's docs and @expo/package-manager, Gradle's start scripts, npm's docs) on 2026-11-05.
+
+Wrong or misleading output fixed:
+
+- `android.gradle-version-too-low`: the title no longer reads "Gradle 8.5. is below …".
+- CocoaPods errors relayed by Expo CLI (`Command \`pod install\` failed.`/`└─ Cause: …`) were reported as "No failure detected"; they now reach the CocoaPods rules, and the line counts as a failure.
+- `ios.deployment-target-unsupported` accepts Expo CLI/xcpretty's `❌` form, which `ios.compile-error` used to claim with "Open undefined at undefined". `ios.compile-error` names the target when there's no file and no longer prints a doubled period.
+- `android.compile-error`: errors in generated code (`build/generated/…`) are no longer blamed on the package version.
+- `javascript.unable-to-resolve-module`: imports with Windows backslashes (`..\assets\x`) are no longer blamed on a missing file or letter case.
+- `android.dependency-resolution`: an HTTP status (`Received status code 403 from server`) is named with its host, and refusals no longer suggest that the version doesn't exist.
+- "No supported diagnosis" excerpts show the line before `Command … failed` and put `** BUILD FAILED **` last.
+
+New rules: `android.java-not-found`, `android.jdk-not-found` (scan), `android.autolinking-stale-path`, `android.cmake-cache-stale`, `android.hermes-source-missing` (fixed in React Native 0.89.0-rc.0), `android.r8-class-descriptor-mismatch`, `android.foojay-gradle9-incompatible` (React Native 0.82–0.85 pin foojay 0.5.0), `ios.stale-node-binary`, `ios.xcode-env-stale-node` (scan), `ios.swift-compiler-crash`, `expo.config-plugins-module-missing`, `expo.autolinking-script-failed`, `expo.config-evaluation-failed`, `javascript.hermes-compile-error`, `javascript.dev-engines-mismatch`.
+
+Better answers:
+
+- Runtime: `Cannot find native module 'X'` without an earlier native error gives the rebuild / Expo Go / version checklist and, with the project, names the installed package that requests the module. `native call failed: java.lang.NoSuchMethodError` is reported as a native binary mismatch. Android fatal exceptions point at the first app frame, suggest `adb logcat -b crash -d`, use the deepest cause in the title for wrapper exceptions, and explain missing `java.*` classes (java.time before API 26). `No script URL provided` (iOS) is a bundle-load failure. "Missing … credentials" counts as missing configuration, with the SDK 55+ `eas update --environment` behavior.
+- Android Studio's Logcat window format and logcat trimmed to `E Tag: message` are recognized.
+- `javascript.lockfile-out-of-sync` says when missing entries are peer dependencies (legacy-peer-deps), reading only that key from `.npmrc`.
+- `android.compile-error` shows androidx versions a library pins when it calls an unresolved API.
+- `ios.uiscene-lifecycle-required` points out `"image": "latest"` in eas.json; `ios.xcode27-simulator-app-not-found` covers Xcode 27.2's `identified as 'com.apple.dt.Xcode'`.
+- Small fixes: `EXIT.ai` replaces a literal exit code, and dead code in project detection was removed.
+
 ## 0.1.9 (2026-10-25)
 
 Gaps from an audit of the build and setup failures in 1,982 issues opened between Jul 25 and Oct 25, 2026 in expo/expo, react/react-native, eas-cli and 27 popular libraries. Each issue body was run through 0.1.8: of the ~300 build-related issues, 11 got a specific diagnosis before this release and 32 after. Every new rule was reproduced locally (npm/Yarn/pnpm/Bun, CocoaPods 1.16.2, Kotlin 2.1.20, Xcode 26.6, AGP 9.2.1 with an API 34 emulator, dyld) or, where that wasn't possible (Xcode 27), checked against the published package contents and the issue's maintainer replies.
