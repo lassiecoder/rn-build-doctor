@@ -1,0 +1,2 @@
+> cd android && gradlew.bat app:assembleDebug
+expo-modules-autolinking failed: SyntaxError: Unexpected token 'm', "[modules]" is not valid JSON

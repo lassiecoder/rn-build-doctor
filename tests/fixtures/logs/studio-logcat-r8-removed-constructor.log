@@ -1,0 +1,33 @@
+2026-10-25 03:47:24.079  1012-1645  EGL_emulation           com.example.r8repro                  D  app_time_stats: avg=236.02ms min=52.14ms max=988.04ms count=7
+2026-10-25 03:47:24.087  542-746    CompatibilityChangeReporter com.example.r8repro                  D  Compat change id reported: 168419799; UID 10088; state: DISABLED
+                                                                                                        Compat change id reported: 273564678; UID 10088; state: DISABLED
+2026-10-25 03:47:24.092  1565-2212  AssistantForeground     com.example.r8repro                  I  (REDACTED) Get launcher package: %s
+2026-10-25 03:47:24.829  3339-3339  AndroidRuntime          com.example.r8repro                  D  Shutting down VM
+2026-10-25 03:47:24.830  3339-3339  AndroidRuntime          com.example.r8repro                  E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.r8repro, PID: 3339
+                                                                                                    java.lang.RuntimeException: Unable to start activity ComponentInfo{com.example.r8repro/com.example.r8repro.MainActivity}: java.lang.RuntimeException: Failed to create an instance of a
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3782)
+                                                                                                    	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3922)
+                                                                                                    	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:103)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:139)
+                                                                                                    	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:96)
+                                                                                                    	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2443)
+                                                                                                    	at android.os.Handler.dispatchMessage(Handler.java:106)
+                                                                                                    	at android.os.Looper.loopOnce(Looper.java:205)
+                                                                                                    	at android.os.Looper.loop(Looper.java:294)
+                                                                                                    	at android.app.ActivityThread.main(ActivityThread.java:8177)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+                                                                                                    	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+                                                                                                    Caused by: java.lang.RuntimeException: Failed to create an instance of a
+                                                                                                    	at com.example.r8repro.MainActivity.onCreate(r8-map-id-7198b78960f04d40f4a7ebc0017a290b88cb8fd585006c9cd81374d47789d8d9:5)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8595)
+                                                                                                    	at android.app.Activity.performCreate(Activity.java:8573)
+                                                                                                    	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1456)
+                                                                                                    	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3764)
+                                                                                                    	... 12 more
+                                                                                                    Caused by: java.lang.NoSuchMethodException: a.<init> []
+                                                                                                    	at java.lang.Class.getConstructor0(Class.java:3325)
+                                                                                                    	at java.lang.Class.getDeclaredConstructor(Class.java:3063)
+                                                                                                    	at com.example.r8repro.MainActivity.onCreate(r8-map-id-7198b78960f04d40f4a7ebc0017a290b88cb8fd585006c9cd81374d47789d8d9:3)
+                                                                                                    	... 16 more

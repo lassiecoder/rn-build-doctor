@@ -1,0 +1,1 @@
+10-21 11:07:34.552  6610  6688 E ReactNativeJS: Error: native call failed: java.lang.NoSuchMethodError: no non-static method "Lexpo/modules/haptics/HapticsModule;.impactAsync__trampoline$ExpoModulesV2(ILio/github/expo/modules/v2/async/PromiseHandle;)V"

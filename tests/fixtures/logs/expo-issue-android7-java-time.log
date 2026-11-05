@@ -1,0 +1,11 @@
+FATAL EXCEPTION: main
+Process: com.example.devlauncherandroid7repro, PID: 5716
+java.lang.NoClassDefFoundError: Failed resolution of: Ljava/time/Duration;
+  at expo.modules.devlauncher.nsd.NsdDiscoveryBaseKt.<clinit>(NsdDiscoveryBase.kt:30)
+  at expo.modules.devlauncher.nsd.NsdDiscoveryBaseKt.access$getHEALTH_CHECK_TIMEOUT$p(NsdDiscoveryBase.kt:1)
+  at expo.modules.devlauncher.nsd.NsdDiscoveryBase.<init>(NsdDiscoveryBase.kt:40)
+  at expo.modules.devlauncher.services.PackagerService.<init>(PackagerService.kt:19)
+  at expo.modules.ApplicationLifecycleDispatcher.onApplicationCreate(ApplicationLifecycleDispatcher.kt:20)
+  at com.example.devlauncherandroid7repro.MainApplication.onCreate(MainApplication.kt:38)
+Caused by: java.lang.ClassNotFoundException: Didn't find class "java.time.Duration"
+  ... 23 more

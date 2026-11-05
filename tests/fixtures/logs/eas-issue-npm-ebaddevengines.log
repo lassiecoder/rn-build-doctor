@@ -1,0 +1,5 @@
+Normalizing project source permissions
+We detected that you set the NPM_TOKEN environment variable
+npm config get userconfig exited with non-zero code: 1
+npm error code EBADDEVENGINES
+npm error EBADDEVENGINES Invalid name "pnpm" does not match "npm" for "packageManager"

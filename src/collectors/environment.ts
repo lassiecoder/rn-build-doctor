@@ -14,6 +14,10 @@ export interface EnvironmentSnapshot {
   variableNames: Set<string>;
   java?: JavaInfo;
   javaHome?: string;
+  /** Whether the JAVA_HOME directory exists (only when JAVA_HOME is set). */
+  javaHomeExists?: boolean;
+  /** Result of looking for `java` on PATH: skipped when not probed or JAVA_HOME already gave a JDK. */
+  javaProbe: "found" | "not-found" | "skipped";
   androidSdk?: { variable: "ANDROID_HOME" | "ANDROID_SDK_ROOT"; exists: boolean };
   nodeVersion: string;
   platform: NodeJS.Platform;
@@ -43,11 +47,13 @@ export function collectEnvironment(options: CollectEnvironmentOptions = {}): Env
     variableNames: new Set(Object.keys(env).filter((k) => env[k] !== undefined && env[k] !== "")),
     nodeVersion: process.versions.node,
     platform: process.platform,
+    javaProbe: "skipped",
   };
 
   const javaHome = env["JAVA_HOME"];
   if (javaHome) {
     snapshot.javaHome = javaHome;
+    snapshot.javaHomeExists = existsSync(javaHome);
     try {
       const release = readFileSync(join(javaHome, "release"), "utf8");
       const parsed = parseJavaMajor(release);
@@ -67,8 +73,10 @@ export function collectEnvironment(options: CollectEnvironmentOptions = {}): Env
       const output = `${result.stderr ?? ""}\n${result.stdout ?? ""}`;
       const parsed = result.error ? undefined : parseJavaMajor(output);
       if (parsed) snapshot.java = { ...parsed, source: "PATH" };
+      snapshot.javaProbe = result.error ? "not-found" : "found";
     } catch {
       // java is not installed or not runnable
+      snapshot.javaProbe = "not-found";
     }
   }
 

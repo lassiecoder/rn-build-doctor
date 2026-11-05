@@ -1,0 +1,6 @@
+› Compiling CleverPushNotificationServiceExtension
+❌  The iOS Simulator deployment target 'IPHONEOS_DEPLOYMENT_TARGET' is set to 13.0, but the range of supported deployment target versions is 15.0 to 27.0.x. (in target 'CleverPushNotificationServiceExtension' from project 'myapp')
+
+› 1 error(s), and 0 warning(s)
+
+CommandError: Failed to build iOS project. "xcodebuild" exited with error code 65.

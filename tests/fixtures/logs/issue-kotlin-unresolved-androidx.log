@@ -1,0 +1,11 @@
+> Task :react-native-hinge:compileDebugKotlin FAILED
+e: .../android/src/main/java/com/margelo/nitro/hinge/HybridHinge.kt:197:43 Unresolved reference 'getCurrentWindowLayoutInfo'.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':react-native-hinge:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+BUILD FAILED in 41s

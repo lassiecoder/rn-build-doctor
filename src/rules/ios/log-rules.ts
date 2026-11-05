@@ -1,7 +1,13 @@
 import { readdirSync, type Dirent } from "node:fs";
 import { join, posix } from "node:path";
 import semver from "semver";
-import { finding, type Rule, type RuleContext, type RuleMeta } from "../../engine/rule.js";
+import {
+  finding,
+  sentence,
+  type Rule,
+  type RuleContext,
+  type RuleMeta,
+} from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import type { XcodeError } from "../../parsers/xcode.js";
 import { compareVersions } from "../android/compat.js";
@@ -13,8 +19,9 @@ import {
   IOS27_UISCENE,
   RN_NAMESPACED_HEADERS,
   XCODE27_DEVICEHUB,
+  XCODE272_SIMULATOR_ID,
 } from "./compat.js";
-import { readJsonFile } from "../../collectors/project-files.js";
+import { findLine, readJsonFile, readProjectFile } from "../../collectors/project-files.js";
 import { logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
@@ -117,21 +124,35 @@ export const cocoapodsSpecNotFound: Rule = {
     title: "CocoaPods could not find a pod specification",
     platforms: ["ios"],
     scope: "log",
-    trigger: "CocoaPods output '[!] Unable to find a specification for `X`'.",
+    trigger:
+      "CocoaPods output '[!] Unable to find a specification for `X`', including Expo CLI's relayed form ('Command `pod install` failed.' / '└─ Cause: Unable to find a specification for …', or 'Couldn't install: A » B').",
     evidence: "The CocoaPods error naming the pod and its dependent.",
     versionScope: "CocoaPods 1.x",
     references: COCOAPODS_REFS,
     lastVerified: VERIFIED,
-    fixtures: ["logs/ios-cocoapods-spec-not-found.log"],
+    fixtures: [
+      "logs/ios-cocoapods-spec-not-found.log",
+      "logs/expo-cli-pod-install-spec-not-found.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
     for (const log of ctx.logs) {
       for (const error of log.cocoapods.errors) {
-        const m =
+        // CocoaPods' own wording, or Expo CLI's summary of it ("Couldn't install: Expo » ExpoModulesCore").
+        const pods =
           /Unable to find a specification for [`'"]([^`'"]+)[`'"](?:\s+depended upon by [`'"]([^`'"]+)[`'"])?/.exec(
             error.message,
           );
+        const expo = pods
+          ? null
+          : /^Couldn't install: (\S+) » (\S+?)\.?(?:\s|$)/.exec(error.message);
+        // [pod, the pod that depends on it]
+        const m = pods
+          ? [pods[0], pods[1], pods[2]]
+          : expo
+            ? [expo[0], expo[2], expo[1]]
+            : undefined;
         if (!m) continue;
         out.push(
           finding(this.meta, {
@@ -254,6 +275,14 @@ function isSigningMessage(message: string): boolean {
   return SIGNING_PATTERNS.some(([p]) => p.test(message));
 }
 
+/** Xcode errors that another rule diagnoses, which ios.compile-error must not claim. */
+function handledElsewhere(message: string): boolean {
+  return (
+    isSigningMessage(message) ||
+    /deployment target '\w+' is set to [\d.]+, but the range/.test(message)
+  );
+}
+
 /** React Native version from the project: installed, or the lowest version the declared range allows. */
 function reactNativeVersion(ctx: RuleContext): string | undefined {
   const versions = ctx.project?.versions;
@@ -316,6 +345,7 @@ export const nativeCompileError: Rule = {
       "logs/expo-issue-swift-error-no-column.log",
       "projects/expo57-framework-headers",
       "projects/rn088-ios-pods",
+      "logs/expo-cli-targeted-compile-error.log",
     ],
   },
   run(ctx) {
@@ -325,18 +355,21 @@ export const nativeCompileError: Rule = {
       const located = log.xcode.errors.filter(
         (e) =>
           e.file &&
-          !isSigningMessage(e.message) &&
+          !handledElsewhere(e.message) &&
           (log.xcode.detected || APPLE_SOURCE.test(e.file)),
       );
       const targeted = log.xcode.detected
         ? log.xcode.errors.filter(
-            (e) => !e.file && IN_TARGET.test(e.message) && !isSigningMessage(e.message),
+            (e) => !e.file && IN_TARGET.test(e.message) && !handledElsewhere(e.message),
           )
         : [];
       const errors = located.length ? located : targeted;
       if (!errors.length) continue;
       const first = errors[0]!;
-      const firstMessage = first.message.replace(IN_TARGET, "");
+      const firstMessage = first.message.replace(IN_TARGET, "").replace(/\.\s*$/, "");
+      const targetName = IN_TARGET.exec(first.message)?.[1];
+      // Where the first error is: its file, or the target Xcode names when there's no file.
+      const firstWhere = first.file ?? (targetName ? `the target ${targetName}` : "the build");
       const dependency = dependencyOfError(first);
       const header = /'([^']+\.h)' file not found/.exec(first.message);
       const module = /(?:no such module|module) '([^']+)'(?: not found)?/i.exec(first.message);
@@ -395,7 +428,7 @@ export const nativeCompileError: Rule = {
               ? `Swift module '${module[1]}' not found`
               : dependency
                 ? `Compiler error in ${dependency}: ${firstMessage}`
-                : `Compiler error: ${firstMessage}`,
+                : `Xcode error${targetName ? ` in ${targetName}` : ""}: ${firstMessage}`,
           severity: "error",
           confidence: header || module ? "medium" : "high",
           explanation:
@@ -405,8 +438,8 @@ export const nativeCompileError: Rule = {
                 ? (xcodeTooOld
                     ? `This build uses Xcode ${xcode}, and Expo SDK ${sdk} requires Xcode ${minXcode} or later: older Xcode versions can't compile its Swift sources. `
                     : "") +
-                  `Xcode reported ${errors.length} compiler error${errors.length === 1 ? "" : "s"}. The first is in ${first.file ?? `the target ${dependency}`}, which belongs to the dependency ${dependency}${installed ? ` (installed ${installed})` : ""}, not to your app code: ${firstMessage}. A compile error inside a dependency usually means that version doesn't support this Xcode (Swift compiler) or React Native version, so the fix is a different version of ${dependency}, not a change in your app.${xcode ? ` This build uses Xcode ${xcode}.` : ""}`
-                : `Xcode reported ${errors.length} compiler error${errors.length === 1 ? "" : "s"}. The first is in ${first.file}: ${firstMessage}`,
+                  `Xcode reported ${errors.length} compiler error${errors.length === 1 ? "" : "s"}. The first is in ${first.file ?? `the target ${dependency}`}, which belongs to the dependency ${dependency}${installed ? ` (installed ${installed})` : ""}, not to your app code: ${sentence(firstMessage)} A compile error inside a dependency usually means that version doesn't support this Xcode (Swift compiler) or React Native version, so the fix is a different version of ${dependency}, not a change in your app.${xcode ? ` This build uses Xcode ${xcode}.` : ""}`
+                : `Xcode reported ${errors.length} error${errors.length === 1 ? "" : "s"}. The first is in ${firstWhere}: ${sentence(firstMessage)}`,
           evidence,
           nextSteps:
             header || module
@@ -444,10 +477,15 @@ export const nativeCompileError: Rule = {
                           "Then reinstall pods (`cd ios && pod install`, or `npx expo prebuild --clean` in an Expo project) so the new version is compiled.",
                         ]),
                   ]
-                : [
-                    `Open ${first.file} at ${first.position} and fix the reported error.`,
-                    "If the file is inside Pods or node_modules, check whether that library version supports your React Native and Xcode versions.",
-                  ],
+                : first.file
+                  ? [
+                      `Open ${first.file} at ${first.position} and fix the reported error.`,
+                      "If the file is inside Pods or node_modules, check whether that library version supports your React Native and Xcode versions.",
+                    ]
+                  : [
+                      `Fix the error reported for ${firstWhere}. Xcode's Report navigator (or the full xcodebuild log) shows the command that produced it.`,
+                      "If the target was added by a config plugin or a library, check whether a newer version of it fixes the error.",
+                    ],
           verification: "The Xcode build compiles the affected file.",
         }),
       );
@@ -718,7 +756,7 @@ export const bundlePhaseFailedRule: Rule = {
           evidence,
           nextSteps: node
             ? [
-                "Set NODE_BINARY in ios/.xcode.env.local to the absolute path of node (`echo export NODE_BINARY=$(command -v node) > ios/.xcode.env.local`).",
+                "Set NODE_BINARY in ios/.xcode.env.local to the absolute path of node (`echo export NODE_BINARY=$(command -v node) > ios/.xcode.env.local`). This pins that exact node: when a version manager removes it, update or delete the file again.",
                 "Rebuild from Xcode or with your run command.",
               ]
             : metroErrors.length
@@ -740,7 +778,7 @@ export const bundlePhaseFailedRule: Rule = {
 // project 'Pods')`. React Native CLI prints it as `error The iOS Simulator …`. Older Xcode versions
 // report the same message as a warning.
 const DEPLOYMENT_TARGET =
-  /(?:^|[\s:])(error|warning):?\s+The ([\w ]+?) deployment target '(\w+)' is set to (\d+(?:\.\d+)*), but the range of supported deployment target versions is (\d+(?:\.\d+)*) to (\d+(?:\.[\dx]+)*)\.?(?:\s*\(in target '([^']+)' from project '([^']+)'\))?/;
+  /(?:(?:^|[\s:])(error|warning):?|^❌)\s+The ([\w ]+?) deployment target '(\w+)' is set to (\d+(?:\.\d+)*), but the range of supported deployment target versions is (\d+(?:\.\d+)*) to (\d+(?:\.[\dx]+)*)\.?(?:\s*\(in target '([^']+)' from project '([^']+)'\))?/;
 
 /**
  * CocoaPods names a resource bundle target `<pod>-<bundle>`, and bundles are usually named after
@@ -761,7 +799,7 @@ export const deploymentTargetUnsupported: Rule = {
     platforms: ["ios"],
     scope: "log",
     trigger:
-      "An Xcode error \"The <platform> deployment target '<SETTING>' is set to X, but the range of supported deployment target versions is Y to Z\". The same message as a warning doesn't trigger the rule.",
+      "An Xcode error \"The <platform> deployment target '<SETTING>' is set to X, but the range of supported deployment target versions is Y to Z\" (as `error:`, React Native CLI's `error`, or Expo CLI/xcpretty's ❌). The same message as a warning doesn't trigger the rule.",
     evidence:
       "The error lines with each target, its project (Pods or the app), the configured value, and the supported range Xcode printed. The Podfile platform when the project is available.",
     versionScope: "Xcode 14+ (seen as an error with Xcode 27, where the minimum is iOS 15.0)",
@@ -771,7 +809,10 @@ export const deploymentTargetUnsupported: Rule = {
       "https://github.com/react-native-async-storage/async-storage/issues/1355",
     ],
     lastVerified: "2026-10-23",
-    fixtures: ["logs/xcode27-pod-deployment-target.log"],
+    fixtures: [
+      "logs/xcode27-pod-deployment-target.log",
+      "logs/expo-cli-xcode27-deployment-target.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -780,7 +821,8 @@ export const deploymentTargetUnsupported: Rule = {
       const seen = new Set<string>();
       log.doc.lines.forEach((line, index) => {
         const match = DEPLOYMENT_TARGET.exec(line);
-        if (!match || match[1] !== "error") return;
+        // Expo CLI and xcpretty print errors with ❌ instead of "error:".
+        if (!match || (match[1] ?? "error") !== "error") return;
         const key = `${match[7] ?? ""}|${match[8] ?? ""}|${match[4]}`;
         if (seen.has(key)) return;
         seen.add(key);
@@ -1143,19 +1185,48 @@ export const xcode27SimulatorApp: Rule = {
     platforms: ["ios"],
     scope: "log",
     trigger:
-      '"Can\'t determine id of Simulator app; the Simulator is most likely not installed on this machine" from Expo CLI or EAS CLI.',
+      "\"Can't determine id of Simulator app; the Simulator is most likely not installed on this machine\" from Expo CLI or EAS CLI, or Expo CLI's \"Device Hub or Simulator is installed but is identified as 'com.apple.dt.Xcode'\" (Xcode 27.2).",
     evidence: "The error line, and with the project, the installed @expo/cli version.",
-    versionScope: `Xcode 27+; Expo CLI before SDK ${XCODE27_DEVICEHUB.expoCliFirstSupportedMajor}, EAS CLI before ${XCODE27_DEVICEHUB.easCliFixedIn}`,
-    references: XCODE27_DEVICEHUB.sources,
-    lastVerified: XCODE27_DEVICEHUB.lastVerified,
+    versionScope: `Xcode 27+; Expo CLI before SDK ${XCODE27_DEVICEHUB.expoCliFirstSupportedMajor}, EAS CLI before ${XCODE27_DEVICEHUB.easCliFixedIn}; Xcode 27.2 with @expo/cli up to ${XCODE272_SIMULATOR_ID.reportedWithExpoCli}`,
+    references: [...XCODE27_DEVICEHUB.sources, ...XCODE272_SIMULATOR_ID.sources],
+    lastVerified: XCODE272_SIMULATOR_ID.lastVerified,
     fixtures: [
       "logs/eas-issue-xcode27-simulator-app.log",
       "logs/expo-issue-xcode27-simulator-app.log",
+      "logs/expo-issue-xcode272-simulator-is-xcode.log",
     ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
     for (const log of ctx.logs) {
+      const xcodeId = firstMatch(
+        log,
+        /Device Hub or Simulator is installed but is identified as '([^']+)'/,
+      );
+      if (xcodeId) {
+        const cli = ctx.project?.installedVersion("@expo/cli");
+        out.push(
+          finding(this.meta, {
+            title: `Expo CLI found ${xcodeId.match[1]} where it looked for the Simulator app (Xcode 27.2)`,
+            severity: "error",
+            confidence: "high",
+            explanation: `With Xcode 27.2, macOS answers the lookup for an app named "Simulator" with Xcode itself (${xcodeId.match[1]}). Expo CLI looks up "Simulator" before "DeviceHub", gets an answer, and stops because it doesn't recognize it, so its DeviceHub support never runs. Reported with @expo/cli ${XCODE272_SIMULATOR_ID.reportedWithExpoCli} (expo/expo#52721); no fix was released when this rule was last checked.`,
+            evidence: [
+              logEvidence(log.doc, { start: xcodeId.index, end: xcodeId.index }),
+              ...(cli
+                ? [{ source: "project" as const, detail: `@expo/cli: installed ${cli}` }]
+                : []),
+            ],
+            references: XCODE272_SIMULATOR_ID.sources,
+            nextSteps: [
+              "Check for a newer @expo/cli (update expo to the latest patch of your SDK) that looks up DeviceHub first.",
+              "Until then, open the .xcworkspace in ios/ and run the app from Xcode, or build with `xcodebuild` and install with `xcrun simctl install booted <app>`, with Metro started separately (`npx expo start`).",
+            ],
+            verification: "The app installs and launches on a simulator.",
+          }),
+        );
+        continue;
+      }
       const hit = firstMatch(log, /Can't determine id of Simulator app/);
       if (!hit) continue;
       const eas = log.doc.lines.some((l) =>
@@ -1476,6 +1547,7 @@ export const uisceneLifecycleRequired: Rule = {
     fixtures: [
       "logs/expo-issue-ios27-uiscene-required.log",
       "logs/issue-ios27-uiscene-crash-report.log",
+      "projects/expo54-eas-image-latest",
     ],
   },
   run(ctx) {
@@ -1495,6 +1567,19 @@ export const uisceneLifecycleRequired: Rule = {
       if (rn) evidence.push({ source: "project", detail: `react-native: ${rn}` });
       if (expo) evidence.push({ source: "project", detail: `expo: ${expo}` });
       const needsUpgrade = isExpo ? oldExpo : oldRn;
+      // EAS profiles with ios.image "latest" switch Xcode versions without a code change.
+      const easText = ctx.project ? readProjectFile(ctx.project.root, "eas.json") : undefined;
+      const latestImage = easText?.ok
+        ? findLine(easText.text, /"image"\s*:\s*"latest"/)
+        : undefined;
+      if (latestImage)
+        evidence.push({
+          source: "project",
+          file: "eas.json",
+          line: latestImage.line,
+          excerpt: latestImage.excerpt,
+          detail: 'An EAS build profile uses image "latest"',
+        });
       out.push(
         finding(this.meta, {
           title:
@@ -1516,6 +1601,11 @@ export const uisceneLifecycleRequired: Rule = {
                 `Upgrade to Expo SDK ${IOS27_UISCENE.minExpoSdk}: \`npx expo prebuild --clean\` then generates SceneDelegate.swift and the UIApplicationSceneManifest entry.${expoMajor === 57 ? " On SDK 57 there's an opt-in: ios.enableSceneSupport in the expo-build-properties plugin." : ""}`,
                 "If ios/ is maintained by hand, follow Expo's scene life cycle guide to move app startup into a scene delegate.",
                 "Until then, build with Xcode 26 (the iOS 26 SDK), which doesn't require scenes.",
+                ...(latestImage
+                  ? [
+                      'eas.json uses `"image": "latest"`, so EAS picked up Xcode 27 when the image changed. Pin `ios.image` to an Xcode 26 image (see the EAS build server infrastructure page) for production builds until the app supports scenes.',
+                    ]
+                  : []),
               ]
             : [
                 `Upgrade to React Native ${IOS27_UISCENE.minReactNative.replace(/\.0$/, "")} or later, then migrate: move the React Native entry point from AppDelegate to a SceneDelegate, forward the scene's URL and user-activity callbacks to RCTLinkingManager, and add UIApplicationSceneManifest to Info.plist (see the template's SceneDelegate.swift).`,
@@ -1529,7 +1619,166 @@ export const uisceneLifecycleRequired: Rule = {
   },
 };
 
+/** A script phase sourcing NODE_BINARY that no longer exists: `…Script-X.sh: line 9: /…/bin/node: No such file or directory`. */
+const MISSING_NODE = /^(.+?\.sh): line \d+: (\/\S*\/(?:bin\/)?node): No such file or directory\s*$/;
+
+export const staleNodeBinary: Rule = {
+  meta: {
+    id: "ios.stale-node-binary",
+    title: "An Xcode script phase runs a node that no longer exists",
+    platforms: ["ios"],
+    scope: "log",
+    trigger:
+      "An Xcode script phase line '<Script-….sh>: line N: <absolute path>/node: No such file or directory'.",
+    evidence:
+      "The script error lines with the missing node path, the script phases that failed, and with the project, the NODE_BINARY line in ios/.xcode.env.local.",
+    versionScope: "React Native 0.69+ (.xcode.env / .xcode.env.local NODE_BINARY)",
+    references: [
+      "https://github.com/react/react-native/issues/59538",
+      "https://github.com/react/react-native/issues/51466",
+      "https://github.com/react/react-native/blob/main/packages/react-native/scripts/xcode/with-environment.sh",
+    ],
+    lastVerified: "2026-11-05",
+    fixtures: ["logs/rn-issue-xcode-env-local-stale-node.log", "projects/rn088-stale-xcode-env"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const hits = log.doc.lines
+        .map((l, index) => ({ index, match: MISSING_NODE.exec(l.trim()) }))
+        .filter((h): h is { index: number; match: RegExpExecArray } => h.match !== null);
+      if (!hits.length) continue;
+      const node = hits[0]!.match[2]!;
+      const local = ctx.project
+        ? readProjectFile(ctx.project.root, "ios/.xcode.env.local")
+        : undefined;
+      const pinned = local?.ok ? findLine(local.text, /^\s*export\s+NODE_BINARY=/) : undefined;
+      const evidence: Evidence[] = hits.slice(0, 3).map((h) =>
+        logEvidence(log.doc, {
+          start: h.index,
+          end: Math.min(log.doc.lines.length - 1, h.index + 1),
+        }),
+      );
+      if (pinned)
+        evidence.push({
+          source: "project",
+          file: "ios/.xcode.env.local",
+          line: pinned.line,
+          excerpt: pinned.excerpt,
+        });
+      out.push(
+        finding(this.meta, {
+          title: `Xcode script phases run ${node}, which no longer exists`,
+          severity: "error",
+          confidence: "high",
+          explanation:
+            `${hits.length} script phase${hits.length === 1 ? "" : "s"} tried to run node at ${node} and the file isn't there. React Native's script phases take node from NODE_BINARY: ios/.xcode.env sets it, then ios/.xcode.env.local overrides it. \`pod install\` writes .xcode.env.local with the absolute path of the node it ran under, only when the file doesn't exist yet, and never updates it. A version manager (nvm, fnm, asdf, volta) that removed that node version leaves every build pointing at a missing binary, and running \`pod install\` again doesn't fix it (react/react-native#59538).` +
+            (pinned ? " This project's ios/.xcode.env.local pins that path." : ""),
+          evidence,
+          nextSteps: [
+            "With the node version you want active, delete ios/.xcode.env.local (or change NODE_BINARY in it to the output of `command -v node`), then run `cd ios && pod install` and build again.",
+            "Don't commit ios/.xcode.env.local: it's machine-specific. ios/.xcode.env, with `export NODE_BINARY=$(command -v node)`, is the shared one.",
+          ],
+          verification:
+            "`grep NODE_BINARY ios/.xcode.env.local` names a node that exists (`ls -l` it), and the build passes the script phases.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
+export const swiftCompilerCrash: Rule = {
+  meta: {
+    id: "ios.swift-compiler-crash",
+    title: "The Swift compiler crashed",
+    platforms: ["ios"],
+    scope: "log",
+    trigger:
+      "A 'Stack dump:' with swift-frontend in its program arguments or an 'Apple Swift version' line, or (with 'Command SwiftCompile failed') an 'Apple Swift version' line followed by the compiler's 'While evaluating request / While silgen …' frames, and no error: diagnostic.",
+    evidence:
+      "The stack dump lines with the Swift version, the module being compiled, and the source file and line the compiler was working on.",
+    versionScope: "Xcode 14+ (swift-frontend)",
+    references: [
+      "https://github.com/expo/expo/issues/52231",
+      "https://github.com/expo/expo/issues/52610",
+      "https://github.com/swiftlang/swift/issues/93625",
+      "https://github.com/swiftlang/swift/issues",
+    ],
+    lastVerified: "2026-11-05",
+    fixtures: [
+      "logs/expo-issue-swift-frontend-crash.log",
+      "logs/expo-issue-swift-crash-no-stack-dump.log",
+    ],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const lines = log.doc.lines;
+      let dump = lines.findIndex((l, i) => {
+        if (l.trim() !== "Stack dump:") return false;
+        const next = lines.slice(i + 1, i + 4).join(" ");
+        return /swift-frontend|Apple Swift version/.test(next);
+      });
+      // Pasted or abridged logs often keep only the numbered frames: "Apple Swift version …" followed
+      // by the compiler's "While evaluating request / While silgen …" stack, and SwiftCompile failing.
+      if (dump < 0 && lines.some((l) => /^Command SwiftCompile failed/.test(l.trim())))
+        dump = lines.findIndex(
+          (l, i) =>
+            /Apple Swift version \S+/.test(l) &&
+            lines
+              .slice(i + 1, i + 5)
+              .some((n) =>
+                /^\s*(?:\d+\.\s+)?While (?:evaluating request|silgen|type-checking|emitting)/.test(
+                  n,
+                ),
+              ),
+        );
+      if (dump < 0) continue;
+      const body = lines.slice(dump, dump + 25);
+      const swift = body.map((l) => /Apple Swift version (\S+)/.exec(l)?.[1]).find(Boolean);
+      const module = body.map((l) => /for module (\w+)\)/.exec(l)?.[1]).find(Boolean);
+      const at = body.map((l) => /\(at (\S+?\.swift):(\d+):(\d+)\)/.exec(l)).find(Boolean);
+      const file = at?.[1];
+      const pkg = file ? packageOfFile(file.replace(/\\/g, "/")) : undefined;
+      const installed = pkg ? ctx.project?.installedVersion(pkg) : undefined;
+      const evidence: Evidence[] = [
+        logEvidence(log.doc, { start: dump, end: Math.min(lines.length - 1, dump + 9) }),
+      ];
+      if (swift)
+        evidence.push({ source: "log", file: log.doc.path, detail: `Apple Swift ${swift}` });
+      if (file)
+        evidence.push({ source: "log", file: log.doc.path, detail: `Compiling ${file}:${at![2]}` });
+      if (pkg && installed)
+        evidence.push({ source: "project", detail: `${pkg}: installed ${installed}` });
+      const name = file ? file.split("/").pop()! : undefined;
+      out.push(
+        finding(this.meta, {
+          title: `The Swift compiler crashed${module ? ` compiling ${module}` : ""}${name ? ` (${name}:${at![2]})` : ""}`,
+          severity: "error",
+          confidence: "medium",
+          explanation: `swift-frontend${swift ? ` (Swift ${swift})` : ""} crashed and printed a stack dump instead of an error, so Xcode only reports that SwiftCompile failed. This is a compiler bug triggered by specific code, not a mistake the compiler found.${file ? ` It was working on ${file}, line ${at![2]}${pkg ? `, which belongs to the dependency ${pkg}${installed ? ` (installed ${installed})` : ""}` : ""}.` : ""} The same code can compile with another Swift version.`,
+          evidence,
+          nextSteps: [
+            ...(pkg
+              ? [
+                  `Search ${pkg}'s issues for ${name ?? "the file"} or "Stack dump". If the library offers precompiled builds (for Expo modules, avoid ios.buildReactNativeFromSource unless you need it), using them skips compiling this file.`,
+                ]
+              : []),
+            "Build with a different Xcode version (an older or newer Swift compiler); the crash is often specific to one release.",
+            `If you can isolate the code, a workaround is usually a small rewrite of the construct at ${name ? `${name}:${at![2]}` : "the reported line"}. Report the crash to the Swift project (swiftlang/swift) with the stack dump.`,
+          ],
+          verification: "The SwiftCompile step for that file completes.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
 export const iosLogRules: Rule[] = [
+  staleNodeBinary,
+  swiftCompilerCrash,
   deploymentTargetUnsupported,
   cocoapodsIncompatibleVersions,
   cocoapodsSpecNotFound,

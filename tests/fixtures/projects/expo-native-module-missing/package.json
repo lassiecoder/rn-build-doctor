@@ -1,0 +1,1 @@
+{ "name": "nativemod", "version": "1.0.0", "main": "expo/AppEntry.js", "dependencies": { "expo": "~57.0.31", "expo-notifications": "~57.0.24", "react": "19.2.3", "react-native": "0.86.3" } }

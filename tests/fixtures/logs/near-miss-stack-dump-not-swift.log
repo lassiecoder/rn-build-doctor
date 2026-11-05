@@ -1,0 +1,4 @@
+Stack dump:
+0.	Program arguments: /usr/local/bin/clang-tidy --checks=* src/main.cpp
+1.	<eof> parser at end of file
+Segmentation fault: 11

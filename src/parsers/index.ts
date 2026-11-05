@@ -59,7 +59,22 @@ export const FAILURE_SIGNALS: RegExp[] = [
   /exited with non-zero (?:exit )?code/i,
   /Command failed with exit code/i,
   /\bfailed with exit code \d+/i,
+  // Expo CLI / @expo/package-manager: "Command `pod install` failed." with "└─ Cause: …" below it.
+  /^Command `[^`]+` failed\.?$/,
+  /^└─ Cause:\s/,
+  // Xcode: "Command PhaseScriptExecution failed with a nonzero exit code", "Command SwiftCompile …".
+  /^Command \w+ failed with a nonzero exit code/,
+  // A shell script phase that couldn't find a program or file.
+  /\.sh: line \d+: .+: (?:No such file or directory|command not found)$/,
+  // Compiler crash (swift-frontend, clang) and CMake configure errors.
+  /^Stack dump:$/,
+  /^CMake Error\b/,
+  /No (?:bundle|script) URL provided/,
 ];
+
+/** Lines that only summarize a failure; shown after the specific errors. */
+export const SUMMARY_LINE =
+  /^(?:\*\* (?:BUILD|ARCHIVE) FAILED \*\*|BUILD FAILED\b|FAILURE: Build failed)/;
 
 /** True when any parser recognized a failure event in the log. */
 export function hasParsedFailure(log: ParsedLog): boolean {

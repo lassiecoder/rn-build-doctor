@@ -1,0 +1,9 @@
+> Task :app:configureCMakeDebug[arm64-v8a] FAILED
+CMake Error at CMakeLists.txt:12 (find_package):
+  Could not find a package configuration file provided by "fbjni" with any of
+  the following names:
+
+    fbjniConfig.cmake
+    fbjni-config.cmake
+
+FAILURE: Build failed with an exception.

@@ -1,0 +1,6 @@
+> cd android && gradlew.bat assembleRelease
+
+ERROR: JAVA_HOME is set to an invalid directory: C:\Program Files\Java\jdk-11.0.2
+
+Please set the JAVA_HOME variable in your environment to match the
+location of your Java installation.

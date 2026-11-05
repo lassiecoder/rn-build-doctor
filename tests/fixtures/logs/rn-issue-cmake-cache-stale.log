@@ -1,0 +1,5 @@
+> Task :packages:react-native:ReactAndroid:hermes-engine:configureBuildForHermes FAILED
+CMake Error: The source "/tmp/hermes-source-moved/CMakeLists.txt" does not match the source "/tmp/react-native/packages/react-native/sdks/hermes/CMakeLists.txt" used to generate cache. Re-run cmake with a different source directory.
+
+Execution failed for task ':packages:react-native:ReactAndroid:hermes-engine:configureBuildForHermes'.
+> Process 'command cmake' finished with non-zero exit value 1

@@ -1,0 +1,3 @@
+/Users/dev/MyApp/ios/build/MyApp.build/Script-13B07F8E1A680F5B00A75B9A.sh: line 4: /Users/dev/MyApp/scripts/upload-sourcemaps.sh: No such file or directory
+Command PhaseScriptExecution failed with a nonzero exit code
+** BUILD FAILED **

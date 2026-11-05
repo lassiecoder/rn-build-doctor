@@ -1,0 +1,3 @@
+Android Bundled 812ms node_modules/expo/AppEntry.js (1021 modules)
+ ERROR  [runtime not ready]: Error: Cannot find native module 'ExpoTopicSubscriptionModule'
+requireNativeModule@http://10.0.2.2:8081/node_modules/expo/AppEntry.bundle//&platform=android&dev=true:60254:91

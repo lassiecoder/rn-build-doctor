@@ -1,0 +1,2 @@
+$ npx expo run:ios
+CommandError: Device Hub or Simulator is installed but is identified as 'com.apple.dt.Xcode'; don't know what that is.

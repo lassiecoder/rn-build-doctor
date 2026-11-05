@@ -1,0 +1,6 @@
+== xcodebuild exit status: 65
+.../hermes-engine.build/Script-46EB2E00011B30.sh: line 9: /Users/dev/.nvm/versions/node/v24.18.1/bin/node: No such file or directory
+Command PhaseScriptExecution failed with a nonzero exit code
+.../ReactNativeDependencies.build/Script-46EB2E00011B10.sh: line 9: /Users/dev/.nvm/versions/node/v24.18.1/bin/node: No such file or directory
+Command PhaseScriptExecution failed with a nonzero exit code
+** BUILD FAILED **

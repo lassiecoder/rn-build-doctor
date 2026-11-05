@@ -89,7 +89,7 @@ function looksBinary(text: string): boolean {
   let control = 0;
   for (let i = 0; i < sample.length; i++) {
     const code = sample.charCodeAt(i);
-    if (code === 0 || (code < 8 && code !== 0)) control++;
+    if (code < 8) control++; // NUL and other low control characters don't appear in text logs
   }
   return control / sample.length > 0.01;
 }

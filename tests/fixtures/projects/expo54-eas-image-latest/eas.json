@@ -1,0 +1,7 @@
+{
+  "build": {
+    "production": {
+      "ios": { "image": "latest" }
+    }
+  }
+}

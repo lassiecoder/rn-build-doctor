@@ -54,3 +54,9 @@ export function finding(meta: RuleMeta, fields: FindingFields): DraftFinding {
     ...fields,
   };
 }
+
+/** Ends `text` with a period unless it already ends with sentence punctuation. */
+export function sentence(text: string): string {
+  const trimmed = text.trimEnd();
+  return /[.!?:]$/.test(trimmed) ? trimmed : `${trimmed}.`;
+}

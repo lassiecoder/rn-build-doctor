@@ -1,0 +1,8 @@
+SyntaxError: Error reading Expo config at D:\work\app\app.config.ts:
+
+Unexpected identifier 'type'. import call expects one or two arguments.
+SyntaxError: Unexpected identifier 'type'. import call expects one or two arguments.
+    at <parse> (D:\work\app\app.config.ts:1)
+    at _compile (unknown)
+    at compileModule (D:\work\app\node_modules\@expo\require-utils\build\load.js:265:13)
+    at evalModule (D:\work\app\node_modules\@expo\require-utils\build\load.js:370:21)

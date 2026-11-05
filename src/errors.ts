@@ -8,4 +8,5 @@ export const EXIT = {
   findings: 1,
   usage: 2,
   internal: 3,
+  ai: 4,
 } as const;

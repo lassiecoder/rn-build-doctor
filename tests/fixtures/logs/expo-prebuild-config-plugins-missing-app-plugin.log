@@ -1,0 +1,6 @@
+PluginError: Cannot find module '@expo/config-plugins'
+Require stack:
+- /Users/dev/myapp/plugins/withCustomManifest.js
+- node_modules/@expo/require-utils/build/load.js
+- node_modules/@expo/config/build/Config.js
+- node_modules/expo/node_modules/@expo/cli/build/src/prebuild/prebuildAsync.js

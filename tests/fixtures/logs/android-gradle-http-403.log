@@ -1,0 +1,18 @@
+> Task :app:checkDebugAarMetadata FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:checkDebugAarMetadata'.
+> Could not resolve all files for configuration ':app:debugRuntimeClasspath'.
+   > Could not resolve com.facebook.react:react-android:0.86.3.
+     Required by:
+         project :app
+      > Could not resolve com.facebook.react:react-android:0.86.3.
+         > Could not get resource 'https://repo.reactnative.dev/maven2/com/facebook/react/react-android/0.86.3/react-android-0.86.3-debug.aar'.
+            > Could not GET 'https://repo.reactnative.dev/maven2/com/facebook/react/react-android/0.86.3/react-android-0.86.3-debug.aar'. Received status code 403 from server: Forbidden
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 14s

@@ -1,0 +1,7 @@
+> Task :app:minifyReleaseAndroidTestWithR8 FAILED
+Class content provided for type descriptor expo.modules.taskManager.BuildConfig
+actually defines class expo.modules.taskmanager.BuildConfig
+
+Reported origin:
+expo-task-manager/android/build/intermediates/compile_library_classes_jar/release/
+bundleLibCompileToJarRelease/classes.jar:expo/modules/taskManager/BuildConfig.class

@@ -1,0 +1,9 @@
+2026-10-27 14:02:11.481  8123-8123  AndroidRuntime          com.example.app                      E  FATAL EXCEPTION: main
+                                                                                                    Process: com.example.app, PID: 8123
+                                                                                                    java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.Intent android.content.Intent.setType(java.lang.String)' on a null object reference
+                                                                                                    	at android.content.Intent.createChooser(Intent.java:1182)
+                                                                                                    	at com.example.app.share.ShareModule.share(ShareModule.kt:42)
+                                                                                                    	at java.lang.reflect.Method.invoke(Native Method)
+                                                                                                    	at com.facebook.react.bridge.JavaMethodWrapper.invoke(JavaMethodWrapper.java:372)
+                                                                                                    	at android.os.Looper.loop(Looper.java:288)
+2026-10-27 14:02:11.482  8123-8123  Process                 com.example.app                      I  Sending signal. PID: 8123 SIG: 9
