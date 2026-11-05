@@ -1,0 +1,16 @@
+FAILURE: Build failed with an exception.
+
+* Where:
+Settings file 'android/settings.gradle' line: 21
+
+* What went wrong:
+Error resolving plugin [id: 'com.facebook.react.settings']
+> org/gradle/toolchains/foojay/FoojayToolchainsPlugin
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+
+BUILD FAILED in 3s
+
+Caused by: java.lang.NoClassDefFoundError: org/gradle/toolchains/foojay/FoojayToolchainsPlugin
+    at org.gradle.toolchains.foojay.FoojayToolchainsConventionPlugin.apply(FoojayToolchainsConventionPlugin.kt:11)

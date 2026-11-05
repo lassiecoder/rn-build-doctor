@@ -1,0 +1,13 @@
+$ ./gradlew assembleDebug        # step 5, in ReproducerApp-moved/android
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Configuring project ':react-native-safe-area-context' without an existing directory is not allowed. The configured projectDirectory 'C:\work\reproducer-run\ReproducerApp\node_modules\react-native-safe-area-context\android' does not exist, can't be written to or is not a directory.
+
+* Try:
+> Make sure the project directory exists and is writable.
+> For more information, see https://docs.gradle.org/9.4.1/userguide/multi_project_builds.html#include_existing_projects_only
+> Run with --scan to get full insights from a Build Scan (powered by Develocity).
+
+BUILD FAILED in 17s

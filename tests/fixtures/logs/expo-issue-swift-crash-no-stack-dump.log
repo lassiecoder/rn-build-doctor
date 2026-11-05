@@ -1,0 +1,9 @@
+Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+While evaluating request ASTLoweringRequest(Lowering AST to SIL for module ExpoModulesCore)
+While silgen visitDecl 'AsyncFunctionDefinition' (at .../expo-modules-core/ios/Core/Functions/AsyncFunctionDefinition.swift:25:8)
+While silgen emitFunction SIL function "@$s15ExpoModulesCore23AsyncFunctionDefinitionC5build10appContext0aB3JSI16JavaScriptObjectVAA03AppI0C_tKF".
+ for 'build(appContext:)'
+...
+(anonymous namespace)::PatternMatchEmission::emitDestructiveCaseBlocks()::ConsumingPatternBindingVisitor::visitEnumProjection(...)
+swift::Lowering::SILGenFunction::emitSwitchStmt(swift::SwitchStmt*)
+Command SwiftCompile failed with a nonzero exit code

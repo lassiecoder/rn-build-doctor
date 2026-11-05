@@ -1,0 +1,13 @@
+✔ Cleared android, ios code
+PluginError: Cannot find module '@expo/config-plugins'
+Require stack:
+- node_modules/cleverpush-expo-plugin/build/cleverpush/withCleverPushAndroid.js
+- node_modules/cleverpush-expo-plugin/build/cleverpush/withCleverPush.js
+- node_modules/cleverpush-expo-plugin/app.plugin.js
+- node_modules/@expo/require-utils/build/load.js
+- node_modules/@expo/require-utils/build/index.js
+- node_modules/@expo/config/build/Config.js
+- node_modules/@expo/config/build/index.js
+- node_modules/expo/node_modules/@expo/cli/build/src/prebuild/prebuildAsync.js
+Error: Cannot find module '@expo/config-plugins'
+    at Object.<anonymous> (node_modules/cleverpush-expo-plugin/build/cleverpush/withCleverPushAndroid.js:4:26)

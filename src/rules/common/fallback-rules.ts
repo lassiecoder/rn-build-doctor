@@ -1,5 +1,10 @@
 import type { PostRule } from "../../engine/rule.js";
-import { failureLines, hasParsedFailure, type ParsedLog } from "../../parsers/index.js";
+import {
+  SUMMARY_LINE,
+  failureLines,
+  hasParsedFailure,
+  type ParsedLog,
+} from "../../parsers/index.js";
 import { logEvidence, type Span } from "../../parsers/types.js";
 import type { DraftFinding } from "../../reports/schema.js";
 
@@ -38,15 +43,25 @@ export const noSupportedDiagnosis: PostRule = {
         ...log.cocoapods.errors.map((e) => e.start),
       ];
       for (const i of [...new Set(extra)].sort((a, b) => a - b)) {
-        if (!covered(i) && !/^(?:BUILD FAILED|FAILURE: Build)/.test(log.doc.lines[i]!.trim()))
-          spans.push({ start: i, end: i + 2 });
+        if (covered(i) || /^(?:BUILD FAILED|FAILURE: Build)/.test(log.doc.lines[i]!.trim()))
+          continue;
+        // "Command X failed" only says that a step failed; the line before it usually says why.
+        const before = log.doc.lines[i - 1]?.trim() ?? "";
+        const start =
+          /^Command \S+ failed/.test(log.doc.lines[i]!.trim()) && before && !covered(i - 1)
+            ? i - 1
+            : i;
+        // A summary line is shown alone, so its span doesn't swallow the specific error after it.
+        spans.push({ start, end: SUMMARY_LINE.test(log.doc.lines[i]!.trim()) ? i : i + 2 });
       }
       if (!spans.length) {
         const first = failureLines(log, 1)[0];
         if (first === undefined && !hasParsedFailure(log)) continue;
         spans.push({ start: first ?? 0, end: (first ?? 0) + 2 });
       }
-      spans.sort((a, b) => a.start - b.start);
+      // Specific errors first, in log order; summary lines ("** BUILD FAILED **") last.
+      const summary = (s: Span) => SUMMARY_LINE.test(log.doc.lines[s.start]!.trim());
+      spans.sort((a, b) => Number(summary(a)) - Number(summary(b)) || a.start - b.start);
       out.push({
         ruleId: this.meta.id,
         title: this.meta.title,

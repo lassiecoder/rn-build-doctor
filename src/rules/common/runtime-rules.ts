@@ -1,7 +1,11 @@
 import { finding, type Rule } from "../../engine/rule.js";
+import { findNativeModuleOwner } from "../expo/native-modules.js";
+import { JAVA_TIME_API } from "../android/compat.js";
+import { EAS_UPDATE_ENV } from "../javascript/compat.js";
 import { REFLECTIVE_CONSTRUCTOR } from "../android/runtime-rules.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import type { JsException } from "../../parsers/runtime.js";
+import { lineNumber } from "../../collectors/build-logs.js";
 import { logEvidence, logEvidenceLines, stripLogcatPrefix } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
@@ -29,6 +33,8 @@ const NATIVE_MODULE_MISSING =
 const NATIVE_INIT_ERROR =
   /\b(?:NoClassDefFoundError|ClassNotFoundException|UnsatisfiedLinkError|NoSuchMethodError|ExceptionInInitializerError)\b|Cannot install Expo Modules/;
 const JS_TAGS = new Set(["ReactNativeJS", "AndroidRuntime"]);
+/** A Java linkage error passed to JavaScript (Expo Modules "native call failed: …"). */
+const NATIVE_BINARY_MISMATCH = /\b(?:java\.lang\.)?(NoSuchMethodError|NoClassDefFoundError)\b/;
 
 interface NativeCause {
   /** Line indices: the native error and up to three "Caused by" lines from the same process. */
@@ -138,6 +144,9 @@ export const javascriptException: Rule = {
       "logs/runtime-android-js-exception.log",
       "logs/real-logcat-js-startup-crash.log",
       "logs/logcat-native-module-init-failed.log",
+      "logs/expo-go-cannot-find-native-module.log",
+      "logs/logcat-native-call-nosuchmethod.log",
+      "projects/expo-native-module-missing",
     ],
   },
   run(ctx) {
@@ -155,6 +164,19 @@ export const javascriptException: Rule = {
         const minified =
           ex.firstFrame &&
           /index\.android\.bundle|main\.jsbundle|^\s*\w@\d+:\d+/.test(ex.firstFrame);
+        const missing = NATIVE_MODULE_MISSING.exec(ex.message);
+        const moduleName = missing ? (missing[1] ?? missing[2]) : undefined;
+        // Without an earlier native error, find which installed package asks for the module.
+        const owner =
+          moduleName && !nativeCause && ctx.project
+            ? findNativeModuleOwner(ctx.project, moduleName)
+            : undefined;
+        const expoGo = log.doc.lines.some((l) => /\bExpo Go\b|exp:\/\//.test(l));
+        // "native call failed: java.lang.NoSuchMethodError: … "Lexpo/modules/haptics/HapticsModule;…"
+        const binary = NATIVE_BINARY_MISMATCH.exec(ex.message);
+        const nativeClass = binary
+          ? /"L([\w/$]+);/.exec(ex.message)?.[1]?.replace(/\//g, ".")
+          : undefined;
         const evidence: Evidence[] = [
           exceptionEvidence(
             log,
@@ -191,6 +213,17 @@ export const javascriptException: Rule = {
                 ),
               ]
             : []),
+          ...(owner
+            ? [
+                {
+                  source: "project" as const,
+                  file: owner.file,
+                  line: owner.line,
+                  excerpt: owner.excerpt,
+                  detail: `${owner.pkg}${owner.version ? `@${owner.version}` : ""} requests the native module ${moduleName}`,
+                },
+              ]
+            : []),
         ];
         out.push(
           finding(this.meta, {
@@ -210,10 +243,30 @@ export const javascriptException: Rule = {
                 : "") +
               (minified
                 ? " The stack trace points into a minified release bundle and needs source maps to map back to your code."
+                : "") +
+              (moduleName && !nativeCause
+                ? ` JavaScript asked for the native module '${moduleName}'${owner ? ` (requested by ${owner.pkg}${owner.version ? ` ${owner.version}` : ""}, which is installed)` : ""}, and the native app that's running doesn't register it. The JavaScript side is there; the native build isn't: the app was built before the package was installed, it runs in a prebuilt client such as Expo Go that doesn't include the module, or the native and JavaScript versions don't match.${expoGo ? " The log mentions Expo Go." : ""}`
+                : "") +
+              (binary
+                ? ` The message is a Java ${binary[1]} passed through to JavaScript${nativeClass ? `, for ${nativeClass}` : ""}: native code calls a method or class that the compiled binary doesn't have. That happens when a native module was compiled against a different version of the library it calls (for Expo modules, expo-modules-core), for example a prebuilt or cached native build from an older version.`
                 : ""),
             evidence,
             nextSteps: [
               ...(nativeCause ? nativeCauseSteps(nativeCause) : []),
+              ...(moduleName && !nativeCause
+                ? [
+                    `Rebuild the native app after installing ${owner?.pkg ?? "the package"} (\`npx expo run:android\` / \`npx expo run:ios\`, \`npx react-native run-android\` / \`run-ios\`, or a new EAS build). Reloading JavaScript isn't enough.`,
+                    "Expo Go only contains the native modules it ships and registers. If the app runs in Expo Go, use a development build instead (`npx expo install expo-dev-client`, then `npx expo run:android` or `eas build --profile development`).",
+                    "Check that native package versions match the Expo SDK or React Native version: `npx expo install --check` in Expo projects.",
+                    "With an ios/ folder, run `cd ios && pod install` after installing native packages.",
+                  ]
+                : []),
+              ...(binary
+                ? [
+                    "Align native package versions (`npx expo install --check`, then `npx expo install --fix` in Expo projects) so modules and their core library come from the same release.",
+                    "Rebuild from clean native state: `cd android && ./gradlew clean` (or delete android/app/build), and for EAS `eas build --clear-cache`, so no prebuilt or cached native module from an older version is reused.",
+                  ]
+                : []),
               ...(/^Network request failed\b/.test(ex.message)
                 ? [
                     "This message comes from React Native's networking layer and hides the cause: the server is unreachable from the device, DNS or TLS failed, or (Android release builds) the URL uses http://, which Android blocks by default. Check the URL the request uses and open it in the device's browser.",
@@ -228,15 +281,21 @@ export const javascriptException: Rule = {
                 ? [
                     "Symbolicate the stack trace with the source map from the same release build (see React Native 'Debugging release builds').",
                   ]
-                : ex.firstFrame
-                  ? [`Start at the first stack frame: ${ex.firstFrame}.`]
-                  : /^Network request failed\b/.test(ex.message) || nativeCause
-                    ? []
-                    : [
-                        `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
-                      ]),
-              "If it happens only in release builds, reproduce with a local release build (`npx expo run:android --variant release` / `npx react-native run-android --mode release`, or the iOS equivalents).",
-              "Compare the configuration and environment variables of the failing build with the working one.",
+                : moduleName || binary
+                  ? []
+                  : ex.firstFrame
+                    ? [`Start at the first stack frame: ${ex.firstFrame}.`]
+                    : /^Network request failed\b/.test(ex.message) || nativeCause
+                      ? []
+                      : [
+                          `Search your source for the message text ("${ex.message.slice(0, 60)}") to find where it's thrown.`,
+                        ]),
+              ...(moduleName && !nativeCause
+                ? []
+                : [
+                    "If it happens only in release builds, reproduce with a local release build (`npx expo run:android --variant release` / `npx react-native run-android --mode release`, or the iOS equivalents).",
+                    "Compare the configuration and environment variables of the failing build with the working one.",
+                  ]),
             ],
             limitations: [
               "A runtime log shows what failed, not why. The cause has to be confirmed in code or configuration.",
@@ -252,7 +311,7 @@ export const javascriptException: Rule = {
 const CONFIG_MESSAGE = [
   /\b(EXPO_PUBLIC_[A-Z0-9_]+|REACT_APP_[A-Z0-9_]+|REACT_NATIVE_[A-Z0-9_]+)\b/,
   /\b(\w*(?:url|uri|key|token|dsn|endpoint|host|projectid|config|secret|apikey|api_key))\b[^.]{0,30}\b(?:is required|is missing|must be (?:provided|set|defined|specified)|not (?:set|defined|provided|configured|specified)|is undefined|cannot be (?:empty|undefined|null))/i,
-  /\b(?:missing|no|invalid)\s+(?:required\s+)?(api[ _-]?key|url|endpoint|env(?:ironment)? variable|configuration|config)\b/i,
+  /\b(?:missing|no|invalid)\s+(?:required\s+)?(?:[A-Z]\w+\s+)?(api[ _-]?key|credentials?|url|endpoint|env(?:ironment)? variable|configuration|config)\b/i,
 ];
 
 export const missingConfigurationSuspected: Rule = {
@@ -268,9 +327,13 @@ export const missingConfigurationSuspected: Rule = {
     references: [
       "https://docs.expo.dev/guides/environment-variables/",
       "https://docs.expo.dev/eas/environment-variables/",
+      ...EAS_UPDATE_ENV.sources,
     ],
-    lastVerified: VERIFIED,
-    fixtures: ["logs/runtime-missing-supabase-url.log"],
+    lastVerified: EAS_UPDATE_ENV.lastVerified,
+    fixtures: [
+      "logs/runtime-missing-supabase-url.log",
+      "logs/runtime-missing-supabase-credentials.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -300,6 +363,7 @@ export const missingConfigurationSuspected: Rule = {
                     "Run `rn-build-doctor scan` in the project to list environment variables the code references and where they're defined locally.",
                     "For EAS builds, check the environment used by the build profile: `eas env:list --environment production` and the `env`/`environment` fields in eas.json.",
                     "Remember that EXPO_PUBLIC_ variables are inlined at build time. Changing them requires a new build or update, not just a restart.",
+                    `If the failing JavaScript came from an EAS Update: from SDK ${EAS_UPDATE_ENV.requiredFromSdk}, \`eas update --environment <env>\` uses only that EAS environment's variables (not .env files, and not a build profile's env in eas.json). Check \`eas env:list --environment <env>\`, then publish again with \`--clear\` so Metro doesn't reuse cached transforms.`,
                   ],
             verification:
               "Build again with the value defined for that environment, and confirm the exception no longer occurs at startup.",
@@ -315,6 +379,45 @@ export const missingConfigurationSuspected: Rule = {
     return out;
   },
 };
+
+/** A java.* / javax.* class the runtime couldn't load (missing on this Android version). */
+function missingJavaClass(exception: string, text: string): string | undefined {
+  if (!/NoClassDefFoundError|ClassNotFoundException/.test(`${exception} ${text}`)) return undefined;
+  return /(?:Failed resolution of: L|Didn't find class "|NoClassDefFoundError: |ClassNotFoundException: )((?:java|javax)[/.][\w/.$]+?)[;"\s]/
+    .exec(`${text} `)?.[1]
+    ?.replace(/\//g, ".");
+}
+
+/** Exceptions that only wrap the error that caused them. */
+function isWrapperException(exception: string, message: string): boolean {
+  return (
+    /^java\.lang\.(?:ExceptionInInitializerError|reflect\.InvocationTargetException)$/.test(
+      exception,
+    ) ||
+    (exception === "java.lang.RuntimeException" &&
+      /^Unable to (?:start activity|create application|get provider|instantiate)/.test(message))
+  );
+}
+
+/** Frames from Android, Java, Kotlin, and React Native internals, which rarely hold the bug. */
+const FRAMEWORK_FRAME =
+  /^(?:android|androidx|java|javax|kotlin|kotlinx|dalvik|libcore|sun|jdk|com\.android|com\.google\.android|com\.facebook\.(?:react|hermes|jni|soloader|fbreact|yoga)|okhttp3|okio)\./;
+
+/** The first `at pkg.Class.method(File.kt:42)` frame of a fatal exception outside framework code. */
+function firstAppFrame(
+  log: ParsedLog,
+  fatal: { start: number; end: number },
+): { index: number; frame: string; location: string; method: string } | undefined {
+  for (let i = fatal.start; i <= fatal.end; i++) {
+    const text = stripLogcatPrefix(log.doc.lines[i]!).message.trim();
+    const m = /^at ([\w.$<>]+)\(([^)]+:\d+)\)/.exec(text);
+    // Obfuscated R8 names (`t6.m`) need the mapping file before they point anywhere.
+    const obfuscated = /^[A-Za-z]{1,3}\d*(?:\.[A-Za-z$]{1,3}\d*)+$/.test(m?.[1] ?? "");
+    if (m && !FRAMEWORK_FRAME.test(m[1]!) && !obfuscated)
+      return { index: i, frame: `${m[1]}(${m[2]})`, location: m[2]!, method: m[1]! };
+  }
+  return undefined;
+}
 
 export const androidFatalException: Rule = {
   meta: {
@@ -334,6 +437,11 @@ export const androidFatalException: Rule = {
       "logs/runtime-android-unable-to-load-script.log",
       "logs/runtime-android-js-exception.log",
       "logs/logcat-fatal-native-module-init-failed.log",
+      "logs/logcat-fatal-npe-app-frame.log",
+      "logs/logcat-fatal-wrapped-soloader.log",
+      "logs/studio-logcat-fatal-npe.log",
+      "logs/expo-issue-android7-java-time.log",
+      "logs/rn-issue-trimmed-logcat-websocket.log",
     ],
   },
   run(ctx) {
@@ -350,12 +458,41 @@ export const androidFatalException: Rule = {
             `${fatal.exception}${fatal.process ? ` in ${fatal.process}` : ""}`,
           ),
         ];
-        let title = `Fatal ${fatal.exception.split(".").pop()}${fatal.message ? `: ${fatal.message.slice(0, 100)}` : ""}`;
-        let explanation = `The app process${fatal.process ? ` ${fatal.process}` : ""} crashed with ${fatal.exception}. The log identifies the exception but not, by itself, the cause.`;
+        // Wrapper exceptions say nothing on their own; the deepest "Caused by" is the real error.
+        const deepest = fatal.causes.at(-1);
+        const wrapped = deepest !== undefined && isWrapperException(fatal.exception, fatal.message);
+        const shown = wrapped
+          ? {
+              exception: deepest.split(":")[0]!,
+              message: deepest.slice(deepest.indexOf(":") + 1).trim(),
+            }
+          : { exception: fatal.exception, message: fatal.message };
+        const shownMessage = shown.message === shown.exception ? "" : shown.message;
+        const appFrame = firstAppFrame(log, fatal);
+        if (appFrame)
+          evidence.push({
+            source: "log",
+            file: log.doc.path,
+            line: lineNumber(log.doc, appFrame.index),
+            detail: `First frame outside Android, Java, Kotlin and React Native: ${appFrame.frame}`,
+          });
+        let title = `Fatal ${shown.exception.split(".").pop()}${shownMessage ? `: ${shownMessage.slice(0, 100)}` : ""}${wrapped ? ` (inside ${fatal.exception.split(".").pop()})` : ""}`;
+        let explanation =
+          `The app process${fatal.process ? ` ${fatal.process}` : ""} crashed with ${fatal.exception}.` +
+          (wrapped
+            ? ` That exception only wraps another one; the deepest cause is ${deepest}.`
+            : "") +
+          " The log identifies the exception but not, by itself, the cause.";
         let confidence: DraftFinding["confidence"] = "low";
+        let references: string[] | undefined;
         let nextSteps = [
+          ...(appFrame
+            ? [
+                `Look here first: ${appFrame.location} (${appFrame.method}), the first stack frame outside Android, Java, Kotlin and React Native code.`,
+              ]
+            : []),
           "Read the full stack trace and the first 'Caused by' entry. The deepest cause is usually the most specific.",
-          "Reproduce with a local release build while capturing `adb logcat`.",
+          "Reproduce with a local release build while capturing `adb logcat`. If the process already died, `adb logcat -b crash -d` prints the crash buffer, which keeps recent crashes.",
         ];
         if (/Unable to load script/.test(all)) {
           title = "Release build tried to load JavaScript from Metro instead of the bundled file";
@@ -366,6 +503,33 @@ export const androidFatalException: Rule = {
             "If this is a debug build, start Metro (`npx react-native start` / `npx expo start`) and run `adb reverse tcp:8081 tcp:8081` for a USB device.",
             "For release builds, confirm the createBundle<Variant>JsAndAssets task ran and assets/index.android.bundle is in the APK (`unzip -l app-release.apk | grep bundle`).",
           ];
+        } else if (missingJavaClass(fatal.exception, all)) {
+          const cls = missingJavaClass(fatal.exception, all)!;
+          const javaTime = cls.startsWith("java.time.");
+          title = `${cls} isn't available on this device's Android version`;
+          confidence = "medium";
+          explanation =
+            `The app crashed because ${cls}, a Java standard library class, doesn't exist on the device: Android only includes the Java APIs of its own API level.` +
+            (javaTime
+              ? ` java.time was added in API ${JAVA_TIME_API.addedInApi} (Android 8.0), so it's missing on Android 7 and older.`
+              : "") +
+            (appFrame
+              ? ` The first code outside the framework that uses it is ${appFrame.frame}.`
+              : "") +
+            " The app's minSdkVersion allows this device, so the code using the class needs a fallback, or the app needs a higher minSdkVersion.";
+          nextSteps = [
+            ...(appFrame
+              ? [`Look at ${appFrame.location} (${appFrame.method}): it uses ${cls}.`]
+              : []),
+            "If that code is in a library, check its issues for the crash on older Android versions and update it; if no fix exists, raising minSdkVersion drops the affected devices.",
+            ...(javaTime
+              ? [
+                  "If it's your code, either guard it with a `Build.VERSION.SDK_INT >= 26` check or use an older API, or enable core library desugaring (coreLibraryDesugaringEnabled), which provides much of java.time on older versions.",
+                ]
+              : []),
+            "Check the device's API level with `adb shell getprop ro.build.version.sdk` and test on the oldest version minSdkVersion allows.",
+          ];
+          references = JAVA_TIME_API.sources;
         } else if (
           /UnsatisfiedLinkError/.test(fatal.exception + all) &&
           /couldn't find DSO to load|lib\w+\.so/.test(all)
@@ -405,7 +569,8 @@ export const androidFatalException: Rule = {
             explanation = `JavaScript asked for the native module '${moduleName}', and this build doesn't provide it. Common causes: the package was installed after the native app was built, the app runs in Expo Go or another prebuilt client that doesn't include the module, or the module failed to initialize (no native error was found earlier in this log, but it may have been logged before the capture started).`;
             nextSteps = [
               "Rebuild the native app after installing the package (`npx expo run:android`, `npx react-native run-android`, or a new EAS build). Reloading JavaScript isn't enough.",
-              "If you use Expo Go, check that the module is included in it; otherwise use a development build.",
+              "Expo Go only contains the native modules it ships and registers. If the app runs in Expo Go, use a development build instead (`npx expo install expo-dev-client`, then `npx expo run:android` or `eas build --profile development`).",
+              "Check that native package versions match the Expo SDK or React Native version: `npx expo install --check` in Expo projects.",
               "Capture logcat from app launch (`adb logcat -c` before starting the app) to see whether native code logged an error first.",
             ];
           } else {
@@ -423,6 +588,7 @@ export const androidFatalException: Rule = {
             explanation,
             evidence,
             nextSteps,
+            ...(references ? { references: [...this.meta.references, ...references] } : {}),
           }),
         );
       }
@@ -545,7 +711,7 @@ export const jsBundleNotLoaded: Rule = {
     platforms: ["android", "ios", "javascript"],
     scope: "log",
     trigger:
-      "A device log with 'Unable to load script' (Android, including the New Architecture's non-fatal handleHostException), 'No bundle URL present' (iOS), or 'Could not connect to development server', when no fatal exception for it is reported.",
+      "A device log with 'Unable to load script' (Android, including the New Architecture's non-fatal handleHostException), 'No bundle URL present' or 'No script URL provided' (iOS), or 'Could not connect to development server', when no fatal exception for it is reported.",
     evidence:
       "The bundle-loading error from the app's process and, when present, the line saying the packager (Metro) couldn't be reached.",
     versionScope: "React Native (all versions); New Architecture red screen since 0.76",
@@ -554,7 +720,7 @@ export const jsBundleNotLoaded: Rule = {
       "https://reactnative.dev/docs/signed-apk-android",
     ],
     lastVerified: "2026-10-15",
-    fixtures: ["logs/real-logcat-metro-not-running.log"],
+    fixtures: ["logs/real-logcat-metro-not-running.log", "logs/ios-no-script-url.log"],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -578,6 +744,8 @@ export const jsBundleNotLoaded: Rule = {
           : logEvidence(log.doc, failure),
       ];
       const unreachable = failure.packagerUnreachableIndex;
+      // RCTBridge/RCTHost wording on iOS: the app got no URL at all, not an unreachable one.
+      const noUrl = /No (?:bundle|script) URL/.test(failure.message);
       if (unreachable !== undefined)
         evidence.push(
           logEvidenceLines(log.doc, [unreachable], "Metro (the packager) was not reachable"),
@@ -594,14 +762,23 @@ export const jsBundleNotLoaded: Rule = {
             "The app started, but React Native found no JavaScript to run: " +
             (unreachable !== undefined
               ? "it's a debug build, which loads JavaScript from the Metro dev server, and Metro wasn't reachable from the device."
-              : "either a debug build couldn't reach Metro, or a release build doesn't contain the bundled JavaScript.") +
+              : noUrl
+                ? "the app had no URL to load JavaScript from. In a debug build that means bundleURL() returned nothing (Metro couldn't be found, or the Debug branch didn't run); in a release build, main.jsbundle wasn't embedded."
+                : "either a debug build couldn't reach Metro, or a release build doesn't contain the bundled JavaScript.") +
             " The app shows a red error screen instead of crashing, so nothing appears as a fatal exception.",
           evidence,
-          nextSteps: [
-            "Start Metro in the project folder (`npx react-native start`, or `npx expo start` for Expo) and keep it running, then reload the app.",
-            "On a USB-connected Android device, run `adb reverse tcp:8081 tcp:8081`. On Wi-Fi, set the dev server address in the dev menu to your computer's IP and port 8081, on the same network.",
-            "If this is a release build, the bundle wasn't packaged: check that createBundleReleaseJsAndAssets ran (Android) or the 'Bundle React Native code and images' phase ran (iOS).",
-          ],
+          nextSteps: noUrl
+            ? [
+                "Start Metro in the project folder (`npx react-native start`, or `npx expo start` for Expo) and keep it running, then reload the app.",
+                "On a physical iPhone, the phone and the computer must be on the same network, and the app must be allowed to reach it (Settings > Privacy & Security > Local Network). Open http://<computer-ip>:8081/status in the phone's browser: it should say packager-status:running.",
+                "If Metro is reachable, check bundleURL() in the AppDelegate (or the React Native factory delegate): in Debug builds it has to return the Metro URL from RCTBundleURLProvider, and only Release builds should return main.jsbundle. A scheme that builds the Release configuration, or an AppDelegate migration that changed the #if DEBUG branch, gives this error.",
+                "If this is a release build, the bundle wasn't embedded: check that the 'Bundle React Native code and images' phase ran and main.jsbundle is in the .app.",
+              ]
+            : [
+                "Start Metro in the project folder (`npx react-native start`, or `npx expo start` for Expo) and keep it running, then reload the app.",
+                "On a USB-connected Android device, run `adb reverse tcp:8081 tcp:8081`. On Wi-Fi, set the dev server address in the dev menu to your computer's IP and port 8081, on the same network.",
+                "If this is a release build, the bundle wasn't packaged: check that createBundleReleaseJsAndAssets ran (Android) or the 'Bundle React Native code and images' phase ran (iOS).",
+              ],
           verification:
             "Reload the app. It shows your first screen instead of the red error screen.",
         }),

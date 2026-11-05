@@ -1,6 +1,6 @@
 import { relative } from "node:path";
 import type { LogDocument } from "../../collectors/build-logs.js";
-import { finding, type Rule, type RuleContext } from "../../engine/rule.js";
+import { finding, sentence, type Rule, type RuleContext } from "../../engine/rule.js";
 import type { ParsedLog } from "../../parsers/index.js";
 import { findIndex, flatten, logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
@@ -94,6 +94,7 @@ export const dependencyResolution: Rule = {
       "logs/android-dependency-resolution.log",
       "logs/android-dynamic-react-native.log",
       "logs/real-agp92-versionless-dependency.log",
+      "logs/android-gradle-http-403.log",
     ],
   },
   run(ctx) {
@@ -144,7 +145,26 @@ export const dependencyResolution: Rule = {
           ),
         ];
 
+        // "Could not GET 'https://host/…'. Received status code 403 from server: Forbidden"
+        const statuses = new Map<string, string>();
+        for (const m of text.matchAll(
+          /Could not (?:GET|HEAD) '(https?:\/\/[^/']+)[^']*'\.\s*Received status code (\d{3}) from server/g,
+        ))
+          statuses.set(`${m[2]} from ${m[1]!.replace(/^https?:\/\//, "")}`, m[2]!);
+        const statusMeaning = (code: string) =>
+          code === "401" || code === "403"
+            ? "the server refused the request: credentials are missing or wrong, a proxy or firewall blocks it, or the repository blocks this client"
+            : code === "404"
+              ? "the artifact isn't published at that URL, so this version doesn't exist in that repository"
+              : code === "429"
+                ? "the repository is rate-limiting this machine"
+                : code.startsWith("5")
+                  ? "the repository had a server error or outage, which usually passes"
+                  : "the repository rejected the request";
+
         const hypotheses: string[] = [];
+        for (const [where, code] of statuses)
+          hypotheses.push(`The repository answered HTTP ${where}: ${statusMeaning(code)}.`);
         if (versionless.length) {
           hypotheses.push(
             `${versionless.join(", ")} ${versionless.length === 1 ? "is" : "are"} declared without a version (Gradle prints an empty version after the last ':'). Gradle has to get the version from somewhere else: a BOM (platform(...)), a dependency constraint, or another dependency that requests the same module. None of them reached this configuration.`,
@@ -155,7 +175,7 @@ export const dependencyResolution: Rule = {
             );
           }
         }
-        if (network) {
+        if (network && !statuses.size) {
           hypotheses.push(
             "The log shows network or repository errors while downloading, so connectivity, a proxy, or an unavailable repository may be responsible.",
           );
@@ -170,13 +190,17 @@ export const dependencyResolution: Rule = {
             "A dynamic 'com.facebook.react:react-native:+' dependency matches the November 2022 incident where old React Native versions resolved the wrong artifact after React Native started publishing to Maven Central (facebook/react-native#35210).",
           );
         }
-        if (!onlyVersionless) {
+        // An HTTP refusal or outage (not a 404) means the version wasn't looked at.
+        const refusedOnly = statuses.size > 0 && ![...statuses.values()].includes("404");
+        if (!onlyVersionless && !refusedOnly) {
           hypotheses.push(
             `${hypotheses.length ? "Otherwise, the" : "The"} requested version may not exist in any configured repository, or the repository that hosts it may not be declared in android/build.gradle or settings.gradle.`,
           );
         }
 
         const evidence: Evidence[] = [logEvidence(log.doc, failure)];
+        for (const where of statuses.keys())
+          evidence.push({ source: "log", file: log.doc.path, detail: `HTTP ${where}` });
         for (const c of coords.slice(0, 10))
           evidence.push({ source: "log", file: log.doc.path, detail: `Unresolved: ${c}` });
         for (const r of requiredBy.slice(0, 5))
@@ -217,7 +241,14 @@ export const dependencyResolution: Rule = {
               : `Gradle failed to resolve dependencies${configuration ? ` for configuration '${configuration}'` : ""}. The log confirms the failure, but not why resolution failed. Possible explanations, in the order the evidence supports them:\n- ${hypotheses.join("\n- ")}`,
             evidence,
             nextSteps: [
-              ...(network
+              ...[...statuses].map(([where, code]) =>
+                code === "401" || code === "403"
+                  ? `Open the failing URL with \`curl -I\` from the same machine and network. If it also returns ${code} there, check the proxy (systemProp.https.proxyHost in gradle.properties), any repository credentials, and whether a firewall or corporate mirror blocks ${where.replace(/^\d+ from /, "")}; if it works elsewhere, the block is specific to this network or CI runner.`
+                  : code === "404"
+                    ? `Check that the version exists in ${where.replace(/^\d+ from /, "")} (open the folder URL in a browser), and that the repository that publishes it is declared in android/build.gradle or settings.gradle.`
+                    : `Retry later; HTTP ${code} from ${where.replace(/^\d+ from /, "")} is a repository-side problem. Gradle's --offline flag only helps if the artifacts are already cached.`,
+              ),
+              ...(network && !statuses.size
                 ? [
                     "Check network access, proxy settings, and whether the repository URLs listed in the log respond.",
                   ]
@@ -237,7 +268,7 @@ export const dependencyResolution: Rule = {
                       : []),
                   ]
                 : []),
-              ...(onlyVersionless
+              ...(onlyVersionless || refusedOnly
                 ? []
                 : [
                     "For each unresolved coordinate, confirm that the version exists in one of the repositories listed under 'Searched in the following locations'.",
@@ -396,7 +427,8 @@ export const gradleVersionTooLow: Rule = {
     for (const log of ctx.logs) {
       for (const { index, match } of eachLine(
         log,
-        /Minimum supported Gradle version is ([\d.]+)\.\s*Current version is ([\d.]+)/,
+        // Versions are captured without the sentence's final period ("Current version is 8.5. If …").
+        /Minimum supported Gradle version is (\d+(?:\.\d+)*)\.?\s*Current version is (\d+(?:\.\d+)*)/,
       )) {
         out.push(
           finding(this.meta, {
@@ -1021,6 +1053,9 @@ export const androidCompileError: Rule = {
       "logs/android-kotlin-library-error.log",
       "logs/android-kotlin-app-error.log",
       "logs/issue-kotlin-error-wrapped.log",
+      "logs/issue-kotlin-unresolved-androidx.log",
+      "logs/expo-issue-inline-module-generated.log",
+      "projects/rn083-hinge",
     ],
   },
   run(ctx) {
@@ -1076,8 +1111,31 @@ export const androidCompileError: Rule = {
           ? (packageForGradleProject(ctx, `:${taskProject}`)?.name ??
             (taskProject.includes("_") ? undefined : taskProject))
           : undefined);
+      // Generated sources (build/generated/…) aren't the package's code: a generator wrote them.
+      const generated = /[\\/]build[\\/]generated[\\/]/.test(first.file);
       const installed = pkg ? ctx.project?.installedVersion(pkg) : undefined;
       const rn = ctx.project?.versions["react-native"];
+      // A library calling an API its own pinned androidx dependency is too old for.
+      const pinnedAndroidx: Evidence[] = [];
+      if (pkg && !generated && /Unresolved reference/.test(first.message) && ctx.project) {
+        const dir = findPackageDir(ctx.project.root, pkg);
+        const base = dir ? relative(ctx.project.root, dir).replace(/\\/g, "/") : undefined;
+        const build = base
+          ? readProjectFile(ctx.project.root, `${base}/android/build.gradle`)
+          : undefined;
+        if (build?.ok)
+          build.text.split(/\r?\n/).forEach((line, i) => {
+            const m = /["'](androidx\.[\w.]+:[\w.-]+):(\d[\w.-]*)["']/.exec(line);
+            if (m && !/^\s*\/\//.test(line) && pinnedAndroidx.length < 5)
+              pinnedAndroidx.push({
+                source: "project",
+                file: `${base}/android/build.gradle`,
+                line: i + 1,
+                excerpt: line.trim().slice(0, 200),
+                detail: `${pkg} pins ${m[1]} to ${m[2]}`,
+              });
+          });
+      }
       const evidence: Evidence[] = errors
         .slice(0, 5)
         .map((e) =>
@@ -1087,34 +1145,58 @@ export const androidCompileError: Rule = {
             `${e.file}:${e.line}${e.column ? `:${e.column}` : ""}`,
           ),
         );
-      if (pkg)
+      if (pkg && !generated)
         evidence.push({
           source: "project",
           detail: `${name} belongs to the npm package ${pkg}${installed ? `@${installed}` : ""}${rn ? `; react-native ${rn}` : ""}`,
         });
+      evidence.push(...pinnedAndroidx);
+      const missingPackage = /package ([\w.]+) does not exist/.exec(first.message)?.[1];
       out.push(
         finding(this.meta, {
-          title: pkg
-            ? `${first.language} compile error in ${pkg}: ${first.message.slice(0, 100)}`
-            : `${first.language} compile error in ${name}:${position}: ${first.message.slice(0, 100)}`,
+          title: generated
+            ? `${first.language} compile error in generated code (${name}): ${first.message.slice(0, 100)}`
+            : pkg
+              ? `${first.language} compile error in ${pkg}: ${first.message.slice(0, 100)}`
+              : `${first.language} compile error in ${name}:${position}: ${first.message.slice(0, 100)}`,
           severity: "error",
-          confidence: "high",
+          confidence: generated ? "medium" : "high",
           explanation:
-            `The ${languages(errors)} compiler reported ${errors.length} error${errors.length === 1 ? "" : "s"}${task ? `, so ${task} failed` : ""}. The first is in ${first.file} at ${position}: ${first.message}` +
-            (pkg
-              ? ` The file belongs to the npm package ${pkg}${installed ? ` (${installed})` : ""}, not to your app code. A library that doesn't compile usually doesn't support the installed React Native${rn ? ` (${rn})` : ""}, Kotlin, or Android Gradle Plugin version.`
-              : ""),
+            `The ${languages(errors)} compiler reported ${errors.length} error${errors.length === 1 ? "" : "s"}${task ? `, so ${task} failed` : ""}. The first is in ${first.file} at ${position}: ${sentence(first.message)}` +
+            (generated
+              ? ` ${name} is generated: it's under a build/generated folder, written by a build step${pkg ? ` of ${pkg}` : ""}, so nobody edits it and the ${pkg ?? "package"} version isn't the problem. The generator referenced ${missingPackage ? `the package ${missingPackage}, which isn't on the classpath` : "code that doesn't exist"}: an earlier step that should have produced or copied that source failed or was skipped, the source it points at was moved or deleted, or the generated folder is left over from an older build.`
+              : pkg
+                ? ` The file belongs to the npm package ${pkg}${installed ? ` (${installed})` : ""}, not to your app code. A library that doesn't compile usually doesn't support the installed React Native${rn ? ` (${rn})` : ""}, Kotlin, or Android Gradle Plugin version.` +
+                  (pinnedAndroidx.length
+                    ? ` Its android/build.gradle pins ${pinnedAndroidx.map((e) => e.detail!.replace(`${pkg} pins `, "")).join(", ")}; an unresolved reference to an androidx API often means the library calls an API added in a newer release than the version it declares.`
+                    : "")
+                : ""),
           evidence,
-          nextSteps: pkg
+          nextSteps: generated
             ? [
-                `Check which ${pkg} version supports React Native${rn ? ` ${rn}` : ""} (its changelog, README compatibility table, or issues for this error message), and upgrade or downgrade it.`,
-                "If you patched native code in node_modules (patch-package), check that the patch still applies to the installed version.",
-                "Don't edit files in node_modules directly. Changes are lost on the next install.",
+                `Look further up the log for an earlier failed or skipped step that should have produced ${missingPackage ?? "the missing code"} (errors from Node scripts that Gradle runs are easy to miss).`,
+                ...(missingPackage
+                  ? [
+                      `Check that the source for ${missingPackage} still exists in your project with the same package name, and that nothing renamed or moved it.`,
+                    ]
+                  : []),
+                "Delete the stale generated output (`cd android && ./gradlew clean`, or remove android/build and android/app/build) and build again.",
               ]
-            : [
-                `Open ${first.file} at ${position} and fix the reported error.`,
-                "If the error appeared after an upgrade, compare the file with the React Native Upgrade Helper diff for your versions.",
-              ],
+            : pkg
+              ? [
+                  ...(pinnedAndroidx.length
+                    ? [
+                        `Check which version of ${pinnedAndroidx[0]!.detail!.replace(/^.* pins (\S+) to .*$/, "$1")} added the unresolved API (its release notes on developer.android.com/jetpack/androidx), and whether a newer ${pkg} declares it. Until ${pkg} is fixed, a newer version can be patched into its android/build.gradle with patch-package.`,
+                      ]
+                    : []),
+                  `Check which ${pkg} version supports React Native${rn ? ` ${rn}` : ""} (its changelog, README compatibility table, or issues for this error message), and upgrade or downgrade it.`,
+                  "If you patched native code in node_modules (patch-package), check that the patch still applies to the installed version.",
+                  "Don't edit files in node_modules directly. Changes are lost on the next install.",
+                ]
+              : [
+                  `Open ${first.file} at ${position} and fix the reported error.`,
+                  "If the error appeared after an upgrade, compare the file with the React Native Upgrade Helper diff for your versions.",
+                ],
           verification: `\`cd android && ./gradlew ${task ?? ":app:compileDebugKotlin"}\` succeeds.`,
         }),
       );

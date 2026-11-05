@@ -1,0 +1,1 @@
+{ "expo": { "name": "cpapp", "slug": "cpapp", "plugins": ["cleverpush-expo-plugin"] } }

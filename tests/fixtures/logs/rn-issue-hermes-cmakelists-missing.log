@@ -1,0 +1,14 @@
+> Task :react-native:packages:react-native:ReactAndroid:hermes-engine:downloadHermes
+> Task :react-native:packages:react-native:ReactAndroid:hermes-engine:unzipHermes
+
+> Task :react-native:packages:react-native:ReactAndroid:hermes-engine:configureBuildForHermes FAILED
+CMake Error: The source directory ".../ReproducerApp/node_modules/react-native/sdks/hermes" does not appear to contain CMakeLists.txt.
+Specify --help for usage, or press the help button on the CMake GUI.
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':react-native:packages:react-native:ReactAndroid:hermes-engine:configureBuildForHermes'.
+> Process 'command '.../cmake/3.30.5/bin/cmake'' finished with non-zero exit value 1
+
+BUILD FAILED in 30s

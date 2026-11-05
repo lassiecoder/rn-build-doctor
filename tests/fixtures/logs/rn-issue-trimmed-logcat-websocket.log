@@ -1,0 +1,8 @@
+E AndroidRuntime: FATAL EXCEPTION: mqt_v_native
+E AndroidRuntime: java.lang.IllegalArgumentException: Invalid URL port: "0"
+E AndroidRuntime:   at t6.m(r8-map-id-50fb0331…:24)
+E AndroidRuntime:   at vv.c(r8-map-id-50fb0331…:513)
+E AndroidRuntime:   at xi.h(r8-map-id-50fb0331…:50)
+E AndroidRuntime:   at com.facebook.react.modules.websocket.WebSocketModule.connect(r8-map-id-50fb0331…:118)
+E AndroidRuntime:   at com.facebook.jni.NativeRunnable.run(Native Method)
+E AndroidRuntime:   at com.facebook.react.bridge.queue.MessageQueueThreadHandler.dispatchMessage(…)

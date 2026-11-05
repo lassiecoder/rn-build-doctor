@@ -127,13 +127,11 @@ export function detectProject(rootInput: string): ProjectContext {
   const nodeModulesPresent = searchDirs.some((d) => existsSync(join(d, "node_modules")));
 
   let lockfiles = LOCKFILES.filter(([file]) => fileExists(root, file)).map(([file]) => file);
-  let lockfileDir = root;
   if (lockfiles.length === 0) {
     for (const dir of searchDirs.slice(1)) {
       const found = LOCKFILES.filter(([file]) => existsSync(join(dir, file))).map(([f]) => f);
       if (found.length) {
         lockfiles = found;
-        lockfileDir = dir;
         notes.push(`Lockfile found in parent directory ${dir} (workspace root).`);
         break;
       }
@@ -145,7 +143,6 @@ export function detectProject(rootInput: string): ProjectContext {
   } else if (lockfiles.length > 0) {
     packageManager = LOCKFILES.find(([file]) => file === lockfiles[0])?.[1];
   }
-  void lockfileDir;
 
   const hasAndroid = isDirectory(root, "android");
   const hasIos = isDirectory(root, "ios");

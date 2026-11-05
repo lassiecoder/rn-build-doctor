@@ -1,0 +1,3 @@
+› Executing pod install
+Command `pod install` failed.
+└─ Cause: Some unrecognized CocoaPods problem happened while generating the workspace

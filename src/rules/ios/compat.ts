@@ -110,3 +110,15 @@ export const EXPO_SDK_MIN_XCODE = {
   lastVerified: "2026-10-25",
   table: { 56: "26.4", 57: "26.4", 58: "26.4" } as Record<number, string>,
 };
+
+/**
+ * With Xcode 27.2 (macOS 27.2), AppleScript's `id of app "Simulator"` returns com.apple.dt.Xcode, so
+ * @expo/cli's lookup (Simulator first, DeviceHub second) stops with "Device Hub or Simulator is
+ * installed but is identified as 'com.apple.dt.Xcode'". Reported with @expo/cli 58.1.18
+ * (expo/expo#52721, closed for a missing reproduction without a fix; no fix PR found on 2026-11-05).
+ */
+export const XCODE272_SIMULATOR_ID = {
+  sources: ["https://github.com/expo/expo/issues/52721"],
+  lastVerified: "2026-11-05",
+  reportedWithExpoCli: "58.1.18",
+};

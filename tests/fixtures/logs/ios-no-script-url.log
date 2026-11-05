@@ -1,0 +1,2 @@
+2026-10-27 18:22:41.203 MyApp[1432:58210] [javascript] No script URL provided. Make sure the packager is running or you have embedded a JS bundle in your application bundle.
+unsanitizedScriptURLString = (null)

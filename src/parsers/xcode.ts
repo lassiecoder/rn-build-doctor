@@ -130,8 +130,20 @@ export function parseCocoaPods(doc: LogDocument): CocoaPodsParseResult {
       result.detected = true;
       result.completedIndex ??= i;
     }
-    const match = /^\s*\[!\]\s+(.+)$/.exec(line);
+    // Expo CLI and `npx pod-install` relay the failure without CocoaPods' `[!]` marker:
+    // "Command `pod install` failed." then "└─ Cause: <CocoaPods message>" (@expo/package-manager).
+    const relayed =
+      /^Command `pod install(?: --repo-update)?` failed\.?$/.test(lines[i - 1]?.trim() ?? "") &&
+      /^└─ Cause:\s+(.+)$/.exec(line.trim());
+    const match = relayed || /^\s*\[!\]\s+(.+)$/.exec(line);
     if (!match) continue;
+    if (relayed) {
+      result.detected = true;
+      let end = i;
+      for (let j = i + 1; j < lines.length && j <= i + 12 && lines[j]!.trim() !== ""; j++) end = j;
+      result.errors.push({ start: i - 1, end, message: relayed[1]!.trim() });
+      continue;
+    }
     result.detected = true;
     if (POD_NOTICE.test(line)) {
       result.notices.push(i);

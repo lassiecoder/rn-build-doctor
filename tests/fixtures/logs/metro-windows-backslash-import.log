@@ -1,0 +1,10 @@
+Android Bundling failed 2146ms index.js (1203 modules)
+Error: Unable to resolve module ..\assets\avatar.mp4 from /home/expo/workingdir/build/src/screens/Profile.tsx: 
+
+None of these files exist:
+  * src/screens/..\assets\avatar.mp4(.android.js|.native.js|.js|.android.jsx|.native.jsx|.jsx|.android.json|.native.json|.json|.android.ts|.native.ts|.ts|.android.tsx|.native.tsx|.tsx|.android.mp4|.native.mp4|.mp4)
+  314 |       <Video
+  315 |         style={styles.video}
+> 316 |         source={require('..\assets\avatar.mp4')}
+      |                          ^
+  317 |       />

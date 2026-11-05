@@ -2,6 +2,7 @@ import { builtinModules } from "node:module";
 import { fileExists, readJsonFile, readProjectFile } from "../../collectors/project-files.js";
 import { findPackageDir } from "../../detection/project-type.js";
 import { finding, type Rule } from "../../engine/rule.js";
+import { HERMES_ASYNC_REST_DESTRUCTURING } from "./compat.js";
 import { logEvidence } from "../../parsers/types.js";
 import type { DraftFinding, Evidence } from "../../reports/schema.js";
 
@@ -165,6 +166,7 @@ export const unableToResolveModule: Rule = {
       "logs/metro-package-export-target-missing.log",
       "projects/rn088-package-exports",
       "logs/expo-issue-metro-resolve-wrapped.log",
+      "logs/metro-windows-backslash-import.log",
     ],
   },
   run(ctx) {
@@ -198,6 +200,18 @@ export const unableToResolveModule: Rule = {
             "Check that the aliased file exists (case-sensitive) under the directory the alias points to.",
             "Check the alias configuration: tsconfig.json `compilerOptions.paths` (Expo SDK 50+ reads it automatically) or babel-plugin-module-resolver in babel.config.js.",
             "Restart Metro with a clean cache after changing alias configuration.",
+          );
+        } else if (!pkg && event.module.includes("\\")) {
+          const fixed = event.module.replace(/\\/g, "/");
+          explanation = `The import '${event.module}' in ${from ?? "the reported file"} uses Windows path separators (\\). Import and require paths must use forward slashes: Metro treats a backslash as part of the file name, so the path only happens to work on Windows and fails on macOS, Linux CI, and EAS builders. The file itself is probably fine.`;
+          evidence.push({
+            source: "log",
+            file: log.doc.path,
+            detail: `Backslash path separators in '${event.module}'`,
+          });
+          nextSteps.push(
+            `Change the import to '${fixed}' (forward slashes).`,
+            "Search the source for other require or import paths with backslashes; an editor's auto-import on Windows can write them.",
           );
         } else if (!pkg) {
           explanation = `The relative import '${event.module}' in ${from ?? "the reported file"} doesn't point to an existing file. The file may be missing, renamed, or have a different extension. A letter-case mismatch also breaks on case-sensitive file systems such as Linux CI and EAS builders, even when it works on macOS or Windows.`;
@@ -382,4 +396,86 @@ export const bundleSyntaxError: Rule = {
   },
 };
 
-export const metroRules: Rule[] = [unableToResolveModule, bundleSyntaxError];
+const HERMESC_FAILED =
+  /hermesc\b.*(?:exited with non-zero code|finished with non-zero exit value)|Process 'command '[^']*hermesc[^']*'' finished with non-zero/;
+const BUNDLE_ERROR = /^(\S+?\.(?:js|bundle|jsbundle|hbc)):(\d+):(\d+): error: (.+)$/;
+
+export const hermesCompileError: Rule = {
+  meta: {
+    id: "javascript.hermes-compile-error",
+    title: "The Hermes compiler rejected the JavaScript bundle",
+    platforms: ["javascript"],
+    scope: "log",
+    trigger:
+      "hermesc fails while compiling the bundle to bytecode ('hermesc … exited with non-zero code', or Gradle's \"Process 'command '…/hermesc'' finished with non-zero exit value\"), with its '<bundle>:<line>:<col>: error: <message>' line.",
+    evidence:
+      "The hermesc error lines with the position in the bundle, and the failed hermesc command.",
+    versionScope:
+      "Hermes bytecode compilation in release builds and `expo export` (React Native 0.70+)",
+    references: [
+      "https://reactnative.dev/docs/hermes",
+      "https://docs.expo.dev/more/expo-cli/#exporting",
+      ...HERMES_ASYNC_REST_DESTRUCTURING.sources,
+    ],
+    lastVerified: HERMES_ASYNC_REST_DESTRUCTURING.lastVerified,
+    fixtures: ["logs/expo-issue-hermesc-invalid-destructuring.log"],
+  },
+  run(ctx) {
+    const out: DraftFinding[] = [];
+    for (const log of ctx.logs) {
+      const lines = log.doc.lines;
+      const failed = lines.findIndex((l) => HERMESC_FAILED.test(l));
+      if (failed < 0) continue;
+      const errors = lines
+        .map((l, index) => ({ index, m: BUNDLE_ERROR.exec(l.trim()) }))
+        .filter((e): e is { index: number; m: RegExpExecArray } => e.m !== null);
+      const first = errors[0];
+      const message = first?.m[4];
+      const known = message?.includes(HERMES_ASYNC_REST_DESTRUCTURING.message);
+      const evidence: Evidence[] = [
+        ...errors
+          .slice(0, 3)
+          .map((e) =>
+            logEvidence(log.doc, { start: e.index, end: e.index }, `${e.m[1]}:${e.m[2]}:${e.m[3]}`),
+          ),
+        logEvidence(log.doc, { start: failed, end: failed }),
+      ];
+      out.push(
+        finding(this.meta, {
+          title: message
+            ? `Hermes couldn't compile the bundle: ${message}`
+            : "Hermes couldn't compile the JavaScript bundle",
+          severity: "error",
+          confidence: message ? "high" : "medium",
+          explanation:
+            "Release builds and `expo export` compile the bundled JavaScript to Hermes bytecode with hermesc. Development builds skip that step, which is why the app runs in development. " +
+            (first
+              ? `hermesc stopped at line ${first.m[2]}, column ${first.m[3]} of the bundle (${first.m[1]}), not of one of your files: the code there comes from your app or from a package, after Babel transformed it.`
+              : "The log doesn't include hermesc's error line.") +
+            (known
+              ? " 'invalid destructuring target' is a known Hermes bug for async arrow functions whose rest parameter is a destructuring pattern (`async (...[a, b]) => {}`, meta/hermes#2260). babel-preset-expo used to transform that pattern and stopped doing so in SDK 58 (expo/expo#51687), so packages that ship it, such as @orpc/client, now reach hermesc (expo/expo#52983)."
+              : ""),
+          evidence,
+          nextSteps: [
+            ...(known
+              ? [
+                  "Add `@babel/plugin-transform-parameters` to the plugins in babel.config.js (install it as a dev dependency), clear the cache (`npx expo export --clear` or `npx expo start --clear`), and export again.",
+                ]
+              : []),
+            `Find the code: run the same export without bytecode (\`npx expo export -p ios --no-bytecode\`, or \`npx react-native bundle --dev false …\` without Hermes) and open the bundle${first ? ` at line ${first.m[2]}, column ${first.m[3]}` : ""}. The surrounding code shows which package it belongs to.`,
+            ...(known
+              ? []
+              : [
+                  "If the syntax is valid JavaScript that Hermes doesn't support yet, transform it with the matching Babel plugin, or upgrade the package (or React Native / the Expo SDK for a newer hermesc).",
+                ]),
+          ],
+          verification:
+            "`npx expo export` (or the release build) compiles the bundle to bytecode without errors.",
+        }),
+      );
+    }
+    return out;
+  },
+};
+
+export const metroRules: Rule[] = [unableToResolveModule, bundleSyntaxError, hermesCompileError];

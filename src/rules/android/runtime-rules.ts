@@ -173,7 +173,11 @@ export const cleartextHttpBlocked: Rule = {
     versionScope: `Android apps targeting API ${CLEARTEXT_DEFAULTS.blockedByDefaultFromTargetSdk}+ (React Native 0.73+ template, Expo)`,
     references: CLEARTEXT_DEFAULTS.sources,
     lastVerified: CLEARTEXT_DEFAULTS.lastVerified,
-    fixtures: ["logs/real-rn087-logcat-cleartext-blocked.log", "logs/android-okhttp-cleartext.log"],
+    fixtures: [
+      "logs/real-rn087-logcat-cleartext-blocked.log",
+      "logs/android-okhttp-cleartext.log",
+      "logs/studio-logcat-network-request-failed.log",
+    ],
   },
   run(ctx) {
     const out: DraftFinding[] = [];
@@ -266,6 +270,7 @@ export const r8RemovedConstructor: Rule = {
     fixtures: [
       "logs/real-logcat-r8-removed-constructor.log",
       "logs/real-logcat-expo58-workmanager-r8.log",
+      "logs/studio-logcat-r8-removed-constructor.log",
     ],
   },
   run(ctx) {

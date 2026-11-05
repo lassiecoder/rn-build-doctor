@@ -1,0 +1,2 @@
+iOS Bundled 403ms node_modules/expo-router/entry.js (1534 modules)
+ ERROR  Error: Cannot find native module 'ExpoMailComposer', js engine: hermes

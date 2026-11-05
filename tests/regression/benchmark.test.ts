@@ -44,6 +44,17 @@ describe("labeled regression cases", () => {
       // Every non-informational finding carries evidence.
       for (const f of report.findings.filter((x) => x.severity !== "info"))
         expect(f.evidence.length).toBeGreaterThan(0);
+      // Text the tool writes itself (not runtime messages it quotes) never shows a missing value or
+      // a doubled period.
+      for (const f of report.findings.filter(
+        (x) => !/^(?:runtime|env)\.|public-env/.test(x.ruleId),
+      )) {
+        const own = JSON.stringify([f.title, f.explanation, f.nextSteps, f.verification ?? ""]);
+        expect(own, f.ruleId).not.toMatch(
+          /\b(?:in|at|Open|from|to|for) undefined\b(?! method)|\(undefined\)/,
+        );
+        expect(own, f.ruleId).not.toMatch(/[a-z0-9)'`]\.\.(?:\s|"|$)/);
+      }
       if (c.mustMention?.length) {
         const target = report.findings.filter((f) => f.ruleId === c.expect[0]);
         const text = JSON.stringify(target);

@@ -203,7 +203,7 @@ export function parseRuntime(doc: LogDocument): RuntimeParseResult {
 
 const EXCERPT_LINES = 9;
 const BUNDLE_NOT_LOADED =
-  /Unable to load script\.?|No bundle URL present|Could not connect to development server/;
+  /Unable to load script\.?|No bundle URL present|No script URL provided|Could not connect to development server/;
 const PACKAGER_UNREACHABLE =
   /packager does not seem to be running|Couldn't connect to "ws:\/\/[^"]*:8081|Could not connect to development server/;
 /** How far ahead to look for lines of the same process in an interleaved logcat. */

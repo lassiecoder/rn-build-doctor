@@ -267,3 +267,88 @@ export const R8_REFLECTIVE_CONSTRUCTORS = {
     "-keep class * extends androidx.work.InputMerger { <init>(); }",
   ],
 };
+
+/**
+ * foojay-resolver-convention before 1.0.0 supports Gradle 7.6 to 8.14.x only (its README:
+ * "Versions prior to 1.0.0 require Java 8 or later and Gradle from 7.6 to 8.14.x"). On Gradle 9 it
+ * fails with NoClassDefFoundError: org/gradle/toolchains/foojay/FoojayToolchainsPlugin.
+ * @react-native/gradle-plugin's settings.gradle.kts pins 0.5.0 on the 0.82-stable through
+ * 0.85-stable branches (which ship Gradle 9.0.0 / 9.3.1 wrappers) and 1.0.0 from 0.86-stable on;
+ * checked on the branch tips on 2026-11-05.
+ */
+export const FOOJAY_GRADLE9 = {
+  sources: [
+    "https://github.com/gradle/foojay-toolchains#readme",
+    "https://github.com/gradle/foojay-toolchains/issues/151",
+    "https://github.com/react/react-native/issues/56287",
+  ],
+  lastVerified: "2026-11-05",
+  firstGradle9Compatible: "1.0.0",
+  minGradleMajorNeedingIt: 9,
+  /** React Native release lines whose gradle plugin pins a pre-1.0 foojay with a Gradle 9 wrapper. */
+  affectedReactNative: "0.82–0.85",
+  fixedInReactNative: "0.86",
+};
+
+/**
+ * React Native's settings plugin caches the autolinking config in
+ * android/build/generated/autolinking/autolinking.json with absolute paths and only refreshes it when
+ * a lockfile changes, so after the project folder moves Gradle includes libraries from the old path
+ * (react/react-native#59503, reproduced on 0.88.0; ReactSettingsExtension.isCacheDirty). Deleting
+ * android/build/generated/autolinking works around it. Checked on 2026-11-05: the issue is open.
+ */
+export const RN_AUTOLINKING_CACHE = {
+  sources: [
+    "https://github.com/react/react-native/issues/59503",
+    "https://github.com/react/react-native/blob/main/packages/gradle-plugin/settings-plugin/src/main/kotlin/com/facebook/react/ReactSettingsExtension.kt",
+  ],
+  lastVerified: "2026-11-05",
+  cacheDir: "android/build/generated/autolinking",
+};
+
+/**
+ * Since facebook/hermes moved to meta/hermes (2026-10-28), the Hermes source tarball's top folder is
+ * meta-hermes-<sha>/, and React Native's unzipHermes only flattened facebook-hermes-<sha>/, leaving
+ * sdks/hermes without CMakeLists.txt. Only source builds of React Native (buildReactNativeFromSource,
+ * includeBuild) download Hermes. Fixed by react/react-native#59589 (merged 2026-10-28), which is in
+ * v0.89.0-rc.0; not in 0.88.1 or on the 0.88-stable branch as of 2026-11-05.
+ */
+export const HERMES_TARBALL_LAYOUT = {
+  sources: [
+    "https://github.com/react/react-native/issues/59587",
+    "https://github.com/react/react-native/pull/59589",
+  ],
+  lastVerified: "2026-11-05",
+  fixedIn: "0.89.0-rc.0",
+  notFixedIn: "0.88.1",
+};
+
+/**
+ * Gradle's generated start scripts (gradlew, gradlew.bat) print "ERROR: JAVA_HOME is not set and no
+ * 'java' command could be found in your PATH." or "ERROR: JAVA_HOME is set to an invalid directory:
+ * <dir>" before Gradle starts (unixStartScript.txt / gradlew.bat in gradle/gradle, checked
+ * 2026-11-05).
+ */
+export const GRADLE_START_SCRIPT = {
+  sources: [
+    "https://github.com/gradle/gradle/blob/master/platforms/jvm/plugins-application/src/main/resources/org/gradle/api/internal/plugins/unixStartScript.txt",
+    "https://developer.android.com/build/jdks",
+  ],
+  lastVerified: "2026-11-05",
+};
+
+/**
+ * java.time (for example java.time.Duration) is part of Android only from API 26; on older versions a
+ * class that uses it fails with NoClassDefFoundError / ClassNotFoundException "java.time.…". Core
+ * library desugaring can provide a subset of java.time on older versions. Seen in expo-dev-launcher on
+ * Android 7 (expo/expo#52492, open on 2026-11-05).
+ */
+export const JAVA_TIME_API = {
+  sources: [
+    "https://developer.android.com/reference/java/time/Duration",
+    "https://developer.android.com/studio/write/java8-support",
+    "https://github.com/expo/expo/issues/52492",
+  ],
+  lastVerified: "2026-11-05",
+  addedInApi: 26,
+};

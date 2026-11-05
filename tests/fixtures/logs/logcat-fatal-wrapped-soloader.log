@@ -1,0 +1,10 @@
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: FATAL EXCEPTION: main
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: Process: com.example.app, PID: 21544
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: java.lang.ExceptionInInitializerError
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: 	at com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load(DefaultNewArchitectureEntryPoint.kt:97)
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: 	at com.example.app.MainApplication.onCreate(MainApplication.kt:48)
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1277)
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: Caused by: com.facebook.soloader.SoLoaderDSONotFoundError: couldn't find DSO to load: libreactnative.so
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.doLoadLibraryBySoName(SoLoader.java:1216)
+10-27 09:41:02.117 21544 21544 E AndroidRuntime: 	at com.facebook.react.internal.featureflags.ReactNativeFeatureFlagsCxxInterop.<clinit>(ReactNativeFeatureFlagsCxxInterop.kt:28)
+10-27 09:41:02.118 21544 21544 I Process : Sending signal. PID: 21544 SIG: 9

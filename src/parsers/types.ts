@@ -91,5 +91,17 @@ export function stripLogcatPrefix(line: string): {
   const brief = /^[VDIWEFA]\/([^(:]+?)\s*(?:\(\s*(\d+)\))?:\s?(.*)$/.exec(line);
   if (brief)
     return { tag: brief[1]!.trim(), ...(brief[2] ? { pid: brief[2] } : {}), message: brief[3]! };
+  // Android Studio's Logcat window: `2026-10-28 12:00:01.234  4321-4321  AndroidRuntime  com.example.app
+  // E  FATAL EXCEPTION: main`. The date and time are usually already removed as a CI timestamp
+  // prefix, and the package column can be empty. Continuation lines of a multi-line entry are only
+  // indented, so they carry no tag.
+  const studio = STUDIO_LOGCAT.exec(line);
+  if (studio) return { tag: studio[3]!, pid: studio[1]!, tid: studio[2]!, message: studio[5]! };
+  // Excerpts trimmed to "E AndroidRuntime: message" (level and tag, no time or ids).
+  const trimmed = /^[VDIWEFA] ([A-Za-z][\w.$:-]*): ?(.*)$/.exec(line);
+  if (trimmed) return { tag: trimmed[1]!, message: trimmed[2]! };
   return { message: line };
 }
+
+const STUDIO_LOGCAT =
+  /^\s*(?:\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2}\.\d+\s+)?(\d+)-(\d+)\s+(\S+)\s+(?:(\S+)\s+)?[VDIWEFA]\s{1,2}(.*)$/;

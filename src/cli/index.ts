@@ -280,7 +280,7 @@ export async function main(argv: string[] = process.argv): Promise<number> {
     }
     if (error instanceof AiError) {
       process.stderr.write(`rn-build-doctor explain: ${error.message}\n`);
-      return 4;
+      return EXIT.ai;
     }
     process.stderr.write(
       `rn-build-doctor: internal error: ${(error as Error)?.stack ?? String(error)}\nPlease report this issue.\n`,

@@ -1,0 +1,13 @@
+> Task :expo:compileDebugJavaWithJavac FAILED
+C:\Users\dev\app\node_modules\expo\android\build\generated\source\inlineModules\ExpoInlineModulesList.java:18: error: package inline.hello does not exist
+      inline.hello.HelloModule.class
+            ^
+1 error
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':expo:compileDebugJavaWithJavac'.
+> Compilation failed; see the compiler output below.
+
+BUILD FAILED in 1m 3s
